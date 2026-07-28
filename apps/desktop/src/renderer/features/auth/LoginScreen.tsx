@@ -1,5 +1,10 @@
-import { AppWindow, ExternalLink, Loader2, Wifi, WifiOff } from "lucide-react";
+import { ExternalLink, Loader2, Wifi, WifiOff } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { APP_ICON_DATA_URLS } from "@lzt/shared";
+import { CURRENT_VERSION } from "~/data/changelog";
+import { APP_ICON_DATA_URL } from "~/lib/appIcon";
+import { useSettingsStore } from "~/stores/settings";
+import { ChangelogModal } from "~/widgets/Changelog/ChangelogModal";
 import s from "./LoginScreen.module.scss";
 
 type NetState =
@@ -7,8 +12,12 @@ type NetState =
 
 export const LoginScreen = () => {
   const [busy, setBusy] = useState(false);
-  const [version, setVersion] = useState("");
   const [net, setNet] = useState<NetState>({ kind: "checking" });
+  const [changelogOpen, setChangelogOpen] = useState(false);
+  const appIconId = useSettingsStore(
+    (st) => st.snapshot?.settings.appIconId ?? 1,
+  );
+  const appIcon = APP_ICON_DATA_URLS[appIconId - 1] ?? APP_ICON_DATA_URL;
 
   const checkNetwork = useCallback(async () => {
     setNet({ kind: "checking" });
@@ -17,7 +26,6 @@ export const LoginScreen = () => {
   }, []);
 
   useEffect(() => {
-    window.moderator.app.getVersion().then(setVersion);
     void checkNetwork();
   }, [checkNetwork]);
 
@@ -25,15 +33,6 @@ export const LoginScreen = () => {
     setBusy(true);
     try {
       await window.moderator.auth.openBrowser();
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleLoginInApp = async () => {
-    setBusy(true);
-    try {
-      await window.moderator.auth.openInApp();
     } finally {
       setBusy(false);
     }
@@ -74,7 +73,13 @@ export const LoginScreen = () => {
       </div>
 
       <div className={s.block}>
-        <div className={s.logo}>LZT</div>
+        <img
+          className={s.logo}
+          src={appIcon}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+        />
         <div className={s.text}>
           <span className={s.title}>Lolzteam Desktop</span>
           <span className={s.lede}>
@@ -92,16 +97,6 @@ export const LoginScreen = () => {
           <span>{busy ? "Открываем браузер…" : "Войти через сайт LZT"}</span>
         </button>
 
-        <button
-          type="button"
-          className={s.button}
-          onClick={handleLoginInApp}
-          disabled={busy || net.kind !== "online"}
-        >
-          <AppWindow size={16} />
-          <span>Войти в окне приложения</span>
-        </button>
-
         {busy && (
           <span className={s.hint}>
             Завершите вход в браузере — приложение продолжит автоматически
@@ -109,7 +104,19 @@ export const LoginScreen = () => {
         )}
       </div>
 
-      {version && <span className={s.version}>v{version}</span>}
+      <button
+        type="button"
+        className={s.version}
+        onClick={() => setChangelogOpen(true)}
+        title="Что нового"
+      >
+        v{CURRENT_VERSION}
+      </button>
+
+      <ChangelogModal
+        open={changelogOpen}
+        onClose={() => setChangelogOpen(false)}
+      />
     </div>
   );
 };

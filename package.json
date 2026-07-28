@@ -1,7 +1,7 @@
 {
   "name": "lolzteam-desktop",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.2",
   "description": "Lolzteam Desktop — утилита для модерации/анализа маркета LZT (Electron-версия).",
   "type": "module",
   "engines": {

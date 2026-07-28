@@ -1246,7 +1246,7 @@
 .miniBanner {
   position: relative;
   height: 150px;
-  margin: -$space-4 -$space-5 0;
+  margin: (-$space-4) (-$space-5) 0;
   background-color: $color-surface-raised;
   background-image: linear-gradient(120deg, $color-accent-dark, $color-surface-overlay);
   background-size: cover;

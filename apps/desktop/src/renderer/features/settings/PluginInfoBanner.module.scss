@@ -54,6 +54,14 @@
   }
 }
 
+.authorName {
+  display: inline-flex;
+  align-items: center;
+  font-size: $fs-xs;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
 .desc {
   margin: 0;
   color: $color-text-muted;

@@ -392,6 +392,8 @@ export const SettingsView = () => {
                 icon={EyeOff}
                 title="StreamMode"
                 description="Скрывает конфиденциальную информацию для стримеров."
+                authorName="God_likeGL"
+                authorUserId={641286}
               />
               <StreamerView />
             </>

@@ -1,22 +1,52 @@
+import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ExternalLink } from "lucide-react";
-import { getForumWebBase } from "@lzt/shared";
+import {
+  getForumWebBase,
+  profileSiteLinks,
+  type FullProfile,
+} from "@lzt/shared";
+import { RichUsername } from "~/features/profile/RichUsername";
 import styles from "./PluginInfoBanner.module.scss";
 
-const AUTHOR_NAME = "ahk_lzt";
-const AUTHOR_URL = `${getForumWebBase()}/${AUTHOR_NAME}/`;
+const DEFAULT_AUTHOR_NAME = "ahk_lzt";
 
 interface PluginInfoBannerProps {
   icon: LucideIcon;
   title: string;
   description: string;
+  authorName?: string;
+  authorUserId?: number;
 }
 
 export const PluginInfoBanner = ({
   icon: Icon,
   title,
   description,
+  authorName = DEFAULT_AUTHOR_NAME,
+  authorUserId,
 }: PluginInfoBannerProps) => {
+  const [author, setAuthor] = useState<FullProfile | null>(null);
+
+  useEffect(() => {
+    setAuthor(null);
+    if (!authorUserId) return;
+    let cancelled = false;
+    void window.moderator.profile.getUser(String(authorUserId)).then((res) => {
+      if (cancelled || !res.ok) return;
+      setAuthor(res.profile);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [authorUserId]);
+
+  const authorUrl =
+    author?.profileUrl ??
+    (authorUserId
+      ? profileSiteLinks.member(authorUserId)
+      : `${getForumWebBase()}/${authorName}/`);
+
   return (
     <div className={styles.banner}>
       <span className={styles.icon}>
@@ -28,9 +58,19 @@ export const PluginInfoBanner = ({
           <button
             type="button"
             className={styles.author}
-            onClick={() => void window.moderator.app.openExternal(AUTHOR_URL)}
+            onClick={() => void window.moderator.app.openExternal(authorUrl)}
           >
-            {AUTHOR_NAME}
+            {author ? (
+              <RichUsername
+                html={author.usernameHtml}
+                fallback={author.username}
+                color={author.usernameColor}
+                userId={author.userId}
+                className={styles.authorName}
+              />
+            ) : (
+              authorName
+            )}
             <ExternalLink size={12} />
           </button>
         </div>

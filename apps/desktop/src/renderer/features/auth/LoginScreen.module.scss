@@ -52,12 +52,8 @@
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  letter-spacing: 1px;
-  background: var(--accent);
-  color: #fff;
+  object-fit: contain;
+  user-select: none;
 }
 
 .text {
@@ -109,8 +105,16 @@
 .version {
   position: absolute;
   bottom: 14px;
+  background: none;
+  border: none;
+  padding: 4px 8px;
   color: var(--text-muted);
   font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent);
+  }
 }
 
 .spin {

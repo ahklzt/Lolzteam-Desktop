@@ -3,6 +3,7 @@ import { IPC, type AuthTokenPayload, parseAuthCallback } from '@lzt/shared'
 import type { BrowserWindow } from 'electron'
 import { session } from 'electron'
 import log from 'electron-log/main'
+import { setProfileToken } from '../services/profile-token'
 import { saveToken } from './token-store'
 
 type GetWindow = () => BrowserWindow | null
@@ -80,6 +81,7 @@ export const acceptAuthCallback = async (
   if (isRecentToken(parsed.accessToken)) return { ok: false, reason: 'duplicate' }
 
   await saveToken(parsed.accessToken)
+  await setProfileToken(parsed.accessToken)
 
   const payload: AuthTokenPayload = {
     accessToken: parsed.accessToken,

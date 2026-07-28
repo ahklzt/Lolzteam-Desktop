@@ -2,6 +2,7 @@ import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import { app, safeStorage } from 'electron'
 import log from 'electron-log/main'
+import { loadToken } from '../auth/token-store'
 import { atomicWrite, backupCorrupt } from './atomic-store'
 
 const FILE_NAME = 'profile-token.bin'
@@ -26,6 +27,10 @@ const readFromDisk = async (): Promise<void> => {
       await backupCorrupt(tokenFilePath())
     }
     sessionToken = null
+  }
+  if (!sessionToken) {
+    const oauth = (await loadToken())?.trim()
+    if (oauth) sessionToken = oauth
   }
   loaded = true
 }

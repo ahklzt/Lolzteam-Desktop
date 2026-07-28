@@ -47,12 +47,10 @@ export const ProfileView = () => {
     void loadStatus();
   }, [loadStatus]);
 
-  const firstNonce = useRef(true);
+  const lastProfileNonce = useRef(profileNonce);
   useEffect(() => {
-    if (firstNonce.current) {
-      firstNonce.current = false;
-      return;
-    }
+    if (profileNonce === lastProfileNonce.current) return;
+    lastProfileNonce.current = profileNonce;
     if (targetNonce !== lastTarget.current) return;
     targetRequested.current = false;
     if (me) setViewing(me);
