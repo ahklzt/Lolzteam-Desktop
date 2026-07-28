@@ -1,0 +1,29 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+  line-height: 1.15;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.root :global(svg) {
+  width: 1.05em;
+  height: 1.05em;
+  flex: 0 0 auto;
+}
+
+.root :global(.uniqUsernameIcon--custom) {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.uniqIcon {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "lolzteam-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lolzteam Desktop — утилита для модерации/анализа маркета LZT (Electron-версия).",
+  "type": "module",
+  "engines": {
+    "node": ">=20.10"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @lzt/desktop run dev",
+    "build": "pnpm --filter @lzt/desktop run build",
+    "build:dir": "pnpm --filter @lzt/desktop run build:dir",
+    "build:win": "pnpm --filter @lzt/desktop run build:win",
+    "dist": "pnpm --filter @lzt/desktop run dist",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
+  }
+}

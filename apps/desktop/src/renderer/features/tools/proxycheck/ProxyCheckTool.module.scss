@@ -1,0 +1,508 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.tabs {
+  display: flex;
+  gap: $space-2;
+  padding: $space-1;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  align-self: center;
+}
+
+.tab {
+  @include button-reset;
+  @include clickable;
+  padding: $space-2 $space-4;
+  border-radius: $radius-pill;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  font-weight: 500;
+  transition: color $duration-fast $ease-out, background $duration-fast $ease-out;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.tabActive {
+  background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.back {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  align-self: flex-start;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.modeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $space-3;
+}
+
+.modeCard {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-5;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  text-align: left;
+  transition: border-color $duration-fast $ease-out, transform $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-accent;
+    transform: translateY(-2px);
+  }
+}
+
+.modeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-md;
+  background: $color-surface-overlay;
+  color: $color-accent;
+}
+
+.modeTitle {
+  font-size: $fs-base;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.modeDesc {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+.label {
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text-soft;
+}
+
+.textarea,
+.input,
+.select {
+  width: 100%;
+  padding: $space-2 $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-family: inherit;
+
+  &:focus {
+    @include focus-ring;
+    border-color: $color-accent;
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: ui-monospace, monospace;
+}
+
+.row {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+}
+
+.row .select {
+  max-width: 220px;
+}
+
+.row .input {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.primary {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+  color: #fff;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(28, 105, 70, 0.42);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.ghost {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2 $space-3;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-border-strong;
+  }
+}
+
+.note {
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+}
+
+.noteWarn {
+  background: rgba(230, 140, 23, 0.12);
+  color: $color-warning;
+}
+
+.noteOk {
+  background: rgba(0, 186, 120, 0.12);
+  color: $color-accent;
+}
+
+.noteInfo {
+  background: $color-surface-raised;
+  color: $color-text-muted;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+  padding: $space-3 $space-4;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.summaryNum {
+  font-size: $fs-xl;
+  font-weight: 700;
+  color: $color-accent;
+}
+
+.summaryLabel {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.exportBar {
+  display: flex;
+  gap: $space-2;
+  margin-left: auto;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.resultRow {
+  padding: $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-left: 3px solid $color-border-strong;
+  border-radius: $radius-md;
+}
+
+.resultRow.ok {
+  border-left-color: $color-accent;
+}
+
+.resultRow.bad {
+  border-left-color: $color-danger;
+}
+
+.resultHead {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.dotOk,
+.dotBad {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotOk {
+  background: $color-accent;
+}
+
+.dotBad {
+  background: $color-danger;
+}
+
+.resultLine {
+  font-family: ui-monospace, monospace;
+  font-size: $fs-sm;
+  color: $color-text;
+  @include truncate;
+}
+
+.resultPing {
+  margin-left: auto;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  white-space: nowrap;
+}
+
+.errText {
+  margin-top: $space-2;
+  font-size: $fs-sm;
+  color: $color-danger;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: $space-2;
+  margin-top: $space-3;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fieldLabel {
+  font-size: $fs-xs;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-text-muted;
+}
+
+.fieldValue {
+  font-size: $fs-sm;
+  color: $color-text;
+  word-break: break-word;
+}
+
+.siteReport,
+.ipReport {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.statusOk,
+.statusBad {
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 600;
+}
+
+.statusOk {
+  background: rgba(0, 186, 120, 0.12);
+  color: $color-accent;
+}
+
+.statusBad {
+  background: rgba(234, 76, 76, 0.12);
+  color: $color-danger;
+}
+
+.badges {
+  display: flex;
+  gap: $space-2;
+}
+
+.badgeWarn {
+  padding: 2px $space-2;
+  border-radius: $radius-sm;
+  background: rgba(230, 140, 23, 0.15);
+  color: $color-warning;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.badgeOk {
+  display: inline-block;
+  padding: 1px $space-2;
+  border-radius: $radius-sm;
+  background: $color-surface-overlay;
+  color: $color-text-soft;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.section {
+  padding: $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.sectionTitle {
+  margin: 0 0 $space-2;
+  font-size: $fs-xs;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-text-muted;
+}
+
+.kv {
+  display: flex;
+  gap: $space-3;
+  padding: 4px 0;
+  border-bottom: 1px solid $color-border;
+  font-size: $fs-sm;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.kvKey {
+  flex: 0 0 40%;
+  color: $color-text-muted;
+}
+
+.kvVal {
+  flex: 1;
+  color: $color-text;
+  word-break: break-word;
+}
+
+.chainItem {
+  padding: 4px 0;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  word-break: break-all;
+}
+
+.ipHead {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  color: $color-accent;
+}
+
+.ipBig {
+  font-size: $fs-lg;
+  font-weight: 700;
+  color: $color-text;
+  font-family: ui-monospace, monospace;
+}
+
+.formatPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.formatPill {
+  @include button-reset;
+  @include clickable;
+  padding: $space-1 $space-3;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  color: $color-text-muted;
+  font-size: $fs-xs;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-border-strong;
+  }
+}
+
+.formatPillActive {
+  background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+  border-color: transparent;
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.output {
+  max-height: 320px;
+  overflow: auto;
+  padding: $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-family: ui-monospace, monospace;
+  font-size: $fs-sm;
+  color: $color-text;
+  white-space: pre-wrap;
+  word-break: break-all;
+  @include scrollbar;
+}
+
+.spin {
+  animation: pc-spin 0.8s linear infinite;
+}
+
+@keyframes pc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

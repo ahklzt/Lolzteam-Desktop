@@ -1,0 +1,51 @@
+
+$color-accent: rgb(0, 186, 120);
+$color-accent-soft: rgb(34, 142, 93);
+$color-accent-dark: rgb(0, 150, 96);
+
+$color-bg: rgb(20, 20, 20);
+$color-surface: rgb(28, 28, 28);
+$color-surface-raised: rgb(36, 36, 36);
+$color-surface-overlay: rgb(48, 48, 48);
+
+$color-text: rgb(234, 234, 234);
+$color-text-soft: rgb(214, 214, 214);
+$color-text-muted: rgb(148, 148, 148);
+
+$color-border: rgba(255, 255, 255, 0.06);
+$color-border-strong: rgba(255, 255, 255, 0.12);
+
+$color-danger: rgb(234, 76, 76);
+$color-warning: rgb(230, 140, 23);
+$color-info: rgb(35, 148, 188);
+
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-pill: 999px;
+
+$fs-xs: 0.75rem;
+$fs-sm: 0.875rem;
+$fs-base: 1rem;
+$fs-lg: 1.125rem;
+$fs-xl: 1.25rem;
+
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+$shadow-focus: 0 0 0 2px rgba(0, 186, 120, 0.45);
+
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$duration-fast: 120ms;
+$duration-base: 180ms;
+
+$z-sticky: 10;
+$z-dock: 50;
+$z-modal: 1000;

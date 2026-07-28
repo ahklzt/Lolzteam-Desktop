@@ -1,0 +1,56 @@
+.nav {
+  flex: 0 0 auto;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding: $space-3 14px;
+  background: $color-surface;
+  border-radius: $radius-lg;
+  min-height: 0;
+  overflow-y: auto;
+  @include scrollbar;
+}
+
+.item {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: $radius-sm;
+  color: $color-text-soft;
+  text-align: left;
+  transition: all 0.18s ease-in-out;
+
+  &:hover {
+    background: $color-surface-raised;
+    color: $color-text;
+  }
+}
+
+.itemIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: inherit;
+}
+
+.itemLabel {
+  font-size: $fs-sm;
+  font-weight: 500;
+  @include truncate;
+}
+
+.active,
+.active:hover {
+  background: $color-accent-soft;
+  color: $color-accent;
+
+  .itemLabel {
+    font-weight: 600;
+  }
+}

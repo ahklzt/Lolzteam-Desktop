@@ -1,0 +1,534 @@
+.marketIndexItem {
+  position: relative;
+  margin: 15px 0 0;
+  padding: 15px 20px;
+  background: rgb(28, 28, 28);
+  border-radius: 10px;
+  font-size: 14px;
+  color: rgb(214, 214, 214);
+}
+
+.marketIndexItem .LinkClicker {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.marketIndexItem .rightCol {
+  float: right;
+  position: relative;
+  z-index: 2;
+  font-weight: 600;
+}
+
+.marketIndexItem--Price {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  font-size: 15px;
+}
+
+.marketIndexItem--Price .svgIcon--rub::before {
+  content: '\20bd';
+  font-size: 14px;
+}
+
+.marketIndexItem--topContainer {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.marketIndexItem .categoryIcon {
+  position: relative;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  vertical-align: middle;
+  object-fit: contain;
+}
+
+.marketIndexItem--Title {
+  position: relative;
+  z-index: 2;
+  max-width: 85%;
+  margin-right: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.marketIndexItem--helpfulIcons {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.marketIndexItem--helpfulIcons > span {
+  display: flex;
+  margin-right: 5px;
+}
+
+.marketIndexItem--helpfulIcons svg {
+  width: 20px;
+  height: 20px;
+}
+
+.marketIndexItem--Badges.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  max-width: 91%;
+  margin: 10px 0 4px;
+}
+
+.marketIndexItem .stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 4px 12px;
+  line-height: 22px;
+  font-size: 13px;
+  color: #d6d6d6;
+  background: rgb(48, 48, 48);
+  border-radius: 31px;
+}
+
+.marketIndexItem .stat.greenText {
+  color: #02bb77;
+  font-weight: 600;
+  background: rgba(2, 187, 119, 0.12);
+}
+
+.marketIndexItem .stat.redText {
+  color: #ff6a70;
+  font-weight: 600;
+  background: rgba(255, 106, 112, 0.12);
+}
+
+.marketIndexItem--Badges {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 12px 0 4px;
+}
+
+.marketIndexItem-Badge {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0 2px 6px 0;
+  padding: 0 10px;
+  line-height: 26px;
+  font-size: 13px;
+  word-break: break-all;
+  background: rgb(48, 48, 48);
+  border-radius: 6px;
+}
+
+.marketIndexItem--otherInfo {
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+}
+
+.marketIndexItem-inlineGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.marketIndexItem-inlineGroup .inline-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  font-size: 13px;
+  color: #949494;
+}
+
+.marketIndexItem-inlineGroup .inline-info .username {
+  color: #aaa;
+  font-weight: 600;
+}
+
+.marketIndexItem .info-separator {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin: 0 5px;
+  vertical-align: middle;
+  background: rgb(34, 142, 93);
+  border-radius: 50%;
+}
+
+.marketIndexItem .muted {
+  color: #949494;
+}
+
+.marketIndexItem-inlineGroup .inline-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.loginDataSpoiler {
+  position: relative;
+  z-index: 2;
+  margin: 10px 0 0;
+}
+
+.loginDataSpoiler .bbCodeSpoilerButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 0 15px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(214, 214, 214);
+  background: rgb(36, 36, 36);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.loginDataSpoiler .bbCodeSpoilerButton:hover {
+  background: rgb(44, 44, 44);
+}
+
+.loginDataSpoilerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.marketItemView--loginData.new-loginData-block {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 12px;
+  background-color: rgb(36, 36, 36);
+  border-radius: 10px;
+}
+
+.marketItemView--loginData--title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+  line-height: 20px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.marketItemView--loginData--title .SvgIcon-loginData {
+  display: flex;
+  width: 20px;
+  height: 20px;
+}
+
+.marketItemView--loginData--title .SvgIcon-loginData svg {
+  width: 20px;
+  height: 20px;
+}
+
+.marketItemView--loginData--title .SvgIcon-loginData.Only-Fill svg path {
+  fill: currentColor;
+}
+
+.marketItemView--loginData--title .categoryIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.new-loginData-block .new-inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.new-loginData-block .new-inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.new-loginData-block .new-inputGroup > span {
+  font-size: 13px;
+  color: #949494;
+}
+
+.new-loginData-block .new-copyGroup {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.new-loginData-block .new-infoBlock {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  line-height: 18px;
+  font-size: 14px;
+  color: rgb(214, 214, 214);
+  background: rgb(28, 28, 28);
+  border-radius: 8px;
+  word-break: break-all;
+}
+
+.new-loginData-block .copyButton.new-copyIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  min-width: 38px;
+  color: rgb(214, 214, 214);
+  background: rgb(48, 48, 48);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.new-loginData-block .copyButton.new-copyIcon:hover {
+  background: rgb(58, 58, 58);
+}
+
+.new-loginData-block .copyButton .greenColor {
+  color: #02bb77;
+}
+
+.new-loginData-block .textCtrl.accountCookies {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgb(214, 214, 214);
+  background: rgb(28, 28, 28);
+  border: none;
+  border-radius: 8px;
+}
+
+.new-loginData-block .btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.new-loginData-block .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  height: 34px;
+  padding: 0 15px;
+  line-height: 34px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: rgb(214, 214, 214);
+  background-color: rgb(48, 48, 48);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.new-loginData-block .button:hover {
+  background-color: rgb(58, 58, 58);
+}
+
+.new-loginData-block .button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.new-loginData-block.market_information_from_seller .quote {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(214, 214, 214);
+  background: rgb(28, 28, 28);
+  border-radius: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.marketIndexItem:not(.itemIgnored):hover {
+  cursor: pointer;
+}
+
+.marketIndexItem:not(.itemIgnored):hover .marketIndexItem--Title {
+  color: rgb(0, 186, 120);
+}
+
+.marketIndexItem:last-of-type {
+  border-bottom: 0;
+}
+
+.marketIndexItem .Value {
+  font-weight: 600;
+}
+
+.marketIndexItem .fl_r {
+  float: right;
+}
+
+.marketIndexItem--Badges.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.marketIndexItem--Badges.flex .marketIndexItem-Badge {
+  margin-right: 8px;
+}
+
+.marketIndexItem-Badge--Clear {
+  display: inline-block;
+  height: 26px;
+  margin-bottom: 4px;
+  line-height: 26px;
+  overflow: hidden;
+}
+
+.marketIndexItem-Badge.noBack {
+  background: transparent;
+}
+
+.marketIndexItem-Badge.lowPrice {
+  height: 24px;
+  margin: -2.5px 6px 0;
+  line-height: 24px;
+  color: rgb(0, 186, 120);
+}
+
+.marketIndexItem-Badge.Exf {
+  background: #964747;
+  color: #f5f5f5;
+}
+
+.marketIndexItem-Badge--RT {
+  background: #753232;
+}
+
+.marketIndexItem-Badge--EB {
+  background: #b3b350;
+  color: #101010;
+  font-weight: 600;
+}
+
+.marketIndexItem-Badge.Vac,
+.marketIndexItem-Badge.mm_ban {
+  color: #b3b309;
+}
+
+.marketIndexItem .game.Vac {
+  color: #c3ad57;
+  font-weight: 600;
+}
+
+.marketIndexItem .stat.warningText,
+.marketIndexItem .stat.smallExf,
+.marketIndexItem .stat.steamRt,
+.marketIndexItem .smallGuarantee,
+.marketIndexItem .warningText {
+  background: rgba(255, 106, 112, 0.12);
+  border-radius: 31px;
+  color: #ff6a70;
+  font-weight: 600;
+}
+
+.marketIndexItem .extendedGuarantee {
+  box-sizing: border-box;
+  padding: 4px 12px;
+  background: rgba(2, 187, 119, 0.12);
+  border-radius: 31px;
+  color: #02bb77;
+  font-weight: 600;
+}
+
+.marketIndexItem--Badges.stats.deletion_process {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 106, 112, 0.12);
+  border-radius: 8px;
+}
+
+.marketIndexItem--Badges.stats.deletion_process .text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.marketIndexItem--Badges.stats.deletion_process .text .title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff6a70;
+}
+
+.marketIndexItem.sticky .marketIndexItem--Price {
+  height: 24px;
+  margin: -3.5px 0 0 12px;
+  padding: 0 8px;
+  background: linear-gradient(90deg, rgb(34, 142, 93) 0%, rgb(18, 76, 50) 100%);
+  border-radius: 6px;
+  color: #f5f5f5;
+  line-height: 24px;
+}
+
+.marketIndexItem.sticky .marketIndexItem-Badge.lowPrice {
+  margin: -3.5px 6px 0;
+}
+
+.marketIndexItem--fbCounter {
+  margin: 6px 0 0;
+  float: right;
+}
+
+.marketIndexItem--fbCounter .positive {
+  color: rgb(0, 186, 120);
+}
+
+.marketIndexItem .steamGameIcon--div {
+  margin-right: 4px;
+}
+
+.marketIndexItem .steamGameIcon--div .steamGameIcon--img {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+.marketIndexItem .tagsWrapper .tagSold {
+  display: inline-block;
+  background: rgb(136, 68, 68);
+  opacity: 1;
+}

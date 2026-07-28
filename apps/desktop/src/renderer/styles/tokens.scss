@@ -1,0 +1,46 @@
+:root {
+  --pageBackground: rgb(20, 20, 20);
+  --contentBackground: rgb(28, 28, 28);
+  --contentText: rgb(214, 214, 214);
+  --faintTextColor: rgb(234, 234, 234);
+  --mutedTextColor: rgb(148, 148, 148);
+  --mutedTextColorStill: rgb(80, 80, 80);
+  --dimmedTextColor: rgb(117, 147, 180);
+
+  --primary: rgb(54, 54, 54);
+  --primaryDark: rgb(48, 48, 48);
+  --primaryDarker: rgb(36, 36, 36);
+  --primaryLight: rgb(18, 76, 50);
+  --primaryLighter: rgb(34, 142, 93);
+  --primaryLighterStill: rgb(48, 48, 48);
+  --primaryLightest: rgb(83, 91, 99);
+  --primaryLightish: rgb(35, 148, 188);
+  --primaryMedium: rgb(0, 186, 120);
+
+  --secondaryDark: #8f6c3f;
+  --secondaryDarker: rgb(136, 68, 68);
+  --secondaryLight: rgb(234, 76, 76);
+  --secondaryLighter: #f9d9b0;
+  --secondaryLightest: #fff4e5;
+  --secondaryMedium: #e68c17;
+
+  --inlineMod: rgb(255, 243, 200);
+  --loaderbar: rgb(18, 76, 50);
+  --overlayMaskColor: rgb(0, 0, 0);
+  --tooltipBackground: rgb(54, 54, 54);
+  --textCtrlBackground: #f5f5f5;
+  --textCtrlText: #000000;
+  --dad_mbabc_color: rgb(0, 186, 120);
+  --nobita_AvatarAlive_backgroundColor: #176093;
+
+  --bg: var(--pageBackground);
+  --bg-elevated: var(--contentBackground);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: var(--faintTextColor);
+  --text-muted: var(--mutedTextColor);
+  --accent: var(--primaryMedium);
+  --accent-hover: #00d089;
+  --danger: var(--secondaryLight);
+  --success: var(--primaryMedium);
+  --radius: 12px;
+}

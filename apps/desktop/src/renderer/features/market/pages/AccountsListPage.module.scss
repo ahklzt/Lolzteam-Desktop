@@ -1,0 +1,49 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+  overflow: hidden;
+}
+
+.tabItem {
+  display: flex;
+  margin: 0 4px;
+}
+
+.tab {
+  @include button-reset;
+  @include clickable;
+  display: block;
+  height: 46px;
+  padding: 0 10px;
+  line-height: 46px;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 14px;
+  color: $color-text-soft;
+
+  &:hover {
+    color: $color-text;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.tabActive {
+  color: $color-accent;
+  box-shadow: inset 0 -2px 0 0 $color-accent;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.tabValue {
+  font-weight: 600;
+}

@@ -1,0 +1,78 @@
+{
+  "name": "@lzt/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lolzteam Desktop — desktop app",
+  "type": "module",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "build:dir": "node scripts/gen-build-icon.mjs && electron-vite build && electron-builder --dir",
+    "build:win": "node scripts/gen-build-icon.mjs && electron-vite build && electron-builder --win",
+    "dist": "node scripts/gen-build-icon.mjs && electron-vite build && electron-builder",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "gen:icon": "node scripts/gen-icon.mjs",
+    "gen:app-icons": "node scripts/gen-app-icons.mjs",
+    "gen:build-icon": "node scripts/gen-build-icon.mjs"
+  },
+  "dependencies": {
+    "@mtcute/convert": "^0.29.7",
+    "@mtcute/node": "^0.29.7",
+    "electron-log": "^5.2.4",
+    "i18next": "^24.2.0",
+    "react-i18next": "^15.4.0",
+    "steam-session": "^1.9.2"
+  },
+  "devDependencies": {
+    "@lzt/shared": "workspace:*",
+    "@tanstack/react-query": "^5.62.7",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^5.0.0",
+    "lucide-react": "^0.469.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sass": "^1.83.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "zustand": "^5.0.2"
+  },
+  "build": {
+    "appId": "com.lolzteam.desktop",
+    "productName": "Lolzteam Desktop",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "artifactName": "Lolzteam-Desktop-${version}-setup.${ext}",
+      "shortcutName": "Lolzteam Desktop",
+      "uninstallDisplayName": "Lolzteam Desktop"
+    },
+    "protocols": [
+      {
+        "name": "Lolzteam Desktop",
+        "schemes": [
+          "lztmoderator"
+        ]
+      }
+    ],
+    "icon": "build/icon.png"
+  }
+}

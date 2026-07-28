@@ -1,0 +1,26 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: $space-6 $space-6 96px;
+  @include scrollbar;
+}
+
+@media (max-width: 720px) {
+  .content {
+    padding: $space-4 $space-4 88px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: $space-3 $space-3 84px;
+  }
+}

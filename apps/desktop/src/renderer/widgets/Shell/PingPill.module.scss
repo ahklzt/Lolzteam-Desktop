@@ -1,0 +1,42 @@
+.pill {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 $space-3;
+  border-radius: $radius-pill;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  color: $color-text-soft;
+  font-size: $fs-xs;
+
+  &:hover:not(:disabled) {
+    border-color: $color-border-strong;
+    color: $color-text;
+  }
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+.text {
+  font-variant-numeric: tabular-nums;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+.online {
+  background: $color-accent;
+}
+.offline {
+  background: $color-danger;
+}
+.checking {
+  background: $color-warning;
+}

@@ -1,0 +1,17 @@
+.body { display: flex; flex-direction: column; gap: $space-3; }
+.text { font-size: $fs-sm; line-height: 1.6; color: $color-text-soft; margin: 0; }
+.primary {
+  @include button-reset;
+  @include clickable;
+  @include focus-ring;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 500;
+}

@@ -1,0 +1,483 @@
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  position: relative;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.back {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  color: $color-text-soft;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+
+  &:hover {
+    color: $color-text;
+    background: $color-surface-overlay;
+  }
+}
+
+.title {
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.subtitle {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.fieldLabel {
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.fieldHint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.dropdown {
+  position: relative;
+  margin-top: $space-2;
+}
+
+.dropdownBtn {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: $z-sticky;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  padding: $space-1;
+  max-height: 240px;
+  overflow-y: auto;
+  @include scrollbar;
+}
+
+.menuItem {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+
+  &:hover {
+    background: $color-surface-raised;
+    color: $color-text;
+  }
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  flex-shrink: 0;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      background: $color-accent;
+    }
+
+    &:checked + .slider::before {
+      transform: translateX(18px);
+    }
+  }
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: $color-surface-overlay;
+  border-radius: $radius-pill;
+  transition: background $duration-fast $ease-out;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform $duration-fast $ease-out;
+  }
+}
+
+.textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 96px;
+  padding: $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-bg;
+  color: $color-text;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: $fs-sm;
+  line-height: 1.5;
+
+  &:focus {
+    @include focus-ring;
+    border-color: $color-accent;
+  }
+}
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.primary,
+.secondary,
+.danger {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.primary {
+  background: $color-accent;
+  color: #06130d;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-dark;
+  }
+}
+
+.secondary {
+  background: $color-surface-raised;
+  color: $color-text-soft;
+  border: 1px solid $color-border;
+
+  &:hover:not(:disabled) {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+}
+
+.danger {
+  background: $color-danger;
+  color: #fff;
+}
+
+.progress {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.listHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.listActions {
+  display: flex;
+  gap: $space-3;
+}
+
+.linkBtn,
+.linkDanger {
+  @include button-reset;
+  @include clickable;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+
+  &:hover:not(:disabled) {
+    color: $color-text;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.linkDanger:hover:not(:disabled) {
+  color: $color-danger;
+}
+
+.empty {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  padding: $space-3 0;
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-2 $space-2;
+  border-radius: $radius-md;
+
+  &:hover {
+    background: $color-surface-raised;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotOk {
+  background: $color-accent;
+}
+
+.dotBad {
+  background: $color-danger;
+}
+
+.dotIdle {
+  background: $color-text-muted;
+}
+
+.rowMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowAddr {
+  font-size: $fs-sm;
+  color: $color-text;
+  @include truncate;
+}
+
+.rowAuth {
+  color: $color-text-muted;
+}
+
+.rowTag {
+  margin-left: $space-2;
+  font-size: $fs-xs;
+  color: $color-accent;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-pill;
+  padding: 0 $space-2;
+}
+
+.rowStatus {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  @include truncate;
+}
+
+.rowAgo {
+  color: $color-text-muted;
+}
+
+.rowErr {
+  color: $color-danger;
+}
+
+.rowBtns {
+  display: flex;
+  gap: $space-1;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+
+  &:hover:not(:disabled) {
+    color: $color-text;
+    background: $color-surface-overlay;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.iconDanger:hover:not(:disabled) {
+  color: $color-danger;
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.flash {
+  position: sticky;
+  bottom: $space-3;
+  align-self: center;
+  padding: $space-2 $space-4;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-pill;
+  font-size: $fs-sm;
+  color: $color-text;
+  box-shadow: $shadow-md;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+
+  input {
+    padding: $space-2 $space-3;
+    border-radius: $radius-md;
+    border: 1px solid $color-border-strong;
+    background: $color-bg;
+    color: $color-text;
+    font-size: $fs-sm;
+
+    &:focus {
+      @include focus-ring;
+      border-color: $color-accent;
+    }
+  }
+}
+
+.confirmBody {
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  margin-bottom: $space-3;
+}
+
+.confirmActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-2;
+}
+
+.hint {
+  display: block;
+  margin-top: $space-2;
+  color: $color-text-muted;
+  font-size: $fs-xs;
+  line-height: 1.5;
+  white-space: pre-line;
+}

@@ -1,0 +1,177 @@
+import { spawn } from 'node:child_process'
+import { rename, rm } from 'node:fs/promises'
+import type { StringSessionData } from '@mtcute/node/utils.js'
+import type {
+  AccountLoginDetails,
+  AccountLoginMethod,
+  AdapterContext,
+  LoginResult,
+  ProbeResult,
+  ServiceAdapter,
+} from '../contract'
+import { failLogin as fail } from '../_shared/fail'
+import { extractTelegramCreds } from './extract'
+import { ensurePortableMarker, fileExists, getTdataDir, resolveTelegramExe } from './paths'
+import { killTelegramProcesses, waitForTelegramExit } from './process'
+import { buildOfflineSession } from './session'
+import { writeProxySettings } from './settings-tdf'
+import { mergeSessions, readExistingSessions, toSessionData, writeTdata } from './tdata'
+
+export const telegramAdapter: ServiceAdapter = {
+  id: 'telegram',
+  displayName: 'Telegram',
+  platforms: ['win32'] as const,
+  methods: ['native'] as const,
+
+  async probe(method: AccountLoginMethod, ctx: AdapterContext): Promise<ProbeResult> {
+    if (method !== 'native') {
+      return { available: false, reason: 'Только native-вход поддерживается' }
+    }
+    if (process.platform !== 'win32') {
+      return { available: false, reason: 'Telegram-адаптер работает только на Windows' }
+    }
+    const folder = ctx.settings?.telegramSessionPath
+    if (!folder) {
+      return { available: false, reason: 'Укажите папку portable Telegram в Настройках' }
+    }
+    if (!(await fileExists(resolveTelegramExe(folder)))) {
+      return { available: false, reason: 'Telegram.exe не найден в указанной папке' }
+    }
+    return { available: true }
+  },
+
+  async login(
+    method: AccountLoginMethod,
+    account: AccountLoginDetails,
+    ctx: AdapterContext,
+  ): Promise<LoginResult> {
+    if (method !== 'native') return fail('Только native-вход поддерживается', method)
+    if (process.platform !== 'win32') return fail('Telegram-адаптер работает только на Windows')
+    if (ctx.abortSignal.aborted) return fail('Вход отменён')
+
+    const folder = ctx.settings?.telegramSessionPath
+    if (!folder) return fail('Укажите папку portable Telegram в Настройках')
+    const exe = resolveTelegramExe(folder)
+    if (!(await fileExists(exe))) {
+      return fail('Telegram.exe не найден в указанной папке')
+    }
+
+    const creds = extractTelegramCreds(account)
+    if (!creds) return fail('У этого аккаунта нет данных Telegram в lzt.market')
+
+    if (!creds.authKey) {
+      return fail('Нет данных сессии Telegram для восстановления (auth_key пуст или некорректен)')
+    }
+
+    ctx.onProgress?.({ step: 'building-tdata' })
+    let session: StringSessionData
+    try {
+      session = buildOfflineSession({
+        authKeyHex: creds.authKey.authKeyHex,
+        dcId: creds.authKey.dcId,
+        userId: creds.userId,
+      })
+      ctx.log.info(
+        `[telegram] offline session built (dc=${creds.authKey.dcId}, userId=${creds.userId ?? 'none'})`,
+      )
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      return fail(`Не удалось собрать сессию из auth_key: ${msg}`)
+    }
+
+    ctx.onProgress?.({ step: 'killing-telegram' })
+    ctx.log.info('[telegram] killing Telegram processes')
+    await killTelegramProcesses(exe)
+    const exited = await waitForTelegramExit(exe, 5000)
+    if (!exited) {
+      return fail(
+        'Telegram всё ещё запущен (возможно, от имени администратора). Закройте его вручную и повторите вход.',
+      )
+    }
+
+    if (ctx.abortSignal.aborted) return fail('Вход отменён')
+
+    ctx.onProgress?.({ step: 'writing-tdata' })
+    let tdataDir: string
+    try {
+      tdataDir = await getTdataDir(folder)
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      return fail(`Папка Telegram недоступна на запись: ${msg}`)
+    }
+    const stagingDir = `${tdataDir}.new`
+    const backupDir = `${tdataDir}.bak`
+    if (!(await fileExists(tdataDir)) && (await fileExists(backupDir))) {
+      try {
+        await rename(backupDir, tdataDir)
+        ctx.log.warn('[telegram] restored tdata from interrupted swap backup')
+      } catch (err) {
+        ctx.log.warn(`[telegram] failed to restore tdata backup: ${String(err)}`)
+      }
+    }
+    const maxAccounts = ctx.settings?.telegramMaxAccounts ?? 3
+    const incoming = toSessionData(session)
+    const existing = await readExistingSessions(tdataDir, ctx.log)
+    const merged = mergeSessions(incoming, existing, maxAccounts)
+    ctx.log.info(`[telegram] writing tdata to ${tdataDir}: ${merged.length} account(s) (offline)`)
+    try {
+      await rm(stagingDir, { recursive: true, force: true })
+      await writeTdata(merged, stagingDir)
+      await rm(backupDir, { recursive: true, force: true })
+      let hadBackup = false
+      try {
+        await rename(tdataDir, backupDir)
+        hadBackup = true
+      } catch (err) {
+        if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err
+      }
+      try {
+        await rename(stagingDir, tdataDir)
+      } catch (err) {
+        if (hadBackup) await rename(backupDir, tdataDir).catch(() => {})
+        throw err
+      }
+      if (hadBackup) await rm(backupDir, { recursive: true, force: true }).catch(() => {})
+    } catch (err) {
+      await rm(stagingDir, { recursive: true, force: true }).catch(() => {})
+      const msg = err instanceof Error ? err.message : String(err)
+      return fail(`Не удалось записать сессию tdata: ${msg}`)
+    }
+
+    if (ctx.proxy) {
+      try {
+        await writeProxySettings(tdataDir, ctx.proxy)
+        ctx.log.info(`[telegram] proxy settings written: ${ctx.proxy.host}:${ctx.proxy.port}`)
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err)
+        ctx.log.warn(`[telegram] failed to write proxy settings (continuing direct): ${msg}`)
+      }
+    }
+
+    try {
+      await ensurePortableMarker(folder)
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      return fail(`Не удалось создать маркер portable-режима: ${msg}`)
+    }
+
+    if (ctx.abortSignal.aborted) return fail('Вход отменён')
+
+    ctx.onProgress?.({ step: 'launching-telegram' })
+    ctx.log.info('[telegram] launching portable Telegram')
+    const child = spawn(exe, [], {
+      detached: true,
+      stdio: 'ignore',
+      windowsHide: false,
+    })
+    child.unref()
+
+    const who = creds.phone || `аккаунт #${account.itemId}`
+    return {
+      ok: true,
+      method,
+      launchedPid: child.pid,
+      message: `Telegram запущен под ${who}`,
+    }
+  },
+}

@@ -1,0 +1,186 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: $space-4;
+  align-items: start;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+    gap: $space-2;
+  }
+}
+
+.labelCol {
+  padding-top: $space-2;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text;
+}
+
+.controlCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-width: 0;
+}
+
+.hint {
+  margin: 0;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: $space-2 $space-3;
+  font-size: $fs-sm;
+  color: $color-text;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-family: inherit;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: $shadow-focus;
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 84px;
+  line-height: 1.5;
+}
+
+.selectWrap {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+}
+
+.select {
+  appearance: none;
+  padding-right: $space-6;
+  cursor: pointer;
+}
+
+.selectChevron {
+  position: absolute;
+  right: $space-3;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-text-muted;
+  pointer-events: none;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+
+  input {
+    margin-top: 2px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-top: $space-2;
+}
+
+.saveBtn {
+  @include button-reset;
+  @include clickable;
+  padding: $space-2 $space-4;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: #fff;
+  background: $color-accent;
+  border-radius: $radius-md;
+  transition: background $duration-fast $ease-out;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-dark;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.flashOk {
+  font-size: $fs-sm;
+  color: $color-accent;
+}
+
+.flashErr {
+  font-size: $fs-sm;
+  color: $color-danger;
+}
+
+.loading {
+  margin: 0;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.errorBox {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3;
+  font-size: $fs-sm;
+  color: $color-danger;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.retryBtn {
+  @include button-reset;
+  @include clickable;
+  padding: $space-1 $space-3;
+  font-size: $fs-xs;
+  color: $color-text;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+}

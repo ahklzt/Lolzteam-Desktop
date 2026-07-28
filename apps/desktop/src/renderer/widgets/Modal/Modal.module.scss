@@ -1,0 +1,74 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+}
+
+.modalWide {
+  max-width: 1040px;
+}
+
+.modal {
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-surface-raised;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  margin: 0;
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.close {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.body {
+  padding: $space-4 $space-5 $space-5;
+  overflow-y: auto;
+  @include scrollbar;
+}

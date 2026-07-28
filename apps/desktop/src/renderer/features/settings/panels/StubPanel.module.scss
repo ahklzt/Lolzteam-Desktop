@@ -1,0 +1,56 @@
+.stub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-3;
+  padding: $space-6 $space-4;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  border: 1px dashed $color-border-strong;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-pill;
+  background: $color-surface-raised;
+  color: $color-accent;
+}
+
+.title {
+  margin: 0;
+  font-size: $fs-lg;
+  color: $color-text;
+}
+
+.body {
+  margin: 0;
+  max-width: 380px;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  line-height: 1.5;
+}
+
+.link {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}

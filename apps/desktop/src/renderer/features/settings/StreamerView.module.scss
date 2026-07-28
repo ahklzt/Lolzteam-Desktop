@@ -1,0 +1,276 @@
+@use "~styles/variables" as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-5;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.title {
+  font-size: $fs-xl;
+  color: $color-text;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-lg;
+  color: $color-text;
+  margin: 0;
+}
+
+.cardHint {
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  margin: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 $space-1;
+  border-radius: $radius-pill;
+  background: $color-surface-raised;
+  color: $color-text-soft;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+  cursor: pointer;
+  transition:
+    background $duration-fast $ease-out,
+    color $duration-fast $ease-out,
+    border-color $duration-fast $ease-out;
+
+  &:hover:not(:disabled) {
+    border-color: $color-border-strong;
+    background: $color-surface-overlay;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.chipActive {
+  border-color: $color-accent;
+  background: $color-accent-soft;
+  color: $color-accent-dark;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.label {
+  flex: 1 1 auto;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text;
+}
+
+.value {
+  color: $color-text-muted;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: $fs-xs;
+}
+
+.range {
+  flex: 2 1 220px;
+  accent-color: $color-accent;
+}
+
+.flags {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: $space-2 $space-3;
+}
+
+.flagRow {
+  display: flex;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.inputRow {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+}
+
+.input {
+  flex: 1 1 auto;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  border: 1px solid $color-border;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:focus-visible {
+    border-color: $color-accent;
+    outline: none;
+    box-shadow: $shadow-focus;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  border-radius: $radius-pill;
+  background: $color-accent-soft;
+  color: $color-accent-dark;
+  font-size: $fs-sm;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.tagRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.15);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.emptyHint {
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.actions {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.primaryBtn,
+.ghostBtn,
+.dangerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background $duration-fast $ease-out;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.primaryBtn {
+  background: $color-accent;
+  color: #001410;
+  border-color: $color-accent;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-dark;
+    border-color: $color-accent-dark;
+  }
+}
+
+.ghostBtn {
+  background: $color-surface-raised;
+  color: $color-text;
+  border-color: $color-border;
+
+  &:hover:not(:disabled) {
+    background: $color-surface-overlay;
+    border-color: $color-border-strong;
+  }
+}
+
+.dangerBtn {
+  background: transparent;
+  color: $color-danger;
+  border-color: $color-danger;
+
+  &:hover:not(:disabled) {
+    background: rgba(234, 76, 76, 0.12);
+  }
+}
+
+.fileHidden {
+  display: none;
+}

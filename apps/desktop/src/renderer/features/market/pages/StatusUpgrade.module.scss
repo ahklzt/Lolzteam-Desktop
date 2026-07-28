@@ -1,0 +1,264 @@
+$lolz-bg: #141414;
+$lolz-panel: #1c1c1c;
+$lolz-raise: #242424;
+$lolz-border: #303030;
+$lolz-icon: #505050;
+$lolz-muted: #949494;
+$lolz-text: #d6d6d6;
+$lolz-green: #00ba78;
+$lolz-green-bg: #192b24;
+
+.layout {
+	display: flex;
+	gap: 15px;
+	align-items: flex-start;
+	color: $lolz-text;
+	background: $lolz-bg;
+}
+
+.sidebar {
+	flex: 0 0 260px;
+	max-width: 260px;
+}
+
+.nav {
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	background: $lolz-panel;
+	padding: 6px 18px;
+	border-radius: 10px;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.category {
+	margin: 12px 0 2px;
+	font-size: 12px;
+	color: $lolz-muted;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.navItem {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 12px;
+	margin: 0 -12px;
+	border-radius: 6px;
+	line-height: 20px;
+	color: $lolz-text;
+	font-size: 14px;
+	cursor: default;
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		background: $lolz-raise;
+	}
+}
+
+.navItemActive {
+	color: $lolz-green;
+	background: $lolz-green-bg;
+
+	&:hover {
+		background: $lolz-green-bg;
+	}
+
+	.navIcon {
+		color: $lolz-green;
+	}
+}
+
+.navIcon {
+	display: inline-flex;
+	flex: 0 0 auto;
+	width: 20px;
+	height: 20px;
+	color: $lolz-icon;
+	transition: all 0.2s ease-in-out;
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.navText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.main {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.alert {
+	padding: 12px 16px;
+	border: 1px solid $lolz-border;
+	border-radius: 10px;
+	background: $lolz-panel;
+	color: $lolz-text;
+	line-height: 20px;
+	font-size: 14px;
+}
+
+.alertLink {
+	color: $lolz-green;
+	font: inherit;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.panel {
+	background: $lolz-panel;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.panelHeader {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 16px 20px;
+	border-bottom: 1px solid $lolz-raise;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 20px;
+	color: #fff;
+}
+
+.panelHeaderIcon {
+	display: inline-flex;
+	flex: 0 0 auto;
+	width: 20px;
+	height: 20px;
+	color: $lolz-text;
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.card {
+	padding: 16px 20px;
+}
+
+.cardHead {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.cardTitle {
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+}
+
+.price {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.priceNow {
+	color: $lolz-green;
+	font-weight: 600;
+}
+
+.priceOld {
+	color: $lolz-muted;
+	text-decoration: line-through;
+}
+
+.pricePeriod {
+	color: $lolz-muted;
+	font-size: 13px;
+}
+
+.rights {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+	margin-bottom: 14px;
+	text-align: left;
+}
+
+.rightItem {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	width: fit-content;
+	max-width: 100%;
+	padding: 6px 10px;
+	background: $lolz-raise;
+	border: 1px solid $lolz-border;
+	border-radius: 8px;
+	line-height: 20px;
+	color: $lolz-text;
+	font-size: 14px;
+}
+
+.rightIcon {
+	display: inline-flex;
+	flex: 0 0 auto;
+	width: 18px;
+	height: 18px;
+	color: $lolz-text;
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.buyBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 34px;
+	line-height: 34px;
+	padding: 0 15px;
+	border: none;
+	border-radius: 8px;
+	background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+	color: #f5f5f5;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	overflow: hidden;
+	cursor: pointer;
+	transition: background 0.3s, color 0.3s;
+
+	&:hover {
+		filter: brightness(1.06);
+	}
+}
+
+@media (max-width: 900px) {
+	.layout {
+		flex-direction: column;
+	}
+
+	.sidebar {
+		flex: 1 1 auto;
+		max-width: none;
+		width: 100%;
+	}
+}

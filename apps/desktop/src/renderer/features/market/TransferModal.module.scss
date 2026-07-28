@@ -1,0 +1,76 @@
+.form { display: flex; flex-direction: column; gap: $space-3; }
+.field { display: flex; flex-direction: column; gap: $space-1; flex: 1; }
+.fieldNarrow { display: flex; flex-direction: column; gap: $space-1; width: 96px; }
+.row { display: flex; gap: $space-2; align-items: flex-end; }
+.label { font-size: $fs-xs; color: $color-text-muted; }
+.input, .select {
+  width: 100%;
+  padding: $space-2;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  color: $color-text;
+  font-size: $fs-sm;
+  &:focus-visible { @include focus-ring; border-color: $color-border-strong; }
+}
+.staticValue {
+  padding: $space-2;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+}
+.fee { margin: 0; font-size: $fs-xs; color: $color-text-muted; }
+.toggleRow { display: flex; align-items: center; justify-content: space-between; gap: $space-2; }
+.toggle {
+  display: inline-flex;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  button {
+    @include button-reset;
+    @include clickable;
+    padding: $space-1 $space-3;
+    font-size: $fs-sm;
+    color: $color-text-soft;
+    background: $color-surface;
+  }
+}
+.toggleActive { background: $color-accent !important; color: #fff !important; }
+.checkRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  label { display: inline-flex; align-items: center; gap: $space-2; font-size: $fs-sm; color: $color-text-soft; }
+}
+.hintOk { margin: 0; font-size: $fs-xs; color: $color-accent; }
+.hintWarn { margin: 0; font-size: $fs-xs; color: $color-warning; }
+.linkBtn {
+  @include button-reset;
+  @include clickable;
+  align-self: flex-start;
+  color: $color-accent;
+  font-size: $fs-xs;
+  text-decoration: underline;
+}
+.error { margin: 0; font-size: $fs-sm; color: $color-danger; }
+.primary {
+  @include button-reset;
+  @include clickable;
+  @include focus-ring;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 500;
+  &:disabled { opacity: 0.6; cursor: default; }
+}
+.done { font-size: $fs-sm; color: $color-accent; margin: 0; }
+.spin { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

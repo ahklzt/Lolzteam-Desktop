@@ -1,0 +1,581 @@
+.wrap {
+  max-width: 1220px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.back {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  align-self: flex-start;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: $fs-xl;
+  color: $color-text;
+  word-break: break-all;
+}
+
+.subtitle {
+  margin: 0;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.inboxHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.headActions {
+  display: inline-flex;
+  gap: $space-2;
+}
+
+.iconBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  color: $color-text-soft;
+
+  &:hover:not(:disabled) {
+    background: $color-surface-raised;
+    color: $color-text;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.loginCard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-5;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.label {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:focus {
+    @include focus-ring;
+    border-color: $color-accent;
+  }
+}
+
+.passRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eye {
+  @include button-reset;
+  @include clickable;
+  position: absolute;
+  right: $space-2;
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1;
+  color: $color-text-muted;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.hint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.error {
+  margin: 0;
+  color: $color-danger;
+  font-size: $fs-sm;
+}
+
+.submit {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  height: 42px;
+  border-radius: $radius-md;
+  background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: $fs-sm;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.quick {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.quickLabel {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-pill;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  overflow: hidden;
+}
+
+.chipText {
+  @include button-reset;
+  @include clickable;
+  padding: $space-1 $space-2 $space-1 $space-3;
+  font-size: $fs-xs;
+  color: $color-text-soft;
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.chipRemove {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-2;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  &:hover {
+    color: $color-danger;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: $space-2;
+}
+
+.filterBtn {
+  @include button-reset;
+  @include clickable;
+  padding: $space-1 $space-3;
+  height: 32px;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.filterActive {
+  background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+  border-color: transparent;
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.empty {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  text-align: center;
+  color: $color-text-muted;
+  border-radius: $radius-lg;
+  border: 1px dashed $color-border-strong;
+  background: $color-surface;
+
+  p {
+    margin: 0;
+    color: $color-text-soft;
+  }
+}
+
+.letters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.letter {
+  display: flex;
+  align-items: stretch;
+  gap: $space-2;
+  padding: $space-3;
+  border-radius: $radius-md;
+  background: $color-surface;
+  border: 1px solid $color-border;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+}
+
+.unread {
+  background: $color-surface-raised;
+  border-color: $color-border-strong;
+}
+
+.letterMain {
+  @include button-reset;
+  @include clickable;
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "from date"
+    "subject subject"
+    "preview preview";
+  gap: 2px $space-2;
+  text-align: left;
+  padding-left: $space-3;
+}
+
+.dot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $color-accent;
+}
+
+.letterFrom {
+  grid-area: from;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  @include truncate;
+}
+
+.letterDate {
+  grid-area: date;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  white-space: nowrap;
+}
+
+.letterSubject {
+  grid-area: subject;
+  font-weight: 600;
+  color: $color-text;
+  @include truncate;
+}
+
+.letterPreview {
+  grid-area: preview;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  @include truncate;
+}
+
+.rowActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $space-1;
+}
+
+.rowIcon {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface;
+    color: $color-text;
+  }
+}
+
+.starOn {
+  color: #f5b301;
+  fill: #f5b301;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-5;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.detailSubject {
+  margin: 0;
+  font-size: $fs-lg;
+  color: $color-text;
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: $space-2;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.detailFrom {
+  color: $color-text-soft;
+}
+
+.detailDate {
+  white-space: nowrap;
+}
+
+.detailActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  padding-bottom: $space-2;
+  border-bottom: 1px solid $color-border;
+}
+
+.rowBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  height: 34px;
+  padding: 0 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: $color-surface-raised;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-border-strong;
+  }
+}
+
+.detailBody {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text;
+}
+
+.select {
+  position: relative;
+}
+
+.selectTrigger {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  height: 40px;
+  padding: 0 $space-3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:hover:not(:disabled) {
+    border-color: $color-accent;
+  }
+  &:focus-visible {
+    @include focus-ring;
+    border-color: $color-accent;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.selectValue {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  min-width: 0;
+
+  span {
+    @include truncate;
+  }
+}
+
+.selectIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  object-fit: contain;
+  flex: none;
+}
+
+.selectGlobe {
+  color: $color-text-muted;
+  flex: none;
+}
+
+.selectChevron {
+  color: $color-text-muted;
+  transition: transform $duration-base $ease-out;
+  flex: none;
+}
+
+.selectChevronOpen {
+  transform: rotate(180deg);
+}
+
+.selectMenu {
+  list-style: none;
+  margin: $space-1 0 0;
+  padding: $space-1;
+  position: absolute;
+  z-index: $z-sticky;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 280px;
+  overflow-y: auto;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-overlay;
+  box-shadow: $shadow-lg;
+  @include scrollbar;
+}
+
+.selectOption {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  height: 38px;
+  padding: 0 $space-2;
+  border-radius: $radius-sm;
+  color: $color-text-soft;
+
+  &:hover {
+    background: $color-surface;
+    color: $color-text;
+  }
+}
+
+.selectOptionActive {
+  background: $color-surface;
+  color: $color-text;
+}
+
+.selectOptionLabel {
+  flex: 1 1 auto;
+  text-align: left;
+  @include truncate;
+}
+
+.htmlBody {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  border: 0;
+  background: transparent;
+  color-scheme: dark;
+}

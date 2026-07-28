@@ -1,0 +1,305 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  min-height: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.back {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface;
+    color: $color-text;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.subtitle {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.tabs {
+  display: flex;
+  gap: $space-1;
+  padding: 4px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.tab {
+  @include button-reset;
+  @include clickable;
+  flex: 1;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  text-align: center;
+
+  &:hover {
+    color: $color-text;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.tabActive {
+  background: $color-surface-raised;
+  color: $color-text;
+  font-weight: 600;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.search {
+  flex: 1;
+  min-width: 0;
+  padding: $space-2 $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+  &:focus-visible {
+    @include focus-ring;
+    border-color: $color-accent;
+  }
+}
+
+.ghostBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2 $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  white-space: nowrap;
+
+  &:hover {
+    background: $color-surface;
+    color: $color-text;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.count {
+  display: block;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  margin-bottom: $space-2;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.empty {
+  padding: $space-6 0;
+  text-align: center;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: $space-2;
+  min-width: 0;
+}
+
+.author {
+  font-weight: 600;
+  font-size: $fs-sm;
+  color: $color-text;
+}
+
+.threadTitle {
+  @include truncate;
+  max-width: 320px;
+  font-size: $fs-xs;
+  color: $color-text-soft;
+}
+
+.date {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  flex-shrink: 0;
+}
+
+.linkBtn,
+.iconBtnDanger {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-raised;
+    color: $color-text;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.iconBtnDanger:hover {
+  color: $color-danger;
+}
+
+.body {
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text;
+  word-break: break-word;
+
+  img {
+    max-width: 100%;
+    border-radius: $radius-sm;
+  }
+}
+
+.mediaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.media {
+  max-width: 180px;
+  max-height: 180px;
+  border-radius: $radius-sm;
+  border: 1px solid $color-border;
+  object-fit: cover;
+}
+
+.revisions {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  border-top: 1px solid $color-border;
+  padding-top: $space-2;
+}
+
+.revToggle {
+  @include button-reset;
+  @include clickable;
+  align-self: flex-start;
+  font-size: $fs-xs;
+  color: $color-accent;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.revList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.revItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: $space-2;
+  background: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+}
+
+.revDate {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.revBody {
+  font-size: $fs-sm;
+  line-height: 1.45;
+  color: $color-text-soft;
+  word-break: break-word;
+
+  img {
+    max-width: 100%;
+    border-radius: $radius-sm;
+  }
+}

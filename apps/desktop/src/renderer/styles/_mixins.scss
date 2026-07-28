@@ -1,0 +1,53 @@
+@use './variables' as *;
+
+@mixin button-reset {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+@mixin clickable {
+  cursor: pointer;
+  transition:
+    background-color $duration-base $ease-out,
+    transform $duration-fast $ease-out,
+    box-shadow $duration-base $ease-out,
+    border-color $duration-base $ease-out,
+    color $duration-base $ease-out;
+}
+
+@mixin focus-ring {
+  outline: none;
+  box-shadow: $shadow-focus;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: $radius-pill;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      background-clip: padding-box;
+    }
+  }
+}

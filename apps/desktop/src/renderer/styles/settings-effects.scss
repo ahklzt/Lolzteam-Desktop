@@ -1,0 +1,16 @@
+
+body {
+  font-family: var(
+    --app-font,
+    "Open Sans",
+    "Segoe UI",
+    Inter,
+    system-ui,
+    sans-serif
+  );
+}
+
+html.hide-notif-badges [data-streamer="hideMessageBadge"],
+html.hide-notif-badges [data-notif-badge] {
+  display: none !important;
+}

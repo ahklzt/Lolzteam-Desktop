@@ -1,0 +1,107 @@
+.root {
+  position: relative;
+  width: 100%;
+}
+
+.trigger {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  width: 100%;
+  min-height: 38px;
+  padding: $space-2 $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: $fs-sm;
+  text-align: left;
+
+  &:hover:not(:disabled) {
+    border-color: $color-accent-soft;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.rootSm .trigger {
+  min-height: 32px;
+  padding: $space-1 $space-2;
+  font-size: $fs-xs;
+}
+
+.value {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  min-width: 0;
+}
+
+.valueLabel {
+  @include truncate;
+}
+
+.chevron {
+  flex: none;
+  color: $color-text-muted;
+  transition: transform $duration-fast $ease-out;
+}
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  z-index: $z-modal;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: $space-1;
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  @include scrollbar;
+}
+
+.option {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  text-align: left;
+
+  &:hover {
+    background: $color-surface-raised;
+    color: $color-text;
+  }
+}
+
+.optionLabel {
+  flex: 1;
+  min-width: 0;
+  @include truncate;
+}
+
+.optionActive {
+  color: $color-text;
+  background: rgba(0, 186, 120, 0.12);
+}

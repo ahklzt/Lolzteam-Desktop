@@ -1,0 +1,818 @@
+
+$bg: $color-bg;
+$bg-elev: $color-surface-raised;
+$bg-hover: rgba(255, 255, 255, 0.06);
+$border: $color-border;
+$text: $color-text;
+$muted: rgba(234, 234, 234, 0.55);
+$accent: $color-accent;
+$accent-soft: rgba(0, 186, 120, 0.16);
+$danger: $color-danger;
+$green: $color-accent;
+$radius: $radius-md;
+$radius-sm: $radius-sm;
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
+  margin: 10px 24px;
+  padding: 10px 20px;
+  background: rgb(35 35 35);
+  border-bottom: 1px solid rgb(255 255 255 / 0%);
+  border-radius: 12px;
+  -webkit-app-region: drag;
+  user-select: none;
+
+  button,
+  input,
+  a {
+    -webkit-app-region: no-drag;
+  }
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.left {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.right {
+  flex: 0 0 auto;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1;
+  margin-right: 8px;
+}
+
+.logoBtn {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text;
+  white-space: nowrap;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.version {
+  font-size: 10px;
+  color: $muted;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  overflow: visible;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 34px;
+  padding: 0 11px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $text;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.14s ease,
+    color 0.14s ease;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.navBtnActive {
+  background: $accent-soft;
+  color: $accent;
+}
+
+.chevron {
+  color: $muted;
+  transition: transform 0.16s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.popover {
+  position: relative;
+  display: inline-flex;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 200;
+  min-width: 220px;
+  padding: 6px;
+  background: $bg-elev;
+  border: 1px solid $border;
+  border-radius: $radius;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  animation: popIn 0.12s ease;
+}
+
+.panelRight {
+  left: auto;
+  right: 0;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuSection {
+  padding: 4px 0;
+
+  & + & {
+    border-top: 1px solid $border;
+    margin-top: 4px;
+  }
+}
+
+.menuTitle {
+  padding: 6px 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $muted;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $text;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.menuItemIcon {
+  flex: 0 0 auto;
+  color: $muted;
+}
+
+.menuItemImg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.menuLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menuBadge {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: $muted;
+}
+
+.greenDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $green;
+}
+
+.scamBadge {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 16px;
+  margin-left: auto;
+}
+
+.iconBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $text;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.iconBtnActive {
+  background: $accent-soft;
+  color: $accent;
+}
+
+.badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: $danger;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 220px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  background: $bg-elev;
+  transition:
+    border-color 0.14s ease,
+    width 0.18s ease;
+
+  &:focus-within {
+    border-color: $accent;
+    width: 260px;
+  }
+}
+
+.searchIcon {
+  flex: 0 0 auto;
+  color: $muted;
+  margin-right: 8px;
+}
+
+.searchInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: $text;
+  font-size: 13px;
+
+  &::placeholder {
+    color: $muted;
+  }
+}
+
+.searchPanel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 200;
+  width: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 6px;
+  background: $bg-elev;
+  border: 1px solid $border;
+  border-radius: $radius;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.sortRow {
+  display: flex;
+  gap: 4px;
+  padding: 4px 4px 8px;
+  border-bottom: 1px solid $border;
+  margin-bottom: 4px;
+}
+
+.sortOpt {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: $muted;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: $bg-hover;
+    color: $text;
+  }
+}
+
+.sortOptActive {
+  background: $accent-soft;
+  color: $accent;
+}
+
+.searchItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.searchAvatar {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--avatar-radius, 50%);
+  object-fit: cover;
+}
+
+.searchAvatarFallback {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--avatar-radius, 50%);
+  background: $bg-hover;
+  color: $muted;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.searchMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.searchName {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchTitle {
+  font-size: 11px;
+  color: $muted;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hint,
+.empty {
+  padding: 14px 10px;
+  text-align: center;
+  color: $muted;
+  font-size: 12px;
+}
+
+.searchFooter {
+  padding: 4px;
+  border-top: 1px solid $border;
+  margin-top: 4px;
+}
+
+.searchBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: $radius-sm;
+  background: $accent-soft;
+  color: $accent;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 186, 120, 0.24);
+  }
+}
+
+.listPanel {
+  width: 340px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid $border;
+}
+
+.listHeaderTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text;
+}
+
+.listHeaderBtn {
+  border: none;
+  background: none;
+  color: $accent;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.listBody {
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.rowItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 8px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.rowUnread {
+  background: rgba(61, 139, 255, 0.08);
+}
+
+.rowAvatar {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--avatar-radius, 50%);
+  object-fit: cover;
+}
+
+.rowAvatarFallback {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--avatar-radius, 50%);
+  background: $bg-hover;
+  color: $muted;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rowMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.rowTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.rowName {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowDate {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: $muted;
+}
+
+.rowText {
+  font-size: 12px;
+  color: $muted;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.unreadDot {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $accent;
+}
+
+.profileTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 8px 0 4px;
+  border: none;
+  border-radius: 18px;
+  background: transparent;
+  color: $text;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--avatar-radius, 50%);
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--avatar-radius, 50%);
+  background: $bg-hover;
+  color: $muted;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.username {
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profilePanel {
+  width: 300px;
+  padding: 8px;
+}
+
+.profHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 6px 12px;
+  border-bottom: 1px solid $border;
+}
+
+.profAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--avatar-radius, 50%);
+  object-fit: cover;
+}
+
+.profAvatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--avatar-radius, 50%);
+  background: $bg-hover;
+  color: $muted;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.profInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.profName {
+  font-size: 14px;
+  font-weight: 700;
+  color: $text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profStatus {
+  border: none;
+  background: none;
+  padding: 0;
+  color: $accent;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.profBalanceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 6px 8px;
+}
+
+.profBalanceLabel {
+  font-size: 12px;
+  color: $muted;
+}
+
+.profBalanceVal {
+  font-size: 14px;
+  font-weight: 700;
+  color: $green;
+}
+
+.profActions {
+  display: flex;
+  gap: 6px;
+  padding: 0 2px 8px;
+  border-bottom: 1px solid $border;
+}
+
+.profActionBtn {
+  flex: 1 1 0;
+  padding: 8px 6px;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  background: $bg-hover;
+  color: $text;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: #2b323f;
+  }
+}
+
+.profActionPrimary {
+  background: $accent;
+  border-color: $accent;
+  color: #fff;
+
+  &:hover {
+    background: #5c9dff;
+  }
+}
+
+.manageList {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+  border-bottom: 1px solid $border;
+}
+
+.profFooter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 6px;
+
+  .menuItem {
+    flex: 1 1 auto;
+  }
+}
+
+.loaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  color: $muted;
+  font-size: 12px;
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $muted;
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease;
+
+  &:hover {
+    background: rgba(255, 92, 92, 0.14);
+    color: $danger;
+  }
+}

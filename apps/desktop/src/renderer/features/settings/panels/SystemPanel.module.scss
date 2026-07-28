@@ -1,0 +1,71 @@
+.mem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.memItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.memName {
+  flex: 1 1 auto;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.memSize {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  min-width: 72px;
+  text-align: right;
+}
+
+.memTotal {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.seg {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.segBtn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.segActive {
+  background: #4c6ef5;
+  border-color: #4c6ef5;
+  color: #fff;
+
+  &:hover {
+    background: #4263eb;
+  }
+}
+
+.status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}

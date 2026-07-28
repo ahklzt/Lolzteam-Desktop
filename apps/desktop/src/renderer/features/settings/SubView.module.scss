@@ -1,0 +1,272 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 $space-6 $space-6;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding-top: $space-2;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.back {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: $radius-md;
+  color: $color-text;
+  background: $color-surface;
+  border: 1px solid $color-border;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: $fs-xl;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #1f1f1f;
+  border: 1px solid $color-border;
+  border-radius: 24px;
+  padding: $space-2;
+}
+
+.option {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  border-radius: 18px;
+  text-align: left;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.optionActive {
+  background: rgba(30, 163, 96, 0.12);
+
+  &:hover {
+    background: rgba(30, 163, 96, 0.16);
+  }
+}
+
+.optionText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optionLabel {
+  font-size: $fs-base;
+  font-weight: 500;
+  color: $color-text;
+}
+
+.optionHint {
+  font-size: $fs-sm;
+  color: #949494;
+}
+
+.checkIcon {
+  color: #1ea360;
+  flex-shrink: 0;
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2;
+}
+
+.swatchPreview {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  padding: 0 $space-3;
+  border-radius: $radius-md;
+  background: $color-bg;
+  border: 1px solid $color-border;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+  &:focus-visible {
+    @include focus-ring;
+    border-color: $color-accent;
+  }
+}
+
+.primaryBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 $space-4;
+  border-radius: $radius-md;
+  background: #1ea360;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &:hover {
+    filter: brightness(1.06);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+    filter: none;
+  }
+}
+
+.ghostBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+}
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  padding: 0 $space-2 $space-2;
+}
+
+.swatch {
+  @include button-reset;
+  @include clickable;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}
+
+.swatchActive {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+.empty {
+  margin: 0;
+  padding: $space-4;
+  text-align: center;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 $space-3;
+  border-radius: $radius-pill;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 600;
+  max-width: 60%;
+  @include truncate;
+}
+
+.labelActions {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.iconBtn,
+.iconBtnDanger {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+}
+
+.iconBtnDanger:hover {
+  color: $color-danger;
+}

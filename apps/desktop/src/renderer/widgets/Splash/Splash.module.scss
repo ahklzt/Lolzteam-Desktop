@@ -1,0 +1,21 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 700ms ease-in-out;
+}
+
+.video {
+  width: 196px;
+  height: 196px;
+  object-fit: contain;
+}

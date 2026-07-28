@@ -1,0 +1,207 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.modal {
+  width: min(520px, 100%);
+  max-height: 84vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface-raised;
+  box-shadow: $shadow-md;
+  @include scrollbar;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.headTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.close {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface;
+    color: $color-text;
+  }
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-6 $space-3;
+  text-align: center;
+  color: $color-text-muted;
+}
+
+.waitTitle {
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.waitText {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.spin {
+  animation: buySpin 0.9s linear infinite;
+}
+
+@keyframes buySpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.previewTitle {
+  font-size: $fs-base;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.price {
+  font-size: $fs-xl;
+  font-weight: 700;
+  color: $color-accent;
+}
+
+.grid,
+.credentials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-2;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: $space-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+}
+
+.cellLabel {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.cellValue {
+  font-size: $fs-sm;
+  color: $color-text;
+  word-break: break-word;
+}
+
+.description {
+  max-height: 140px;
+  overflow-y: auto;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text-soft;
+  white-space: pre-wrap;
+  @include scrollbar;
+}
+
+.notice {
+  padding: $space-2;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+}
+
+.errorText {
+  font-size: $fs-sm;
+  color: $color-danger;
+}
+
+.successText {
+  font-size: $fs-base;
+  font-weight: 600;
+  color: $color-accent;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.buy {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    background: $color-accent-dark;
+  }
+}
+
+.cancel,
+.deposit {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+}

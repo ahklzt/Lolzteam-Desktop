@@ -1,0 +1,61 @@
+
+
+@mixin sm-blurred {
+  filter: blur(var(--streamer-blur, 10px));
+  transition: filter var(--streamer-transition, 180ms) ease-out;
+  user-select: none;
+  cursor: default;
+}
+
+@mixin sm-hidden {
+  display: none !important;
+}
+
+
+
+$sm-flags: (
+  "sm-hide-balance": "hideBalance",
+  "sm-hide-payment-history": "hidePaymentHistory",
+  "sm-hide-payment-stats": "hidePaymentStats",
+  "sm-hide-pending-payments": "hidePendingPayments",
+  "sm-hide-recently-viewed": "hideRecentlyViewed",
+  "sm-hide-purchased-accounts": "hidePurchasedAccounts",
+  "sm-hide-conversation-list": "hideConversationList",
+  "sm-blur-message-bodies": "blurMessageBodies",
+  "sm-hide-message-badge": "hideMessageBadge",
+  "sm-hide-notifications": "hideNotifications",
+  "sm-hide-account-credentials": "hideAccountCredentials",
+  "sm-hide-secret-answers": "hideSecretAnswers",
+  "sm-hide-moderator-tools": "hideModeratorTools",
+  "sm-hide-forum-team": "hideForumTeamFeatures",
+  "sm-hide-service": "hideServiceElements",
+);
+
+@each $cls, $key in $sm-flags {
+  body.streamer-mode-active.streamer-mode-hide.#{$cls} [data-streamer="#{$key}"] {
+    @include sm-hidden;
+  }
+}
+
+@each $cls, $key in $sm-flags {
+  body.streamer-mode-active.streamer-mode-blur.#{$cls} [data-streamer="#{$key}"] {
+    @include sm-blurred;
+  }
+  body.streamer-mode-active.#{$cls} [data-streamer="#{$key}"][data-streamer-mode="hide"] {
+    @include sm-hidden;
+  }
+}
+
+body.streamer-mode-active.streamer-mode-blur.streamer-reveal-on-click [data-streamer] {
+  cursor: pointer;
+}
+body.streamer-mode-active.streamer-mode-blur [data-streamer][data-revealed="true"] {
+  filter: none;
+  user-select: auto;
+  cursor: default;
+}
+
+body.streamer-mode-active.sm-hide-message-badge [data-streamer="hideMessageBadge"],
+body.streamer-mode-active.sm-hide-notifications [data-streamer="hideNotifications"] {
+  display: none !important;
+}

@@ -1,0 +1,1208 @@
+.home,
+.wallet {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: $space-3;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  background: linear-gradient(160deg, $color-surface-raised, $color-surface);
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition:
+    border-color $duration-base $ease-out,
+    transform $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-border-strong;
+    transform: translateY(-1px);
+  }
+}
+
+.cardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: $radius-md;
+  background: linear-gradient(160deg, $color-accent-soft, $color-surface-overlay);
+  color: $color-accent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cardLabel {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.cardValue {
+  font-size: $fs-lg;
+  font-weight: 650;
+  color: $color-text;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.blockTitle {
+  margin: 0;
+  font-size: $fs-base;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-6;
+  color: $color-text-muted;
+}
+
+.muted {
+  margin: 0;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.error {
+  margin: 0;
+  color: $color-danger;
+  font-size: $fs-sm;
+}
+
+.opList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.opRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid $color-border;
+  font-size: $fs-sm;
+  transition: background $duration-fast $ease-out;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.018);
+  }
+}
+
+.opDate {
+  color: $color-text-muted;
+}
+
+.opType {
+  color: $color-text-soft;
+  @include truncate;
+}
+
+.opIn {
+  color: $color-info;
+  font-weight: 600;
+  text-align: right;
+}
+
+.opOut {
+  color: $color-danger;
+  font-weight: 600;
+  text-align: right;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  @include scrollbar;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $fs-sm;
+
+  th,
+  td {
+    padding: $space-3;
+    text-align: left;
+    border-bottom: 1px solid $color-border;
+  }
+
+  th {
+    color: $color-text-muted;
+    font-weight: 500;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    position: sticky;
+    top: 0;
+  }
+
+  tbody tr {
+    transition: background $duration-fast $ease-out;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.018);
+    }
+
+    &:last-child td {
+      border-bottom: 0;
+    }
+  }
+}
+
+.btn {
+  @include button-reset;
+  @include clickable;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-weight: 500;
+
+  &:hover {
+    background: $color-surface-raised;
+    border-color: $color-accent;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.spin {
+  animation: lztSpin 0.8s linear infinite;
+}
+
+@keyframes lztSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.itemTitle {
+  color: $color-text;
+  font-weight: 500;
+  max-width: 260px;
+  @include truncate;
+}
+
+.itemId {
+  color: $color-text-muted;
+  font-size: $fs-xs;
+}
+
+.priceInput {
+  width: 110px;
+  padding: $space-1 $space-2;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-sm;
+  color: $color-text;
+  font-size: $fs-sm;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-accent-soft;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 186, 120, 0.12);
+  }
+}
+
+.rowActions {
+  display: inline-flex;
+  gap: $space-1;
+}
+
+.iconBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: $radius-sm;
+  color: $color-text-soft;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: $space-2;
+  height: 160px;
+  padding: $space-3 0 0;
+}
+
+.chartCol {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-1;
+  min-width: 0;
+  height: 100%;
+}
+
+.chartBarWrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chartBar,
+.chartBarNeg {
+  width: 62%;
+  min-height: 4px;
+  border-radius: $radius-sm $radius-sm 0 0;
+  transition: height $duration-base $ease-out;
+}
+
+.chartBar {
+  background: linear-gradient(180deg, $color-accent, $color-accent-dark);
+}
+
+.chartBarNeg {
+  background: linear-gradient(180deg, rgb(240, 96, 96), $color-danger);
+}
+
+.chartLabel {
+  max-width: 100%;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  @include truncate;
+}
+
+.distList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.distRow {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  align-items: center;
+  gap: $space-3;
+  font-size: $fs-sm;
+}
+
+.distName {
+  color: $color-text-soft;
+  @include truncate;
+}
+
+.distTrack {
+  height: 10px;
+  background: $color-surface-overlay;
+  border-radius: $radius-pill;
+  overflow: hidden;
+}
+
+.distFill {
+  height: 100%;
+  background: linear-gradient(90deg, $color-accent-dark, $color-accent);
+  border-radius: $radius-pill;
+  transition: width $duration-base $ease-out;
+}
+
+.distCount {
+  min-width: 32px;
+  color: $color-text;
+  font-weight: 600;
+  text-align: right;
+}
+
+.analysisToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: $space-3;
+  margin-bottom: $space-3;
+  padding: $space-3;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.fieldLabel {
+  font-size: $fs-xs;
+  font-weight: 500;
+  color: $color-text-muted;
+}
+
+.select,
+.num {
+  height: 34px;
+  padding: 0 $space-2;
+  background: $color-bg;
+  color: $color-text;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out,
+    background $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-accent-soft;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 186, 120, 0.12);
+  }
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2398a0aa' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-surface;
+  }
+
+  option {
+    background: $color-surface-raised;
+    color: $color-text;
+  }
+}
+
+.num {
+  width: 96px;
+}
+
+.switchRow {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+}
+
+.switch {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  width: 40px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: $radius-pill;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border-strong;
+  cursor: pointer;
+  transition:
+    background $duration-fast $ease-out,
+    border-color $duration-fast $ease-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: $color-text-soft;
+    transition:
+      transform $duration-fast $ease-out,
+      background $duration-fast $ease-out;
+  }
+
+  &:checked {
+    background: $color-accent;
+    border-color: transparent;
+  }
+
+  &:checked::before {
+    transform: translateX(18px);
+    background: #fff;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.applyBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-3;
+}
+
+.primaryBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  height: 36px;
+  padding: 0 $space-4;
+  background: linear-gradient(180deg, $color-accent, $color-accent-dark);
+  color: #fff;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  font-weight: 600;
+  box-shadow:
+    0 6px 18px rgba(0, 186, 120, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background: linear-gradient(180deg, rgb(0, 208, 137), $color-accent);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.badgeReady,
+.badgeReview,
+.badgeManual {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: 3px $space-2;
+  border-radius: $radius-pill;
+  font-size: $fs-xs;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badgeReady {
+  background: $color-accent-soft;
+  color: #fff;
+}
+
+.badgeReview {
+  background: rgba(230, 140, 23, 0.14);
+  color: $color-warning;
+}
+
+.badgeManual {
+  background: $color-surface-overlay;
+  color: $color-text-muted;
+}
+
+.rangeText {
+  display: block;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.deltaUp {
+  color: $color-accent;
+  font-weight: 600;
+}
+
+.deltaDown {
+  color: $color-danger;
+  font-weight: 600;
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $space-3;
+  background: linear-gradient(160deg, $color-surface-raised, $color-surface);
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow:
+    $shadow-md,
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+
+  .field {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    align-items: start;
+    gap: $space-4;
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .fieldLabel {
+    padding-top: 10px;
+    font-size: $fs-sm;
+    font-weight: 500;
+    color: $color-text-muted;
+  }
+
+  .num,
+  .priceInput,
+  .select,
+  .textarea {
+    width: 100%;
+  }
+
+  .num,
+  .select {
+    height: 40px;
+  }
+
+  .parseSummary {
+    grid-column: 2;
+    margin-top: $space-1;
+  }
+
+  .sellSep {
+    margin: 0;
+    padding: $space-2 $space-4;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .applyBar {
+    margin: 0;
+    padding: $space-3 $space-4;
+    background: rgba(255, 255, 255, 0.015);
+    border-top: 1px solid $color-border;
+  }
+
+  > .field:last-child,
+  > .applyBar:last-child,
+  > .sellSep:last-child {
+    border-bottom: 0;
+  }
+}
+
+.textarea {
+  width: 100%;
+  padding: $space-2;
+  background: $color-bg;
+  color: $color-text;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  font-family: inherit;
+  resize: vertical;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-accent-soft;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 186, 120, 0.12);
+  }
+}
+
+.parseSummary {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.progressBar {
+  height: 8px;
+  width: 100%;
+  background: $color-surface-overlay;
+  border-radius: $radius-pill;
+  overflow: hidden;
+  margin-bottom: $space-3;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, $color-accent-dark, $color-accent);
+  border-radius: $radius-pill;
+  transition: width $duration-base $ease-out;
+}
+
+.badgeError {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px $space-2;
+  border-radius: $radius-pill;
+  font-size: $fs-xs;
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(234, 76, 76, 0.14);
+  color: $color-danger;
+}
+
+.securityNote {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  padding: $space-3;
+  background: rgba(230, 140, 23, 0.08);
+  border: 1px solid rgba(230, 140, 23, 0.22);
+  border-left: 3px solid $color-warning;
+  border-radius: $radius-md;
+  font-size: $fs-xs;
+  color: $color-text-soft;
+  line-height: 1.5;
+}
+
+.automation {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.autoHeader {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: $space-2;
+}
+
+.summaryCard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding: $space-3;
+  background: linear-gradient(160deg, $color-surface-raised, $color-surface);
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.summaryVal {
+  font-size: $fs-lg;
+  font-weight: 650;
+  color: $color-text;
+}
+
+.summaryLabel {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.sell {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.sellGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: $space-3;
+}
+
+.sellCard {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-4 $space-3;
+  background: linear-gradient(160deg, $color-surface-raised, $color-surface);
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  &:hover {
+    border-color: $color-accent;
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.sellIcon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sellName {
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text;
+  text-align: center;
+  @include truncate;
+  max-width: 100%;
+}
+
+.sellExt {
+  color: $color-text-muted;
+  flex-shrink: 0;
+}
+
+.export {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.sellWizard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.sellTopbar {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.sellBackBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+
+  &:hover {
+    color: $color-text;
+    background: $color-surface-overlay;
+  }
+}
+
+.sellHead {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  background: linear-gradient(160deg, $color-surface-raised, $color-surface);
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.sellHeadIcon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.sellHeadName {
+  font-size: $fs-lg;
+  font-weight: 650;
+  color: $color-text;
+}
+
+.sellSteps {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+}
+
+.sellStep {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.sellStepActive {
+  color: $color-text;
+  font-weight: 600;
+}
+
+.sellStepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-strong;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.sellStepNumActive {
+  border-color: transparent;
+  background: linear-gradient(180deg, $color-accent, $color-accent-dark);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 186, 120, 0.28);
+}
+
+.sellNotImpl {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  line-height: 1.5;
+}
+
+.sellRadioRow {
+  display: flex;
+  gap: $space-3;
+}
+
+.sellRadio {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+}
+
+.sellTagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+}
+
+.sellTag {
+  @include button-reset;
+  @include clickable;
+  padding: $space-1 $space-3;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-strong;
+  font-size: $fs-xs;
+  font-weight: 500;
+  color: $color-text-soft;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-text;
+  }
+}
+
+.sellTagOn {
+  border-color: transparent;
+  background: $color-accent-soft;
+  color: #fff;
+}
+
+.sellFlags {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: $space-2;
+}
+
+.sellFlag {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+}
+
+.sellFileRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.sellFileName {
+  font-size: $fs-xs;
+  color: $color-accent;
+  @include truncate;
+}
+
+.sellSep {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: $space-1 0;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $color-border;
+    margin: 0 $space-2;
+  }
+}
+
+.abTimes {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-top: $space-4;
+}
+
+.abTimeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.abTimeRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px 4px 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background: $color-surface;
+  transition: border-color $duration-base $ease-out;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+
+  &:focus-within {
+    border-color: $color-accent;
+  }
+}
+
+.abTime {
+  appearance: none;
+  width: 58px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: $color-text;
+  color-scheme: dark;
+  font-size: $fs-sm;
+  font-variant-numeric: tabular-nums;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    display: none;
+  }
+}
+
+.abTimeDel {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: $radius-pill;
+  color: $color-text-muted;
+  transition:
+    color $duration-base $ease-out,
+    background $duration-base $ease-out;
+
+  &:hover {
+    color: $color-danger;
+    background: $color-surface-overlay;
+  }
+}
+
+.abAdd {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-pill;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  transition:
+    color $duration-base $ease-out,
+    border-color $duration-base $ease-out;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-accent;
+  }
+}
+
+.abGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: $space-3;
+  margin-top: $space-4;
+}
+
+.abField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.abInput {
+  appearance: textfield;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-variant-numeric: tabular-nums;
+  transition:
+    border-color $duration-base $ease-out,
+    background $duration-base $ease-out;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    background: $color-surface-raised;
+  }
+}
+
+.abHint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}

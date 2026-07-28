@@ -1,0 +1,45 @@
+.bar {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  flex: 0 0 32px;
+  background: #141414;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  user-select: none;
+}
+
+.drag {
+  flex: 1 1 auto;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+.controls {
+  display: flex;
+  align-items: stretch;
+  -webkit-app-region: no-drag;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #d8d8d8;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.close:hover {
+  background: #e81123;
+  color: #ffffff;
+}

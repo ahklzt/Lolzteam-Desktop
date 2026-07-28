@@ -1,0 +1,417 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: $fs-sm;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-text-muted;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: $space-4;
+  align-items: start;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+    gap: $space-2;
+  }
+}
+
+.labelCol {
+  padding-top: $space-2;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text;
+}
+
+.controlCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-width: 0;
+}
+
+.hint {
+  margin: 0;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+.input,
+.prefixField,
+.select {
+  width: 100%;
+  padding: $space-2 $space-3;
+  font-size: $fs-sm;
+  color: $color-text;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: $shadow-focus;
+  }
+}
+
+.prefixInput {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &:focus-within {
+    border-color: $color-accent;
+    box-shadow: $shadow-focus;
+  }
+}
+
+.prefix {
+  display: flex;
+  align-items: center;
+  padding: $space-2 $space-3;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  background: $color-surface-raised;
+  border-right: 1px solid $color-border;
+  white-space: nowrap;
+}
+
+.prefixField {
+  border: none;
+  border-radius: 0;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.linkBtn {
+  @include button-reset;
+  @include clickable;
+  color: $color-accent;
+  text-decoration: none;
+  word-break: break-all;
+  text-align: left;
+}
+
+.selector {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  min-width: 220px;
+  font-size: $fs-sm;
+  color: $color-text;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition: border-color $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+}
+
+.selFlag {
+  width: 20px;
+  height: 14px;
+  border-radius: $radius-sm;
+  object-fit: cover;
+}
+
+.selText {
+  @include truncate;
+  flex: 1;
+  text-align: left;
+}
+
+.selChevron {
+  color: $color-text-muted;
+  flex-shrink: 0;
+}
+
+.selectWrap {
+  position: relative;
+  display: inline-flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.select {
+  appearance: none;
+  padding-right: $space-6;
+  cursor: pointer;
+}
+
+.selectChevron {
+  position: absolute;
+  top: 50%;
+  right: $space-2;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: $color-text-muted;
+}
+
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.radio,
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+
+  input {
+    accent-color: $color-accent;
+    cursor: pointer;
+  }
+}
+
+.check {
+  align-items: flex-start;
+}
+
+.dobRow {
+  display: flex;
+  gap: $space-2;
+
+  .selectWrap {
+    flex: 1;
+  }
+}
+
+.dobDay,
+.dobYear {
+  padding: $space-2 $space-3;
+  font-size: $fs-sm;
+  color: $color-text;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: $shadow-focus;
+  }
+}
+
+.dobDay {
+  width: 72px;
+  text-align: center;
+}
+
+.dobYear {
+  width: 96px;
+  text-align: center;
+}
+
+.inputError {
+  border-color: $color-danger;
+
+  &:focus {
+    border-color: $color-danger;
+    box-shadow: none;
+  }
+}
+
+.dobError {
+  margin: $space-2 0 0;
+  font-size: $fs-xs;
+  color: $color-danger;
+  line-height: 1.4;
+}
+
+.dobLimit {
+  margin: $space-1 0 0;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+.spoiler {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.spoilerToggle {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  align-self: flex-start;
+  font-size: $fs-sm;
+  color: $color-accent;
+}
+
+.spoilerChevron {
+  transition: transform $duration-fast $ease-out;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.spoilerBody {
+  padding: $space-3;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text-soft;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  white-space: pre-line;
+}
+
+.infoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: $color-text-muted;
+  cursor: help;
+
+  &:hover .tooltip,
+  &:focus-within .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + #{$space-2});
+  left: 50%;
+  transform: translate(-50%, 4px);
+  z-index: $z-sticky;
+  width: max-content;
+  max-width: 260px;
+  padding: $space-2 $space-3;
+  font-size: $fs-xs;
+  font-weight: 400;
+  line-height: 1.4;
+  color: $color-text;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity $duration-fast $ease-out,
+    transform $duration-fast $ease-out;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding-top: $space-2;
+}
+
+.saveBtn {
+  @include button-reset;
+  @include clickable;
+  padding: $space-2 $space-5;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: #fff;
+  background: $color-accent;
+  border-radius: $radius-md;
+  transition: background $duration-fast $ease-out;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-dark;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.flashOk {
+  font-size: $fs-sm;
+  color: $color-accent;
+}
+
+.flashErr {
+  font-size: $fs-sm;
+  color: $color-danger;
+}
+
+.loading {
+  margin: 0;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.errorBox {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3;
+  font-size: $fs-sm;
+  color: $color-danger;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.retryBtn {
+  @include button-reset;
+  @include clickable;
+  color: $color-accent;
+  font-weight: 600;
+}

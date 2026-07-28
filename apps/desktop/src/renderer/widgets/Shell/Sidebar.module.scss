@@ -1,0 +1,60 @@
+.dock {
+  position: fixed;
+  left: 50%;
+  bottom: $space-5;
+  transform: translateX(-50%);
+  z-index: $z-dock;
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2;
+  border-radius: $radius-pill;
+  background: rgba(28, 28, 28, 0.82);
+  border: 1px solid $color-border-strong;
+  box-shadow: $shadow-lg;
+  backdrop-filter: blur(12px);
+}
+
+.item {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-pill;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    color: $color-text;
+    background: $color-surface-overlay;
+  }
+}
+
+.label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition:
+    max-width $duration-base $ease-out,
+    opacity $duration-base $ease-out;
+}
+
+.active {
+  color: #fff;
+  background: $color-accent;
+
+  &:hover {
+    color: #fff;
+    background: $color-accent;
+  }
+
+  .label {
+    max-width: 120px;
+    opacity: 1;
+    margin-left: 2px;
+  }
+}

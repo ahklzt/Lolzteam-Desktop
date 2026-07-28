@@ -1,0 +1,64 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.option {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3;
+  border-radius: $radius-md;
+  border: 1px solid transparent;
+  color: $color-text-soft;
+  text-align: left;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+}
+
+.active {
+  border-color: $color-accent;
+  background: rgba(0, 186, 120, 0.1);
+  color: $color-text;
+}
+
+.flag {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  border-radius: $radius-sm;
+  object-fit: contain;
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.code {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  text-transform: uppercase;
+}
+
+.check {
+  margin-left: auto;
+  color: $color-accent;
+}
+
+.error {
+  margin-top: $space-3;
+  color: $color-danger;
+  font-size: $fs-sm;
+}

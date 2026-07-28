@@ -1,0 +1,262 @@
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  position: relative;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-5 $space-6;
+  border-radius: $radius-lg;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      120% 140% at 0% 0%,
+      rgba($color-accent, 0.18),
+      transparent 60%
+    ),
+    $color-surface;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-md;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(
+      180deg,
+      $color-accent,
+      rgba($color-accent, 0.2)
+    );
+  }
+}
+
+.headIcon {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: $radius-md;
+  color: #fff;
+  background: linear-gradient(135deg, $color-accent, $color-accent-dark);
+  box-shadow:
+    0 8px 20px rgba($color-accent, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: $fs-xl;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $color-text;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-6;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  padding: $space-6;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-md;
+  animation: settingsFade $duration-base $ease-out;
+}
+
+@keyframes settingsFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panelHead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $color-border;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.panelSubtitle {
+  margin: 0;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-4;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  transition:
+    border-color $duration-base $ease-out,
+    background $duration-base $ease-out;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  transition:
+    border-color $duration-base $ease-out,
+    background $duration-base $ease-out,
+    transform $duration-base $ease-out;
+
+  &:hover {
+    border-color: $color-border-strong;
+    background: $color-surface-overlay;
+  }
+}
+
+.rowIcon {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: $radius-md;
+  color: $color-accent;
+  background: $color-accent-soft;
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.rowLabel {
+  font-size: $fs-base;
+  font-weight: 500;
+  color: $color-text;
+}
+
+.rowHint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.chevron {
+  flex: 0 0 auto;
+  color: $color-text-soft;
+  transition: transform $duration-base $ease-out;
+
+  .row:hover & {
+    transform: translateX(2px);
+    color: $color-text-muted;
+  }
+}
+
+.action {
+  flex: 0 0 auto;
+}
+
+.switch {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: $radius-pill;
+  background: $color-surface-overlay;
+  border: 1px solid $color-border-strong;
+  cursor: pointer;
+  transition: background $duration-base $ease-out;
+}
+
+.slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $color-text;
+  transition: transform $duration-base $ease-out;
+}
+
+.flash {
+  position: fixed;
+  bottom: $space-6;
+  right: $space-6;
+  padding: $space-3 $space-4;
+  border-radius: $radius-md;
+  background: $color-surface-overlay;
+  border: 1px solid $color-accent;
+  color: $color-text;
+  font-size: $fs-sm;
+  box-shadow: $shadow-md;
+  animation: settingsFade $duration-base $ease-out;
+  z-index: 20;
+}
+
+@media (max-width: 900px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .content {
+    width: 100%;
+    padding: $space-4;
+  }
+
+  .head {
+    padding: $space-4;
+  }
+}

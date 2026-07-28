@@ -1,0 +1,42 @@
+.message {
+  margin: 0 0 $space-4;
+  font-size: $fs-sm;
+  color: $color-text;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-2;
+}
+
+.btn {
+  @include button-reset;
+  @include clickable;
+  padding: 8px 14px;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+}
+
+.btnGhost {
+  color: $color-text;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+
+  &:hover {
+    border-color: $color-border-strong;
+  }
+}
+
+.btnPrimary {
+  color: #fff;
+  background: $color-accent;
+  border: 1px solid $color-accent;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}

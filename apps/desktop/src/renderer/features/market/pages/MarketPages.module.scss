@@ -1,0 +1,685 @@
+.page { display: flex; flex-direction: column; gap: $space-3; }
+.pageTitle { margin: 0; font-size: $fs-lg; font-weight: 600; color: $color-text; }
+.tabs { display: flex; gap: $space-2; border-bottom: 1px solid $color-border; }
+.tab, .tabActive {
+  @include button-reset;
+  @include clickable;
+  padding: $space-2 $space-3;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  border-bottom: 2px solid transparent;
+}
+.tabActive { color: $color-text; border-bottom-color: $color-accent; }
+.doc { display: flex; flex-direction: column; gap: $space-2; }
+.docH { margin: $space-2 0 0; font-size: $fs-base; font-weight: 600; color: $color-text; }
+.docP { margin: 0; font-size: $fs-sm; line-height: 1.6; color: $color-text-soft; }
+.docLi { margin: 0 0 0 $space-3; font-size: $fs-sm; line-height: 1.6; color: $color-text-soft; }
+.lead { margin: 0; font-size: $fs-base; color: $color-text; }
+.list { display: flex; flex-direction: column; gap: $space-1; padding: 0; list-style: disc; }
+.note { margin: 0; font-size: $fs-xs; color: $color-text-muted; }
+.siteBtn {
+  @include button-reset;
+  @include clickable;
+  @include focus-ring;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 500;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $fs-sm;
+  th { text-align: left; color: $color-text-muted; font-weight: 500; padding: $space-2; border-bottom: 1px solid $color-border; }
+  td { padding: $space-2; border-bottom: 1px solid $color-border; color: $color-text-soft; }
+}
+.right { text-align: right; }
+.sym { color: $color-text; font-weight: 600; }
+.state { display: flex; justify-content: center; padding: $space-4; }
+.error { margin: 0; font-size: $fs-sm; color: $color-danger; }
+.spin { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.refund {
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: rgba($color-warning, 0.12);
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  line-height: 1.5;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $space-3;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background: $color-surface;
+}
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+.cardTitle { font-size: $fs-base; font-weight: 600; color: $color-text; }
+.price { display: flex; align-items: baseline; gap: $space-2; flex-wrap: wrap; }
+.priceNow { font-size: $fs-lg; font-weight: 700; color: $color-accent; }
+.priceOld { font-size: $fs-sm; color: $color-text-muted; text-decoration: line-through; }
+.pricePeriod { font-size: $fs-xs; color: $color-text-muted; }
+.rights { display: flex; flex-direction: column; gap: $space-1; margin: 0; padding: 0 0 0 $space-3; list-style: disc; }
+.rightItem { font-size: $fs-sm; line-height: 1.5; color: $color-text-soft; }
+
+.payStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  margin-bottom: $space-3;
+}
+
+.payStatCard {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.payStatLabel {
+  font-size: $fs-xs;
+  font-weight: 600;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.payStatValue {
+  font-size: $fs-lg;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.payLimits {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.payLimitRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  font-size: $fs-sm;
+}
+
+.payLimitKey {
+  color: $color-text-muted;
+  word-break: break-word;
+}
+
+.payLimitVal {
+  color: $color-text;
+  font-weight: 600;
+}
+
+.payTableWrap {
+  overflow-x: auto;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+}
+
+.payMono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: $fs-sm;
+}
+
+.payIn {
+  color: $color-accent;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.payOut {
+  color: $color-danger;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.payHold {
+  display: inline-block;
+  padding: 1px $space-1;
+  border-radius: $radius-md;
+  background: $color-warning;
+  color: #1b1b1b;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.payTest {
+  display: inline-block;
+  margin-left: $space-1;
+  padding: 1px $space-1;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  color: $color-text-muted;
+  font-size: $fs-xs;
+}
+
+.paymentsContainer {
+  display: grid;
+  gap: $space-4;
+  margin-bottom: $space-4;
+}
+
+.paymentsBlock {
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.timestampHeader {
+  padding: $space-5;
+  padding-bottom: $space-3;
+}
+
+.timestampTitle {
+  font-size: $fs-base;
+  line-height: 20px;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.paymentItem {
+  position: relative;
+  display: grid;
+  margin: 0 $space-2 $space-2;
+  padding: $space-3;
+  border-radius: $radius-md;
+  transition: background-color $duration-base $ease-out;
+
+  &:hover {
+    background-color: $color-surface-raised;
+
+    .avatarBlock {
+      background-color: $color-surface-overlay;
+    }
+
+    .paymentComment {
+      background-color: $color-surface-overlay;
+
+      .commentSvg {
+        fill: $color-surface-overlay;
+      }
+    }
+  }
+}
+
+.paymentItemClickable {
+  cursor: pointer;
+}
+
+.paymentGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-3;
+  min-width: 0;
+}
+
+.paymentInformation {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  width: 100%;
+  min-width: 0;
+}
+
+.avatarBlock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  min-width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: $color-surface-raised;
+  transition: background-color $duration-base $ease-out;
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatarIconIn {
+  color: $color-accent;
+}
+
+.avatarIconOut {
+  color: $color-text-muted;
+}
+
+.detailsBlock {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.paymentTitleBlock {
+  display: flex;
+  gap: $space-3;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.paymentTitle {
+  position: relative;
+  z-index: 1;
+  font-size: $fs-sm;
+  font-weight: 700;
+  line-height: 20px;
+  color: $color-text;
+  word-break: break-word;
+}
+
+.paymentUser {
+  color: $color-accent;
+}
+
+.amountChange {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 3px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.amountIn {
+  color: $color-accent;
+}
+
+.amountOut {
+  color: $color-text-soft;
+}
+
+.paymentComment {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  max-width: 500px;
+  margin: $space-2 0 0;
+  padding: 9px $space-4;
+  border-radius: 16px;
+  background-color: $color-surface-raised;
+  word-break: break-word;
+  transition: background-color $duration-base $ease-out;
+}
+
+.commentSvg {
+  position: absolute;
+  top: -5px;
+  left: -7px;
+  width: 19px;
+  height: 18px;
+  fill: $color-surface-raised;
+  transition: fill $duration-base $ease-out;
+}
+
+.commentText {
+  font-size: $fs-sm;
+  line-height: 1.45;
+  color: $color-text-muted;
+}
+
+.paymentFooter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin: $space-3 0 0;
+}
+
+.paymentTime {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.payBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px $space-2;
+  border-radius: $radius-pill;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.payBadgeHold {
+  background: rgba($color-warning, 0.14);
+  border: 1px solid rgba($color-warning, 0.3);
+  color: $color-warning;
+}
+
+.payBadgeTest {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $color-border-strong;
+  color: $color-text-muted;
+}
+
+.payHeader {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-4;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.payHeaderTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.payHeaderTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.payHeaderTitle {
+  font-size: $fs-base;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.payHeaderPeriod {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.payTotals {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.payTotalIn {
+  font-size: $fs-lg;
+  font-weight: 700;
+  color: $color-accent;
+  white-space: nowrap;
+}
+
+.payTotalOut {
+  font-size: $fs-lg;
+  font-weight: 700;
+  color: $color-text-soft;
+  white-space: nowrap;
+}
+
+.payFilterToggle {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: rgba(255, 255, 255, 0.03);
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-border-strong;
+  }
+}
+
+.payChevron {
+  transition: transform $duration-base $ease-out;
+}
+
+.payChevronOpen {
+  transform: rotate(180deg);
+  transition: transform $duration-base $ease-out;
+}
+
+.payFilters {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.payFilterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: $space-3;
+}
+
+.payField {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.payFieldLabel {
+  font-size: $fs-xs;
+  font-weight: 600;
+  color: $color-text-muted;
+}
+
+.payInput {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-bg;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 186, 120, 0.12);
+  }
+}
+
+.payChecks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.payCheck {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  cursor: pointer;
+
+  input {
+    accent-color: $color-accent;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+}
+
+.payFilterActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.payGhostBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: rgba(255, 255, 255, 0.04);
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  font-weight: 500;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-border-strong;
+  }
+}
+
+.payTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.payTab,
+.payTabActive {
+  @include button-reset;
+  @include clickable;
+  padding: $space-2 $space-3;
+  border-radius: $radius-pill;
+  font-size: $fs-sm;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.payTab {
+  color: $color-text-muted;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+
+  &:hover {
+    color: $color-text;
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.payTabActive {
+  color: #fff;
+  border: 1px solid transparent;
+  background: linear-gradient(88deg, #1c6946 0.29%, #329c6c 51.58%, #1d8254 100%);
+}
+
+.payDetailsHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.detailPanel {
+  display: flex;
+  flex-direction: column;
+  margin: $space-3 0 0;
+  padding: $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: rgba(0, 0, 0, 0.22);
+  cursor: default;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-2 0;
+  font-size: $fs-sm;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+}
+
+.detailKey {
+  color: $color-text-muted;
+}
+
+.detailVal {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  color: $color-text;
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+
+.detailCopy {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: $color-text-muted;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.detailCopied {
+  color: $color-accent;
+  font-size: $fs-xs;
+}
+
+.paySentinel {
+  display: flex;
+  justify-content: center;
+  padding: $space-4 0 $space-6;
+}
+
+.payMoreState {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.paymentUserStyled {
+  font-weight: 700;
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lolzteam Desktop</title>
+    <style>
+      /* Мгновенный сплэш: рисуется ещё до загрузки React-бандла и инициализации
+         i18n, чтобы вместо голого фона окна сразу был виден загрузочный экран.
+         Цвета намеренно совпадают с загрузочным экраном приложения
+         (--bg #141414, --accent #00ba78, --text #eaeaea) — поэтому подмена на
+         React-версию проходит бесшовно, без вспышки другого цвета. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #141414;
+      }
+      #root {
+        height: 100vh;
+      }
+      .app-splash {
+        height: 100vh;
+        background: #141414;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Сплэш живёт внутри #root: React через createRoot(...).render() заменит
+         содержимое #root на приложение, поэтому убирать его вручную не нужно. -->
+    <div id="root">
+      <div class="app-splash"></div>
+    </div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>

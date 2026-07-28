@@ -1,0 +1,150 @@
+.nav {
+  flex: 0 0 auto;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  position: sticky;
+  top: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding: $space-3;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-md;
+}
+
+.sectionTitle {
+  padding: $space-2 $space-2 $space-1;
+  font-size: $fs-xs;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $color-text-soft;
+}
+
+.item {
+  @include button-reset;
+  @include clickable;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+  text-align: left;
+  transition:
+    color $duration-base $ease-out,
+    background $duration-base $ease-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    border-radius: $radius-pill;
+    background: $color-accent;
+    transition: transform $duration-base $ease-out;
+  }
+
+  &:hover {
+    color: $color-text;
+    background: $color-surface-raised;
+  }
+}
+
+.itemIcon {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: $radius-sm;
+  color: inherit;
+  background: transparent;
+  transition:
+    color $duration-base $ease-out,
+    background $duration-base $ease-out;
+
+  .item:hover & {
+    background: $color-surface-overlay;
+  }
+}
+
+.itemLabel {
+  @include truncate;
+  flex: 1 1 auto;
+  font-size: $fs-sm;
+  font-weight: 500;
+}
+
+.active {
+  color: $color-text;
+  background: $color-accent-soft;
+
+  &::before {
+    transform: translateY(-50%) scaleY(1);
+  }
+
+  &:hover {
+    background: $color-accent-soft;
+  }
+
+  .itemIcon {
+    color: $color-accent;
+    background: rgba($color-accent, 0.16);
+  }
+}
+
+.antipublicBtn {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, $color-accent, $color-accent-dark);
+  box-shadow: 0 8px 20px rgba($color-accent, 0.3);
+  transition:
+    transform $duration-base $ease-out,
+    box-shadow $duration-base $ease-out,
+    filter $duration-base $ease-out;
+
+  &:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 10px 26px rgba($color-accent, 0.4);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    width: 100%;
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .section {
+    flex: 1 1 220px;
+  }
+}

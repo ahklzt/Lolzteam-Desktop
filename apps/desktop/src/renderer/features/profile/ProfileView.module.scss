@@ -1,0 +1,1984 @@
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.profileBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.14;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.35));
+}
+
+.wrap > .toolbar,
+.wrap > .card {
+  position: relative;
+  z-index: 1;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  height: 100%;
+  padding: $space-5;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.offlineTitle {
+  margin: 0;
+  font-size: $fs-lg;
+  color: $color-text;
+}
+
+.offlineDesc {
+  margin: 0;
+  max-width: 380px;
+}
+
+.centerActions {
+  display: flex;
+  gap: $space-2;
+  margin-top: $space-2;
+}
+
+.spin {
+  animation: profile-spin 0.9s linear infinite;
+}
+
+@keyframes profile-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.btn,
+.btnPrimary {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+}
+
+.btnPrimary {
+  border-color: transparent;
+  background: $color-accent;
+  color: #04150e;
+
+  &:hover {
+    background: $color-accent-soft;
+  }
+}
+
+.btnDanger {
+  color: $color-danger;
+
+  &:hover {
+    background: rgba(234, 76, 76, 0.12);
+  }
+}
+
+.gate {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  padding: $space-5;
+  overflow-y: auto;
+  @include scrollbar;
+}
+
+.gateCard {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-6;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  box-shadow: $shadow-lg;
+}
+
+.gateIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: $radius-pill;
+  background: $color-accent-soft;
+  color: #04150e;
+}
+
+.gateTitle {
+  margin: 0;
+  font-size: $fs-xl;
+  color: $color-text;
+}
+
+.gateSubtitle {
+  margin: 0;
+  text-align: center;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.guide {
+  width: 100%;
+  padding: $space-3 $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+}
+
+.guideTitle {
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text-soft;
+  margin-bottom: $space-2;
+}
+
+.steps {
+  margin: 0;
+  padding-left: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+
+  li {
+    line-height: 1.4;
+  }
+}
+
+.linkBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  margin-top: $space-1;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  font-size: $fs-xs;
+  font-weight: 500;
+  color: $color-accent;
+  background: rgba(0, 186, 120, 0.1);
+
+  &:hover {
+    background: rgba(0, 186, 120, 0.18);
+  }
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.input {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  background: $color-bg;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-family: inherit;
+  transition: border-color $duration-fast $ease-out;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.submit {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 600;
+  background: $color-accent;
+  color: #04150e;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-accent-soft;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+.security {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  width: 100%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: rgba(0, 186, 120, 0.08);
+  color: $color-text-muted;
+  font-size: $fs-xs;
+  line-height: 1.4;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: $color-accent;
+  }
+}
+
+.error {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: rgba(234, 76, 76, 0.12);
+  color: $color-danger;
+  font-size: $fs-sm;
+}
+
+.card {
+  position: relative;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  display: flex;
+  gap: $space-4;
+  padding: 0 $space-5 $space-4;
+  margin-top: -44px;
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar,
+.avatarFallback {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  background: $color-surface-overlay;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fs-xl;
+  font-weight: 700;
+  color: $color-text-soft;
+}
+
+.onlineDot {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: $radius-pill;
+  border: 3px solid $color-surface;
+}
+
+.online {
+  background: $color-accent;
+}
+
+.offlineDot {
+  background: $color-text-muted;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.activityInline {
+  flex-shrink: 0;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  white-space: nowrap;
+}
+
+.divider {
+  height: 1px;
+  background: $color-border;
+  margin: $space-1 0;
+}
+
+.username {
+  font-size: $fs-xl;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.verified {
+  display: inline-flex;
+  color: $color-info;
+}
+
+.title {
+  font-size: $fs-sm;
+  color: $color-text-soft;
+}
+
+.status {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+.siteLink {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  margin-top: $space-1;
+  font-size: $fs-xs;
+  color: $color-accent;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: $space-2;
+  padding: $space-4 $space-5;
+  border-top: 1px solid $color-border;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+}
+
+.metaKey {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+
+  svg {
+    color: $color-text-muted;
+  }
+}
+
+.metaVal {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text;
+  text-align: right;
+}
+
+.copyBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+}
+
+.section {
+  padding: $space-4 $space-5;
+  border-top: 1px solid $color-border;
+}
+
+.sectionTitle {
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text-soft;
+  margin-bottom: $space-3;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+}
+
+.fieldKey {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.fieldVal {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  min-width: 0;
+  font-size: $fs-sm;
+  color: $color-text;
+}
+
+.fieldText {
+  @include truncate;
+}
+
+.fieldLink {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  color: $color-text;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: $space-2;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-3;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+}
+
+.statNum {
+  font-size: $fs-lg;
+  font-weight: 700;
+  color: $color-accent;
+}
+
+.statLabel {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  min-width: 320px;
+}
+
+.modalLabel {
+  font-size: $fs-sm;
+  color: $color-text-soft;
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: $space-5;
+  padding: $space-5;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  min-width: 0;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  min-width: 0;
+}
+
+.leftCol .avatarWrap {
+  align-self: stretch;
+}
+
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.splitBtn {
+  display: flex;
+  gap: 2px;
+}
+
+.splitMain {
+  @include button-reset;
+  @include clickable;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md 0 0 $radius-md;
+  font-size: $fs-sm;
+  font-weight: 600;
+  background: $color-accent;
+  color: #04150e;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-accent-soft;
+  }
+}
+
+.splitSide {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  border-radius: 0 $radius-md $radius-md 0;
+  font-size: $fs-base;
+  font-weight: 700;
+  background: $color-accent-dark;
+  color: #04150e;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-accent;
+  }
+}
+
+.followRow {
+  display: flex;
+  gap: $space-2;
+}
+
+.followBtn,
+.followBtnActive {
+  @include button-reset;
+  @include clickable;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 600;
+  border: 1px solid transparent;
+  background: $color-accent;
+  color: #04150e;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-accent-soft;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
+
+.followBtnActive {
+  background: $color-surface-raised;
+  border-color: $color-border-strong;
+  color: $color-text;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+}
+
+.wideBtn,
+.wideDangerBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+}
+
+.wideDangerBtn {
+  color: $color-danger;
+  border-color: rgba(234, 76, 76, 0.4);
+
+  &:hover {
+    background: rgba(234, 76, 76, 0.12);
+  }
+}
+
+.menuRoot {
+  position: relative;
+}
+
+.iconBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+  min-height: 38px;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: $z-modal;
+  min-width: 210px;
+  display: flex;
+  flex-direction: column;
+  padding: $space-1;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface-overlay;
+  box-shadow: $shadow-lg;
+}
+
+.menuItem {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  color: $color-text;
+  text-align: left;
+
+  &:hover {
+    background: $color-surface-raised;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.sideCard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+}
+
+.depositCard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3 $space-3 $space-3 $space-4;
+  border: 1px solid $color-border;
+  border-left: 3px solid rgb(0, 186, 120);
+  border-radius: $radius-md;
+  background: linear-gradient(180deg, rgba(0, 186, 120, 0.06), $color-surface-raised 60%);
+}
+
+.sideCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.sideCardTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text-soft;
+}
+
+.sideCardCount {
+  padding: 1px $space-2;
+  border-radius: $radius-pill;
+  background: $color-surface-overlay;
+  color: $color-text-muted;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.savedHint {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-xs;
+  color: $color-accent;
+}
+
+.depositHead {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text-soft;
+
+  svg {
+    color: $color-accent;
+  }
+}
+
+.depositName {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.depositNameBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  min-width: 0;
+}
+
+.depositValue {
+  font-size: $fs-xl;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.depositBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+  background: rgba(0, 186, 120, 0.12);
+  color: $color-accent;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: rgba(0, 186, 120, 0.2);
+  }
+}
+
+.depositActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-2;
+}
+
+.depositAction {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+  background: rgba(0, 186, 120, 0.12);
+  color: $color-accent;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: rgba(0, 186, 120, 0.2);
+  }
+}
+
+.noteInput,
+.textarea {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  background: $color-bg;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-family: inherit;
+  resize: none;
+  transition: border-color $duration-fast $ease-out;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.noteHint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.notePlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3;
+  color: $color-text-muted;
+}
+
+.emptyHint {
+  padding: $space-2 0;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.followerList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+  @include scrollbar;
+}
+
+.followerRow {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2;
+  border-radius: $radius-sm;
+  text-align: left;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+}
+
+.followerAvatar,
+.followerAvatarFallback {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: $radius-pill;
+  object-fit: cover;
+  background: $color-surface-overlay;
+}
+
+.followerAvatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fs-sm;
+  font-weight: 700;
+  color: $color-text-soft;
+}
+
+.followerInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.followerName {
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text;
+  @include truncate;
+}
+
+.followerTitle {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+  @include truncate;
+}
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: $space-3 $space-5;
+  padding: $space-3 0;
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+}
+
+.statCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 64px;
+  flex: 1 1 auto;
+}
+
+.threadList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.threadRow {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  background: $color-surface-raised;
+  text-align: left;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-surface-overlay;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+}
+
+.threadIcon {
+  flex-shrink: 0;
+  color: $color-text-muted;
+}
+
+.threadBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.threadTitle {
+  display: block;
+  width: 100%;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text;
+  @include truncate;
+}
+
+.threadPrefix {
+  flex-shrink: 0;
+  padding: 1px $space-2;
+  border-radius: $radius-sm;
+  font-size: $fs-xs;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid $color-border;
+}
+
+.threadMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.threadAuthor {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.threadTitleBtn {
+  @include button-reset;
+  @include clickable;
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: $fs-sm;
+  font-weight: 500;
+  color: $color-text;
+  @include truncate;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.threadAuthorBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.threadDot {
+  opacity: 0.6;
+}
+
+.threadStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+
+  svg {
+    opacity: 0.8;
+  }
+}
+
+.threadExt {
+  flex-shrink: 0;
+  color: $color-text-muted;
+}
+
+.lastSeenLine {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text;
+  cursor: pointer;
+
+  input {
+    accent-color: $color-accent;
+  }
+}
+
+.successBox {
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: rgba(0, 186, 120, 0.12);
+  color: $color-accent;
+  font-size: $fs-sm;
+}
+
+.ghostBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $fs-sm;
+  font-weight: 500;
+  border: 1px solid $color-border-strong;
+  background: transparent;
+  color: $color-text;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-surface-raised;
+  }
+}
+
+.mini {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  width: 100%;
+  min-width: 0;
+}
+
+.miniCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-6 0;
+  color: $color-text-muted;
+}
+
+.miniBanner {
+  position: relative;
+  height: 150px;
+  margin: -$space-4 -$space-5 0;
+  background-color: $color-surface-raised;
+  background-image: linear-gradient(120deg, $color-accent-dark, $color-surface-overlay);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+  }
+}
+
+.miniHead {
+  display: flex;
+  align-items: flex-end;
+  gap: $space-3;
+  position: relative;
+  z-index: 1;
+}
+
+.miniHeadActions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-left: auto;
+  padding-bottom: $space-2;
+}
+
+.miniAvatarBox {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  margin-top: -60px;
+}
+
+.miniMoneyBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  background: $color-accent-soft;
+  color: $color-accent;
+
+  &:hover {
+    background: $color-accent;
+    color: #fff;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.miniMsgBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.miniMenuWrap {
+  position: relative;
+}
+
+.miniMenuBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text-muted;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.miniMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + #{$space-1});
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+  padding: $space-1;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-overlay;
+  box-shadow: $shadow-lg;
+}
+
+.miniMenuItem {
+  @include button-reset;
+  @include clickable;
+  display: flex;
+  align-items: center;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+  color: $color-text;
+  font-size: $fs-sm;
+  text-align: left;
+
+  &:hover {
+    background: $color-surface-raised;
+    color: $color-accent;
+  }
+}
+
+.miniIdentity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 $space-2;
+}
+
+.miniDesc {
+  margin: 2px 0 0;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+  line-height: 1.45;
+}
+
+.miniChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.miniChip {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  svg {
+    flex-shrink: 0;
+    color: $color-text-muted;
+  }
+}
+
+button.miniChip {
+  @include clickable;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+
+    svg {
+      color: $color-accent;
+    }
+  }
+}
+
+.miniAvatar,
+.miniAvatarFallback {
+  width: 96px;
+  height: 96px;
+  border-radius: 18px;
+  border: 4px solid $color-surface;
+  box-shadow: $shadow-md;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.miniAvatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-accent-soft;
+  color: $color-accent;
+  font-size: $fs-xl;
+  font-weight: 700;
+}
+
+.miniUserBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.miniName {
+  font-size: $fs-lg;
+  font-weight: 700;
+}
+
+.miniNameBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  border-radius: $radius-sm;
+  transition: opacity $duration-fast $ease-out;
+
+  &:hover {
+    opacity: 0.82;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.miniTitle {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.miniControls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-2;
+  padding: $space-2;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.miniControlBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  min-width: 0;
+  padding: $space-2 $space-3;
+  border-radius: 10px;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-weight: 600;
+  text-align: left;
+  @include truncate;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.miniDepositBtn {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: 10px;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-weight: 600;
+}
+
+.miniControlIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: $color-text-muted;
+}
+
+.miniInfoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.miniInfoTitle {
+  font-size: $fs-xs;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+.miniCounters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.miniCounter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  font-weight: 600;
+  transition: background $duration-fast $ease-out;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: $color-text;
+  }
+}
+
+.miniCounterIcon {
+  display: inline-flex;
+  align-items: center;
+  color: $color-text-muted;
+}
+
+.miniCounterValue {
+  font-weight: 600;
+}
+
+.miniName {
+  @include truncate;
+}
+
+.miniActivity {
+  font-size: $fs-sm;
+  color: $color-text-soft;
+}
+
+.miniDeposit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+}
+
+.miniDepositLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-text-soft;
+}
+
+.miniDepositValue {
+  font-size: $fs-lg;
+  font-weight: 700;
+}
+
+.miniSection {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.miniSectionLabel {
+  font-size: $fs-xs;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+.miniStatsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2 $space-4;
+}
+
+.miniStat {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  color: $color-text;
+
+  svg {
+    color: $color-text-muted;
+    flex-shrink: 0;
+  }
+}
+
+.miniStatNum {
+  font-weight: 600;
+}
+
+.miniInfoRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-1 $space-3;
+  font-size: $fs-xs;
+  color: $color-text-soft;
+}
+
+.miniInfoItem {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  color: $color-text-soft;
+
+  svg {
+    color: $color-text-muted;
+  }
+}
+
+.miniInfoLink {
+  @include clickable;
+
+  &:hover {
+    color: $color-accent;
+
+    svg {
+      color: $color-accent;
+    }
+  }
+}
+
+.miniContacts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.miniContactRow {
+  display: flex;
+  align-items: stretch;
+  gap: $space-2;
+}
+
+.miniContactMain {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  flex: 1;
+  min-width: 0;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+  text-align: left;
+
+  span {
+    @include truncate;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $color-text-muted;
+  }
+
+  &:hover {
+    border-color: $color-accent;
+  }
+}
+
+.miniContactCopy {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text-muted;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+.miniSocials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.miniSocialBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+.miniMarketBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  background: $color-accent-soft;
+  color: $color-accent;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    background: $color-accent;
+    color: #fff;
+  }
+}
+
+
+.editBtn {
+  @include button-reset;
+  @include clickable;
+  position: absolute;
+  top: $space-3;
+  right: $space-3;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-overlay;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-weight: 500;
+  transition:
+    background $duration-fast $ease-out,
+    border-color $duration-fast $ease-out;
+
+  &:hover {
+    background: $color-accent-soft;
+    border-color: $color-accent;
+  }
+}
+
+.forumBanner {
+  margin-top: $space-3;
+}
+
+.description {
+  margin-top: $space-2;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text-soft;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.noteToggle {
+  @include button-reset;
+  @include clickable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  color: $color-text;
+}
+
+.noteChevron {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: $color-text-muted;
+  transform: rotate(180deg);
+  transition: transform $duration-base $ease-out;
+}
+
+.noteChevronOpen {
+  transform: rotate(0deg);
+}
+
+.noteBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-top: $space-2;
+  animation: noteReveal $duration-base $ease-out;
+}
+
+@keyframes noteReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.banBlock {
+  margin-bottom: $space-4;
+  padding: $space-3 $space-4;
+  border: 1px solid rgba(234, 76, 76, 0.5);
+  border-radius: $radius-md;
+  background: rgba(234, 76, 76, 0.08);
+}
+
+.banHead {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-3;
+  color: rgb(234, 76, 76);
+  font-weight: 600;
+}
+
+.banRows {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.banRow {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+}
+
+.banKey {
+  flex: 0 0 168px;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+}
+
+.banVal {
+  flex: 1;
+  color: $color-text;
+  font-size: $fs-sm;
+  word-break: break-word;
+}
+
+.claimBlock {
+  margin-bottom: $space-3;
+  padding: $space-3 $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+}
+
+.claimHead {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-2;
+}
+
+.claimBadgeMarket,
+.claimBadgeNomarket {
+  padding: 2px $space-2;
+  border-radius: $radius-sm;
+  font-size: $fs-xs;
+  font-weight: 600;
+  color: #fff;
+}
+
+.claimBadgeMarket {
+  background: rgb(46, 162, 74);
+}
+
+.claimBadgeNomarket {
+  background: rgb(234, 76, 76);
+}
+
+.claimTitle {
+  color: $color-text;
+  font-weight: 600;
+}
+
+.claimBody {
+  margin-bottom: $space-2;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  word-break: break-word;
+}
+
+.claimBtn {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  color: $color-accent;
+  font-size: $fs-sm;
+}

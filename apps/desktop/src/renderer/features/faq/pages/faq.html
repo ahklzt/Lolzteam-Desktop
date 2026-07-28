@@ -1,0 +1,1500 @@
+<style>
+.help_faq .sectionMain {
+    background: none;
+}
+
+.mainContentBlock {
+    padding: 0px;
+}
+@media (min-width: 1072px) {
+    .mainContentBlock {
+        max-width: 805px;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+    }
+}
+.mainContentBlock {
+    border-radius: 10px;
+    vertical-align: top;
+    margin: 0;
+    margin-right: 15px;
+    zoom: 1;
+    float: right;
+    height: fit-content;
+}
+.sectionMain {
+    background-color: rgb(28, 28, 28);
+    border-radius: 10px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    padding: 10px;
+}
+.section {
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 15px;
+}
+
+.faqContainer .faqGroup:not(:last-child) {
+    margin-bottom: 16px;
+}
+.faqContainer .faqGroup {
+    border-radius: 10px;
+    clip-path: inset(0 round 12px);
+    border: 1px solid rgb(48, 48, 48);
+    background-color: rgb(28, 28, 28);
+}
+
+.faqContainer .faqGroup .headerBlock {
+    display: flex;
+    padding: 20px;
+    background-color: rgb(36, 36, 36);
+    border-bottom: 1px solid rgb(48, 48, 48);
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .prefixItem {
+    display: flex;
+    width: fit-content;
+    padding: 4px 10px;
+    line-height: 20px;
+    color: #00ba78;
+    background-color: rgba(0, 186, 120, 0.1411764706);
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .text .title {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: bold;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .text .description {
+    line-height: 22px;
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .headerBlock .dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 420px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock a {
+    display: flex;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock a .messageAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup {
+    display: flex;
+    align-items: flex-end;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup.green {
+    margin-left: 45px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup {
+    display: flex;
+    align-items: flex-end;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup.green .messageItem {
+    background-color: #066f49;
+    margin-right: -1px;
+    border-radius: 10px 10px 0 10px;
+    max-width: 320px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup .messageItem {
+    padding: 8px 12px;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup.green svg {
+    color: #066f49;
+    transform: scaleX(-1);
+    flex-shrink: 0;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock a {
+    display: flex;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock a .messageAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup {
+    display: flex;
+    align-items: flex-end;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup.greenTint svg {
+    color: #183e31;
+    flex-shrink: 0;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup.greenTint .messageItem {
+    background-color: #183e31;
+    margin-left: -1px;
+    border-radius: 10px 10px 10px 0;
+    color: rgb(0, 186, 120);
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup.gray svg {
+    color: #363636;
+    flex-shrink: 0;
+}
+
+.faqContainer .faqGroup .headerBlock .dialog .messageBlock .messageGroup .messageItem {
+    padding: 8px 12px;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    background-color: rgb(54, 54, 54);
+    margin-left: -1px;
+    border-radius: 10px 10px 10px 0;
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyBlock .itemHeaderItem a .messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem a .messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.userQuestion .itemHeaderItem a .messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem a .messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.userQuestion .itemHeaderItem .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.userQuestion .itemHeaderItem .text .description {
+    line-height: 20px;
+    color: rgb(148, 148, 148);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.userQuestion .itemHeaderItem {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock .itemHeaderItem {
+    padding: 12px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(54, 54, 54);
+    min-height: 92px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .description {
+    color: rgb(148, 148, 148);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .description .descriptionItem {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: rgba(214, 214, 214, 0.1294117647);
+    color: #d6d6d6;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .description .descriptionItem.lolzteamFont {
+    font-size: 17px;
+    padding: 8px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .description .descriptionItem.green {
+    background-color: rgba(0, 186, 120, 0.1294117647);
+    color: #00ba78;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .title .amount {
+    color: rgb(0, 186, 120);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .title .separator {
+    width: 4px;
+    height: 4px;
+    border-radius: 1000px;
+    background-color: rgba(255, 255, 255, 0.2509803922);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.safeDeal .itemHeaderItem .text .title {
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem .text .title {
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem .text .title .amount {
+    color: rgb(0, 186, 120);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem .text .description {
+    color: rgb(148, 148, 148);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem .text .description .descriptionItem.red {
+    color: #fb4d4d;
+    background-color: rgba(251, 77, 77, 0.1960784314);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem .text .description .descriptionItem {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: rgba(214, 214, 214, 0.1294117647);
+    color: #d6d6d6;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.depositProblem .itemHeaderItem .text .description .descriptionItem {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: rgba(214, 214, 214, 0.1294117647);
+    color: #d6d6d6;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.domainsBlock .itemHeaderItem {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.domainsBlock .itemHeaderItem a {
+    border-radius: 10px;
+    padding: 7px 12px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    line-height: 20px;
+    font-weight: 500;
+    background-color: rgb(54, 54, 54);
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .top, .faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .bottom {
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .main {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .main .green {
+    color: rgb(0, 186, 120);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .top, .faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .bottom {
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem .text .main .red {
+    color: #fb4d4d;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemBottom .itemText .title {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemBottom .itemText .description {
+    line-height: 20px;
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine.two .activeItem:nth-child(2) {
+    grid-column: 2 / 4;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem {
+    background-color: rgb(36, 36, 36);
+    border: 1px solid rgb(48, 48, 48);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: space-between;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .activePrefix.blue {
+    color: #279EDA;
+    background-color: rgba(39, 158, 218, 0.1411764706);
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .activePrefix.purple {
+    color: #848bf1;
+    background-color: rgba(132, 139, 241, 0.1411764706);
+}
+
+a {
+    text-decoration: none;
+}
+
+a {
+    color: rgb(214, 214, 214);
+    text-decoration: none;
+}
+
+.faqContainer .faqGroup .faqItemsBlock {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem {
+    background-color: rgb(36, 36, 36);
+    border-radius: 16px;
+    border: 1px solid var(--primaryDark);
+    display: flex;
+    flex-direction: column;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock {
+    padding: 8px;
+    border-bottom: 1px solid rgb(48, 48, 48);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyBlock .itemHeaderItem {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock .itemHeaderItem {
+    padding: 12px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(54, 54, 54);
+    min-height: 92px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.alertAction {
+    position: relative;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyBlock .itemHeaderItem .text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyBlock .itemHeaderItem .text .title {
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+a.username {
+    color: #aaa;
+}
+
+.mainc {
+    color: rgb(0, 186, 120);
+}
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyBlock .itemHeaderItem .text .description {
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemBottom {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemBottom .itemText {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem .likeButton {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 17px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(54, 54, 54);
+    border-radius: 10px;
+    line-height: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem .likeButton .lolzteamFont {
+    color: rgb(0, 186, 120);
+}
+
+.lolzteamFont {
+    font-family: 'lztIcons';
+    font-weight: normal;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem .likeNotification {
+    padding: 8px 12px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(54, 54, 54);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem .likeNotification:before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 50%;
+    margin-top: -6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 0 0 0 4px;
+    background-color: rgb(48, 48, 48);
+    border-left: 1px solid rgb(54, 54, 54);
+    border-bottom: 1px solid rgb(54, 54, 54);
+    transform: rotate(45deg);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem .likeNotification .title {
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 500;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyButton .itemHeaderItem .likeNotification .description {
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock .itemHeaderItem {
+    padding: 12px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(54, 54, 54);
+    min-height: 92px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.alertAction {
+    position: relative;
+}
+
+.alertAction:not(.from_admin):not(.alerts):not(.renewal_is_coming)::before {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    top: 22px;
+    left: 22px;
+    border: 1px solid rgb(28, 28, 28);
+    z-index: 10;
+    content: '';
+    display: inline-block;
+    background-position: center;
+}
+
+.alertAction.like::before {
+    background: url(data:image/svg+xml;charset=utf-8,%3Csvg%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20width%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%2210%22%2F%3E%3Cpath%20d%3D%22m12.1992481%206.5c1.5468126%200%202.8007519%201.20487381%202.8007519%202.69116097%200%201.50097283-.6258611%202.25353543-3.2805047%204.23746743l-1.2078781.9027005c-.3009254.2248948-.72230897.2248948-1.02323438%200l-1.20787815-.9027005c-2.65464356-1.983932-3.28050467-2.7364946-3.28050467-4.23746743%200-1.48628716%201.25393933-2.69116097%202.80075188-2.69116097.82873383%200%201.54924812.4%202.19924812%201.15.65-.75%201.3705143-1.15%202.1992481-1.15z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E) no-repeat, linear-gradient(to bottom right, #ff5263, #ff3347);
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem a .messageAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 1000px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem .text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem .text .title {
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem .text .description {
+    color: rgb(148, 148, 148);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem .text .description .descriptionItem.green {
+    background-color: rgba(0, 186, 120, 0.1294117647);
+    color: #00ba78;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem .text .description .descriptionItem {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: rgba(214, 214, 214, 0.1294117647);
+    color: #d6d6d6;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.reportUser .itemHeaderItem .text .description .descriptionItem {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: rgba(214, 214, 214, 0.1294117647);
+    color: #d6d6d6;
+    line-height: 20px;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemBottom {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.button {
+    background-color: rgb(48, 48, 48);
+    background-position: center;
+    border-radius: 8px;
+    border-style: none;
+    color: rgb(214, 214, 214);
+    user-select: none;
+    font-style: normal;
+    text-align: center;
+    outline: none;
+    line-height: 34px;
+    display: inline-block;
+    cursor: pointer;
+    box-sizing: border-box;
+    vertical-align: top;
+    -webkit-appearance: none !important;
+    font-weight: 600;
+    transition: background 0.8s;
+    overflow: hidden;
+    font-size: 14px;
+    height: 34px;
+    padding-bottom: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    text-decoration: none;
+}
+
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock.sympathyRemove .itemHeaderItem {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.1s ease-in-out;
+}
+.faqContainer .faqGroup .faqItemsBlock .faqItem .itemHeaderBlock .itemHeaderItem {
+    padding: 12px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(54, 54, 54);
+    min-height: 92px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.faqContainer .faqGroup {
+    border-radius: 10px;
+    clip-path: inset(0 round 12px);
+    border: 1px solid rgb(48, 48, 48);
+    background-color: rgb(28, 28, 28);
+}
+
+.faqContainer .faqGroup .headerBlock {
+    display: flex;
+    padding: 20px;
+    background-color: rgb(36, 36, 36);
+    border-bottom: 1px solid rgb(48, 48, 48);
+}
+
+.faqContainer .faqGroup .activeItems {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .text .title {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: bold;
+}
+
+.faqContainer .faqGroup .headerBlock .textBlock .text .description {
+    line-height: 22px;
+    color: rgb(148, 148, 148);
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine.one {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine.two {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine.three {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine.three {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine.one .activeItem:first-child {
+    grid-column: span 2;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem {
+    background-color: rgb(36, 36, 36);
+    border: 1px solid rgb(48, 48, 48);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: space-between;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .activePrefix.green {
+    background-color: rgba(0, 186, 120, 0.1294117647);
+    color: #00ba78;
+}
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .activePrefix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 10px;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem {
+    background-color: rgb(36, 36, 36);
+    border: 1px solid rgb(48, 48, 48);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: space-between;
+    transition: all 0.1s ease-in-out;
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .activePrefix.red {
+    color: #fc8888;
+    background-color: rgba(251, 77, 77, 0.1960784314);
+}
+
+.faqContainer .faqGroup .activeItems .activeItemsLine .activeItem .activePrefix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 10px;
+}
+</style>
+<div class="mainContentBlock section sectionMain">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="faqContainer">
+    <div class="faqGroup">
+        <div class="headerBlock">
+            <div class="textBlock">
+                <span class="prefixItem">
+                    FAQ
+                </span>
+                <div class="text">
+                    <span class="title">
+                        Наиболее частые вопросы и ответы на них
+                    </span>
+                    <span class="description">
+                        Предлагаем ознакомиться с нашим кратким графическим путеводителем по форуму.
+                    </span>
+                </div>
+            </div>
+            <div class="dialog">
+                <div class="messageBlock">
+                    <a href="https://lolz.team/ahk_lzt/">
+                        <img class="messageAvatar" src="https://nztcdn.com/avatar/s/1772741895/4315635.webp">
+                    </a>
+                    <div class="messageGroup gray">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="19" viewBox="0 0 8 19" fill="none">
+                            <path d="M6.99983 19H7.99983V0H6.99983V2C6.80683 4.839 6.12383 7.767 4.94983 10.782C4.04583 13.107 2.50383 15.267 0.324825 17.262C-0.0831746 17.635 -0.110175 18.268 0.262825 18.675C0.451825 18.882 0.719825 19 0.999825 19H6.99983Z" fill="currentColor"></path>
+                        </svg>
+                        <div class="messageItem">
+                            У меня есть вопрос, помогите!
+                        </div>
+                    </div>
+                </div>
+                <div class="messageBlock">
+                    <div class="messageGroup green">
+                        <div class="messageItem">
+                            Специально для распространённых вопросов мы сделали FAQ страницу. Кстати ответ на твой вопрос есть на ней!
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="19" viewBox="0 0 8 19" fill="none">
+                            <path d="M6.99983 19H7.99983V0H6.99983V2C6.80683 4.839 6.12383 7.767 4.94983 10.782C4.04583 13.107 2.50383 15.267 0.324825 17.262C-0.0831746 17.635 -0.110175 18.268 0.262825 18.675C0.451825 18.882 0.719825 19 0.999825 19H6.99983Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <a href="https://lolz.team/extasy/">
+                        <img class="messageAvatar" src="https://nztcdn.com/avatar/s/1783789994/3227904.webp">
+                    </a>
+                </div>
+                <div class="messageBlock">
+                    <a href="https://lolz.team/ahk_lzt/">
+                        <img class="messageAvatar" src="https://nztcdn.com/avatar/s/1772741895/4315635.webp">
+                    </a>
+                    <div class="messageGroup greenTint">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="19" viewBox="0 0 8 19" fill="none">
+                            <path d="M6.99983 19H7.99983V0H6.99983V2C6.80683 4.839 6.12383 7.767 4.94983 10.782C4.04583 13.107 2.50383 15.267 0.324825 17.262C-0.0831746 17.635 -0.110175 18.268 0.262825 18.675C0.451825 18.882 0.719825 19 0.999825 19H6.99983Z" fill="currentColor"></path>
+                        </svg>
+                        <div class="messageItem">
+                            Спасибо!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="faqItemsBlock">
+            <div class="faqItem">
+                <div class="itemHeaderBlock sympathyBlock">
+                    <div class="itemHeaderItem">
+                        <a href="https://lolz.team/extasy/" class="alertAction like">
+                            <img class="messageAvatar" src="https://nztcdn.com/avatar/s/1783789994/3227904.webp">
+                        </a>
+                        <div class="text">
+                            <span class="title">
+                                <a href="extasy/" class="notranslate username" translate="no" dir="auto" data-user="3227904, extasy"><span class="styleUserNickname style350">extasy</span><span class="uniqUsernameIcon developerUsernameIcon groupUsernameIcon"></span></a> нравится Ваше сообщение в теме <a href="help/faq" class="mainc">FAQ</a>.
+                            </span>
+                            <span class="description">
+                                Только что
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Как получать симпатии?
+                        </span>
+                        <span class="description">
+                            Симпатии ставят другие пользователи, если они посчитали ваше сообщение или тему полезной
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock sympathyButton">
+                    <div class="itemHeaderItem">
+                        <div class="likeButton">
+                            <span class="lolzteamFont"></span>
+                            59
+                        </div>
+                        <div class="likeNotification">
+                            <span class="title">
+                                Вам, <a href="rays/" class="notranslate username" translate="no" dir="auto" target="_blank"><span class="styleUserNickname style3">RaysMorgan</span></a>, <a href="members/8739027/" class="notranslate username" translate="no" dir="auto" target="_blank"><span class="styleUserNickname style7">Разработчик</span><span class="uniqUsernameIcon developerUsernameIcon groupUsernameIcon"></span></a>, <a href="extasy/" class="notranslate username" translate="no" dir="auto" target="_blank"><span class="styleUserNickname style350">extasy</span><span class="uniqUsernameIcon developerUsernameIcon groupUsernameIcon"></span></a> и другим нравится
+                            </span>
+                            <span class="description">
+                                Осталось 294 симпатии
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Появление кнопки «Мне нравится»
+                        </span>
+                        <span class="description">
+                            Чтобы появилась кнопка ''Мне нравится'', нужно получить более 20 симпатий, или приобрести привилегированную группу
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock reportUser">
+                    <div class="itemHeaderItem">
+                        <a href="/banned" class="alertAction like">
+                            <img class="messageAvatar" src="https://nztcdn.com/files/c320df0f-c953-4b0b-af3b-ed7cf2c35c84.webp">
+                        </a>
+                        <div class="text">
+                            <div class="title">
+                                Нарушитель
+                                <span class="blockedPrefix">
+                                    Заблокирован
+                                </span>
+                            </div>
+                            <div class="description">
+                                <div class="descriptionItem green">
+                                    Жалоба обработана
+                                </div>
+                                <div class="descriptionItem">
+                                    1.1 + 1.4
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Пожаловаться на пользователя
+                        </span>
+                        <span class="description">
+                            У вас имеется возможность написать жалобы на пользователей и на состав команды форума
+                        </span>
+                    </div>
+                    <a href="/forums/801/" class="button secondary">Написать жалобу</a>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock safeDeal">
+                    <div class="itemHeaderItem">
+                        <a href="/threads/5213934/" class="alertAction finished">
+                            <img class="messageAvatar" src="https://nztcdn.com/files/9ff93bff-2d6b-4000-934d-05066fb7b72a.webp">
+                        </a>
+                        <div class="text">
+                            <div class="title">
+                                <span class="amount">
+                                    1&nbsp;000&nbsp;₽
+                                </span>
+                                <div class="separator"></div>
+                                <div class="titlePhrase">
+                                    Перевод средств <span class="seller">Продавцу</span>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <div class="descriptionItem">
+                                    За аккаунт Steam
+                                </div>
+                                <div class="descriptionItem green lolzteamFont">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Что такое безопасная сделка?
+                        </span>
+                        <span class="description">
+                            Cпособ перевода денег на баланс пользователя, с временными ограничениями на их использование
+                        </span>
+                    </div>
+                    <a href="/threads/3173057/" class="button secondary">Узнать подробнее</a>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock userQuestion">
+                    <div class="itemHeaderItem">
+                        <a href="https://lolz.team/ahk_lzt/" class="alertAction tag">
+                            <img class="messageAvatar" src="https://nztcdn.com/avatar/s/1772741895/4315635.webp">
+                        </a>
+                        <div class="text">
+                            <div class="title">
+                                <span>
+                                    <a href="ahk_lzt/" class="notranslate username" translate="no" dir="auto" target="_blank"><span class="styleUserNickname style23">ahk_lzt</span></a>
+                                    задал вопрос:
+                                </span>
+                            </div>
+                            <div class="description">
+                                Как мне сделать то...<br>
+                                следующее и другое?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Не знаете ответ на нужный вопрос?
+                        </span>
+                        <span class="description">
+                            Задайте его в тематическом разделе «Вопрос - Ответ» в котором вы обязательно получите ответ от Команды Форума
+                        </span>
+                    </div>
+                    <a href="/forums/899/" class="button secondary">Перейти в раздел «Вопрос - Ответ»</a>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock depositProblem">
+                    <div class="itemHeaderItem">
+                        <a href="/payment/balance/deposit/problem" class="alertAction payout_cancelled">
+                            <img class="messageAvatar" src="https://nztcdn.com/files/95cb3356-dc57-43c3-b61b-7d4fbe72d683.webp">
+                        </a>
+                        <div class="text">
+                            <div class="title">
+                                Платёж
+                                <span class="amount">
+                                    №329394129
+                                </span>
+                            </div>
+                            <div class="description">
+                                <div class="descriptionItem red">
+                                    Проблема с операцией
+                                </div>
+                                <div class="descriptionItem">
+                                    500&nbsp;₽
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Проблемы с деньгами?
+                        </span>
+                        <span class="description">
+                            Не дошли средства при пополнении или выводе или другая проблема? - Скорее пишите нашей поддержке!
+                        </span>
+                    </div>
+                    <a href="/payment/balance/deposit/problem" class="button secondary">Обратиться в платежную поддержку</a>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock domainsBlock">
+                    <div class="itemHeaderItem">
+                        <a href="https://zelenka.guru">zelenka.guru</a>
+                        <a href="https://lolz.live">lolz.live</a>
+                        <a href="https://lolz.guru">lolz.guru</a>
+                        <a href="https://lzt.market">lzt.market</a>
+                        <a href="https://lolz.market">lolz.market</a>
+                        <a href="https://zelenka.market">zelenka.market</a>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Список доменов форума
+                        </span>
+                        <span class="description">
+                            Нажмите на любой удобный доменов форума, чтобы узнать доступен ли он в вашем регионе
+                        </span>
+                    </div>
+                    <a href="https://status.lolz.guru/" class="button secondary">Состояние проектов LZT</a>
+                </div>
+            </div>
+            <div class="faqItem">
+                <div class="itemHeaderBlock sympathyRemove">
+                    <div class="itemHeaderItem">
+                        <div class="text">
+                            <span class="top">
+                                Ваша статистика
+                            </span>
+                            <span class="main">
+                                <span class="green">23 951</span> симпатий
+                            </span>
+                            <span class="bottom">
+                                За месяц: <b>+ 1 401</b>
+                            </span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="text">
+                            <span class="top">
+                                Обнулено
+                            </span>
+                            <span class="main">
+                                <span class="red">1 927</span> симпатий
+                            </span>
+                            <span class="bottom">
+                                Причина: <b>Накрутка</b>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="itemBottom">
+                    <div class="itemText">
+                        <span class="title">
+                            Почему пропадают симпатии?
+                        </span>
+                        <span class="description">
+                            Распространенные причины: Накрутка симпатий, удаление вашей темы которая имела симпатии
+                        </span>
+                    </div>
+                    <a href="/rules" class="button secondary">Правила форума</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faqGroup">
+        <div class="headerBlock">
+            <div class="textBlock">
+                <div class="text">
+                    <span class="title">
+                        Востребованные активности форума
+                    </span>
+                    <span class="description">
+                        Предлагаем присоединиться к жизни проекта и найти что-то интересное для себя.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="activeItems">
+            <div class="activeItemsLine one">
+                <a class="activeItem" href="/threads/19835/" target="_blank">
+                    <div class="activePrefix green">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.61735 3.08313C6.51686 1.82282 3.94791 1.61697 1.6735 2.52674C1.34222 2.65925 1.125 2.9801 1.125 3.33689V12.0811C1.125 12.6668 1.71657 13.0673 2.2604 12.8498C4.12291 12.1048 6.22661 12.2733 7.9467 13.3054L8.79817 13.8163C8.86312 13.8552 8.93258 13.8722 9 13.871C9.06742 13.8722 9.13688 13.8552 9.20183 13.8163L10.0533 13.3054C11.7734 12.2733 13.8771 12.1048 15.7396 12.8498C16.2834 13.0673 16.875 12.6668 16.875 12.0811V3.33689C16.875 2.9801 16.6578 2.65925 16.3265 2.52674C14.0521 1.61697 11.4832 1.82282 9.38265 3.08313L9 3.31271L8.61735 3.08313ZM9.5625 4.87502C9.5625 4.56437 9.31065 4.31252 9 4.31252C8.68935 4.31252 8.4375 4.56437 8.4375 4.87502V12C8.4375 12.3107 8.68935 12.5625 9 12.5625C9.31065 12.5625 9.5625 12.3107 9.5625 12V4.87502Z" fill="currentColor"></path>
+                            <path d="M2.04366 14.2817C3.56155 13.3963 5.4385 13.3963 6.9564 14.2817L7.77183 14.7574C8.53075 15.2001 9.4693 15.2001 10.2282 14.7574L11.0436 14.2817C12.5616 13.3963 14.4385 13.3963 15.9564 14.2817L16.0335 14.3266C16.3018 14.4832 16.3924 14.8276 16.2359 15.0959C16.0794 15.3643 15.735 15.4549 15.4666 15.2984L15.3896 15.2534C14.2219 14.5723 12.7782 14.5723 11.6105 15.2534L10.7951 15.7291C9.68583 16.3762 8.31423 16.3762 7.20499 15.7291L6.38954 15.2534C5.22193 14.5723 3.77812 14.5723 2.61052 15.2534L2.53345 15.2984C2.26511 15.4549 1.92069 15.3643 1.76416 15.0959C1.60762 14.8276 1.69826 14.4832 1.9666 14.3266L2.04366 14.2817Z" fill="currentColor"></path>
+                        </svg>
+                        Статья
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Что означают и какую роль играют получаемые «Баллы» после нарушений
+                        </span>
+                        <span class="description">
+                            Статья про виды нарушений и наказаний за них
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/rules/" target="_blank">
+                    <div class="activePrefix red">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3 6C3 4.13604 4.51104 2.625 6.375 2.625H13.875C14.4963 2.625 15 3.12868 15 3.75V15C15 15.4142 14.6642 15.75 14.25 15.75H5.625C4.30257 15.75 3.20854 14.7721 3.02658 13.5H3V6ZM13.875 11.625H5.625C4.79657 11.625 4.125 12.2965 4.125 13.125C4.125 13.9535 4.79657 14.625 5.625 14.625H13.875V11.625ZM6.1875 6C6.1875 5.68934 6.43934 5.4375 6.75 5.4375H12C12.3106 5.4375 12.5625 5.68934 12.5625 6C12.5625 6.31066 12.3106 6.5625 12 6.5625H6.75C6.43934 6.5625 6.1875 6.31066 6.1875 6ZM6.75 7.6875C6.43934 7.6875 6.1875 7.93935 6.1875 8.25C6.1875 8.56065 6.43934 8.8125 6.75 8.8125H10.5C10.8106 8.8125 11.0625 8.56065 11.0625 8.25C11.0625 7.93935 10.8106 7.6875 10.5 7.6875H6.75Z" fill="currentColor"></path>
+                        </svg>
+                        Правила
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Ознакомиться с правилами сайта
+                        </span>
+                        <span class="description">
+                            Будьте добропорядочным пользователем
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/guarantor/" target="_blank">
+                    <div class="activePrefix green">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M9.66479 3.25554C9.09892 2.91482 8.39114 2.91482 7.82527 3.25554L7.41614 3.50189C6.42347 4.09964 5.30903 4.46645 4.15537 4.57513L3.89761 4.59942C3.38881 4.64736 3 5.07452 3 5.58558V6.88822C3 9.09005 3.89391 11.1976 5.47697 12.7279L8.05658 15.2216C8.4405 15.5928 9.04956 15.5928 9.43348 15.2216L12.0131 12.7279C13.5961 11.1976 14.4901 9.09005 14.4901 6.88822V5.58558C14.4901 5.07452 14.1012 4.64736 13.5924 4.59942L13.3347 4.57513C12.181 4.46645 11.0666 4.09964 10.0739 3.50189L9.66479 3.25554Z" fill="currentColor"></path>
+                        </svg>
+                        Гарант
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Актуальные гаранты форума
+                        </span>
+                        <span class="description">
+                            Обезопась свои деньги от рук мошенников
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="activeItemsLine two">
+                <a class="activeItem" href="/account/api/" target="_blank">
+                    <div class="activePrefix orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.89958 2.85858C7.71396 2.88562 7.53216 2.93434 7.35786 3.00373C6.32044 3.41677 5.70499 4.49076 5.87311 5.59465L5.89639 5.7475C5.92525 5.9369 5.97498 6.12253 6.0447 6.30097L6.73087 8.05725C8.37276 7.94565 10.0208 7.95532 11.6617 8.08627L12.7837 8.17582C13.5098 8.2338 14.1027 8.77965 14.2204 9.49845C14.4916 11.1551 14.4916 12.8449 14.2204 14.5015C14.1027 15.2203 13.5098 15.7661 12.7837 15.8241L11.6617 15.9137C9.89001 16.0551 8.10996 16.0551 6.33837 15.9137L5.21627 15.8241C4.4902 15.7661 3.89732 15.2203 3.77962 14.5015C3.50835 12.8449 3.50835 11.1551 3.77962 9.49845C3.89732 8.77965 4.4902 8.2338 5.21627 8.17582L5.55871 8.14852L4.99684 6.71037C4.89688 6.45454 4.82558 6.18842 4.78422 5.91689L4.76094 5.76403C4.514 4.14265 5.41797 2.56519 6.94172 1.95853C7.19768 1.85661 7.46471 1.78506 7.73736 1.74534C9.36028 1.50886 10.9318 2.42299 11.5287 3.95062L11.5849 4.09463C11.6849 4.35046 11.7562 4.61658 11.7976 4.88812L11.9036 5.58412C11.9347 5.78887 11.794 5.98012 11.5893 6.01131L11.2186 6.06778C11.0139 6.09895 10.8226 5.95825 10.7914 5.75351L10.6854 5.0575C10.6566 4.8681 10.6068 4.68247 10.5371 4.50403L10.4809 4.36001C10.0745 3.31996 9.00448 2.69758 7.89958 2.85858ZM8.99998 10.875C8.37868 10.875 7.87498 11.3787 7.87498 12C7.87498 12.6213 8.37868 13.125 8.99998 13.125C9.62128 13.125 10.125 12.6213 10.125 12C10.125 11.3787 9.62128 10.875 8.99998 10.875Z" fill="currentColor"></path>
+                        </svg>
+                        API Форума
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Перейти к просмотру API форума
+                        </span>
+                        <span class="description">
+                            Удобно. Быстро. Понятно.
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/help/user-groups/" target="_blank">
+                    <div class="activePrefix green">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.61735 3.08313C6.51686 1.82282 3.94791 1.61697 1.6735 2.52674C1.34222 2.65925 1.125 2.9801 1.125 3.33689V12.0811C1.125 12.6668 1.71657 13.0673 2.2604 12.8498C4.12291 12.1048 6.22661 12.2733 7.9467 13.3054L8.79817 13.8163C8.86312 13.8552 8.93258 13.8722 9 13.871C9.06742 13.8722 9.13688 13.8552 9.20183 13.8163L10.0533 13.3054C11.7734 12.2733 13.8771 12.1048 15.7396 12.8498C16.2834 13.0673 16.875 12.6668 16.875 12.0811V3.33689C16.875 2.9801 16.6578 2.65925 16.3265 2.52674C14.0521 1.61697 11.4832 1.82282 9.38265 3.08313L9 3.31271L8.61735 3.08313ZM9.5625 4.87502C9.5625 4.56437 9.31065 4.31252 9 4.31252C8.68935 4.31252 8.4375 4.56437 8.4375 4.87502V12C8.4375 12.3107 8.68935 12.5625 9 12.5625C9.31065 12.5625 9.5625 12.3107 9.5625 12V4.87502Z" fill="currentColor"></path>
+                            <path d="M2.04366 14.2817C3.56155 13.3963 5.4385 13.3963 6.9564 14.2817L7.77183 14.7574C8.53075 15.2001 9.4693 15.2001 10.2282 14.7574L11.0436 14.2817C12.5616 13.3963 14.4385 13.3963 15.9564 14.2817L16.0335 14.3266C16.3018 14.4832 16.3924 14.8276 16.2359 15.0959C16.0794 15.3643 15.735 15.4549 15.4666 15.2984L15.3896 15.2534C14.2219 14.5723 12.7782 14.5723 11.6105 15.2534L10.7951 15.7291C9.68583 16.3762 8.31423 16.3762 7.20499 15.7291L6.38954 15.2534C5.22193 14.5723 3.77812 14.5723 2.61052 15.2534L2.53345 15.2984C2.26511 15.4549 1.92069 15.3643 1.76416 15.0959C1.60762 14.8276 1.69826 14.4832 1.9666 14.3266L2.04366 14.2817Z" fill="currentColor"></path>
+                        </svg>
+                        Статья
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Информация о повышениях и получении определенных групп пользователей
+                        </span>
+                        <span class="description">
+                            Статья про виды групп на форуме и гайд как их получать
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/forums/arbitrage/" target="_blank">
+                    <div class="activePrefix red">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                            <path d="M11.1404 13.2123C11.2237 13.2123 11.3062 13.1959 11.3832 13.1639C11.4601 13.1319 11.5299 13.085 11.5886 13.0259L15.2441 9.37161C15.3629 9.25274 15.4297 9.09152 15.4297 8.92341C15.4297 8.75529 15.3629 8.59407 15.2441 8.4752C15.1252 8.35632 14.964 8.28954 14.7959 8.28954C14.6277 8.28954 14.4665 8.35632 14.3476 8.4752L10.6934 12.1318C10.6047 12.2204 10.5442 12.3333 10.5197 12.4562C10.4952 12.5792 10.5078 12.7066 10.5558 12.8225C10.6038 12.9383 10.6851 13.0373 10.7893 13.1068C10.8936 13.1764 11.0162 13.2135 11.1416 13.2134L11.1404 13.2123ZM2.75937 14.3465L7.8406 9.26414L6.60002 8.0247L10.228 4.39672L13.6239 7.79259L9.9959 11.4194L8.73588 10.1606L3.6535 15.2429C3.59464 15.3018 3.52477 15.3485 3.44787 15.3803C3.37096 15.4122 3.28854 15.4286 3.20529 15.4286C3.12206 15.4286 3.03963 15.4122 2.96272 15.3803C2.88582 15.3485 2.81595 15.3018 2.75709 15.2429C2.69823 15.1841 2.65154 15.1142 2.61968 15.0373C2.58783 14.9604 2.57143 14.878 2.57143 14.7947C2.57143 14.7115 2.58783 14.6291 2.61968 14.5522C2.65154 14.4752 2.69823 14.4054 2.75709 14.3465H2.75937ZM5.42347 7.49417C5.50651 7.49422 5.58875 7.47789 5.66546 7.4461C5.74218 7.41432 5.81187 7.3677 5.87054 7.30894L9.52711 3.65351C9.58597 3.59466 9.63266 3.52478 9.66451 3.44787C9.69637 3.37097 9.71276 3.28855 9.71276 3.20531C9.71276 3.12207 9.69637 3.03964 9.66451 2.96274C9.63266 2.88583 9.58597 2.81596 9.52711 2.7571C9.46825 2.69824 9.39837 2.65155 9.32147 2.61969C9.24456 2.58784 9.16214 2.57144 9.0789 2.57144C8.99566 2.57144 8.91323 2.58784 8.83633 2.61969C8.75942 2.65155 8.68955 2.69824 8.63069 2.7571L4.97641 6.41252C4.88777 6.50104 4.82736 6.61386 4.80284 6.7367C4.77831 6.85955 4.79076 6.98691 4.83861 7.10269C4.88646 7.21846 4.96757 7.31745 5.07167 7.38713C5.17577 7.45681 5.2982 7.49406 5.42347 7.49417Z" fill="currentColor"></path>
+                        </svg>
+                        Арбитраж
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Вас обманули на форуме?
+                        </span>
+                        <span class="description">
+                            Написать арбитраж
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="activeItemsLine three">
+                <a class="activeItem" href="/forums/suggestions/" target="_blank">
+                    <div class="activePrefix green">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.64866 1.24718C8.35968 0.749068 7.64028 0.749068 7.35131 1.24718L5.31574 4.75516C5.17296 5.00122 4.92618 5.16915 4.64488 5.21163L0.830142 5.7878C0.189432 5.88457 -0.0353135 6.69352 0.463669 7.10692L3.30549 9.46132C3.56854 9.67927 3.69223 10.0231 3.62833 10.3586L2.88495 14.2625C2.76744 14.8796 3.41528 15.3591 3.97114 15.0664L7.56318 13.175C7.83656 13.0311 8.16333 13.0311 8.43678 13.175L12.0288 15.0664C12.5847 15.3591 13.2325 14.8796 13.115 14.2625L12.3717 10.3586C12.3078 10.0231 12.4314 9.67927 12.6945 9.46132L15.5363 7.10692C16.0353 6.69352 15.8106 5.88457 15.1698 5.7878L11.3551 5.21163C11.0738 5.16915 10.827 5.00122 10.6842 4.75516L8.64866 1.24718Z" fill="currentColor"></path>
+                        </svg>
+                        Нововведение
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Имеете классную идею?
+                        </span>
+                        <span class="description">
+                            Предложите ваше нововведение
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/new-features/" target="_blank">
+                    <div class="activePrefix blue">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.877 11.6799C13.2094 8.48524 13.2094 5.26475 12.877 2.07013C12.773 1.0709 11.6209 0.564738 10.8146 1.16407L7.7369 3.45188C6.7667 4.17306 5.59003 4.56249 4.38118 4.56249H1.50928C1.09506 4.56249 0.759277 4.89828 0.759277 5.31249V8.43746C0.759277 8.85169 1.09506 9.18746 1.50928 9.18746H4.38117C5.59003 9.18746 6.7667 9.57694 7.7369 10.2981L10.8146 12.5859C11.6209 13.1853 12.773 12.6791 12.877 11.6799Z" fill="currentColor"></path>
+                            <path d="M4.81942 10.8515C4.8625 10.6831 4.82537 10.5043 4.71881 10.3671C4.61225 10.2298 4.44825 10.1495 4.27448 10.1495H2.77448C2.56142 10.1495 2.36665 10.2698 2.27137 10.4604L1.52137 11.9604C1.39328 12.2166 1.47812 12.5281 1.71841 12.684L3.31889 13.7219C3.47084 13.8205 3.66095 13.8399 3.82965 13.7739C3.99835 13.708 4.12499 13.5649 4.1699 13.3895L4.81942 10.8515Z" fill="currentColor"></path>
+                        </svg>
+                        Новости
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Тема с новостями о форуме
+                        </span>
+                        <span class="description">
+                            Отслеживайте изменения
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/forums/bugs/" target="_blank">
+                    <div class="activePrefix red">
+                        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.29719 0.994451C7.11619 -0.203802 8.88378 -0.203794 9.70271 0.994451L10.0267 1.46841C12.0562 4.43783 13.8 7.59279 15.2345 10.8911L15.3021 11.0466C15.8077 12.209 15.0439 13.5287 13.7843 13.6695C9.94001 14.0992 6.05991 14.0992 2.21568 13.6695C0.956022 13.5287 0.192252 12.209 0.69779 11.0466L0.765455 10.8911C2.2 7.59279 3.94372 4.43782 5.97325 1.46841L6.29719 0.994451ZM8.74998 4.74998C8.74998 5.16419 8.41421 5.49998 7.99998 5.49998C7.58576 5.49998 7.24998 5.16419 7.24998 4.74998C7.24998 4.33576 7.58576 3.99998 7.99998 3.99998C8.41421 3.99998 8.74998 4.33576 8.74998 4.74998ZM7.99998 6.81249C8.31063 6.81249 8.56248 7.06434 8.56248 7.37499V11.125C8.56248 11.4356 8.31063 11.6875 7.99998 11.6875C7.68933 11.6875 7.43748 11.4356 7.43748 11.125V7.37499C7.43748 7.06434 7.68933 6.81249 7.99998 6.81249Z" fill="currentColor"></path>
+                        </svg>
+                        Недочеты
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Нашли недочёт на форуме?
+                        </span>
+                        <span class="description">
+                            Скорее сообщите нам о его наличии
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/threads/2707943/" target="_blank">
+                    <div class="activePrefix green">
+                        <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.3125 1.375H12.5V0.8125C12.5 0.475 12.275 0.25 11.9375 0.25H4.0625C3.725 0.25 3.5 0.475 3.5 0.8125V1.375H0.6875C0.35 1.375 0.125 1.6 0.125 1.9375V3.45625C0.125 5.93125 2.0375 7.95625 4.5125 8.06875C4.9625 8.6875 5.58125 9.1375 6.3125 9.41875V10.9375H5.75C4.79375 10.9375 4.0625 11.6687 4.0625 12.625V14.3125C4.0625 14.65 4.2875 14.875 4.625 14.875H11.375C11.7125 14.875 11.9375 14.65 11.9375 14.3125V12.625C11.9375 11.6687 11.2063 10.9375 10.25 10.9375H9.6875V9.475C10.4187 9.19375 11.0375 8.6875 11.4875 8.125C13.9063 7.95625 15.875 5.9875 15.875 3.5125V1.9375C15.875 1.6 15.65 1.375 15.3125 1.375ZM1.25 3.45625V2.5H3.5V5.3125C3.5 5.875 3.6125 6.38125 3.78125 6.83125C2.31875 6.4375 1.25 5.0875 1.25 3.45625ZM14.75 3.45625C14.75 5.03125 13.6812 6.38125 12.2188 6.83125C12.3875 6.38125 12.5 5.875 12.5 5.3125V2.5H14.75V3.45625Z" fill="currentColor"></path>
+                        </svg>
+                        Трофеи
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Хотите получить трофей?
+                        </span>
+                        <span class="description">
+                            Оставляйте заявку в теме
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="activeItemsLine three">
+                <a class="activeItem" href="/support-tickets/open/" target="_blank">
+                    <div class="activePrefix blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8623 14.8426L13.8629 14.8412L13.8759 14.8086L16.125 3.46932V3.43248C16.125 3.14996 16.0206 2.90331 15.7934 2.75537C15.5946 2.62587 15.3661 2.61666 15.2058 2.62882C15.0362 2.64168 14.8764 2.684 14.7658 2.71922C14.7089 2.73734 14.6612 2.75479 14.6271 2.768C14.61 2.77463 14.5961 2.78025 14.5861 2.78444L14.5762 2.78861L2.03633 7.70781L2.03288 7.70901C2.0261 7.71149 2.01715 7.71486 2.00633 7.71906C1.98476 7.72746 1.95541 7.73946 1.92092 7.75514C1.85321 7.78581 1.75966 7.83314 1.66478 7.89809C1.50365 8.00849 1.19681 8.26971 1.24862 8.68386C1.29153 9.02691 1.52801 9.24479 1.68744 9.35759C1.7729 9.41811 1.85466 9.46169 1.91453 9.49019C1.94486 9.50466 1.97063 9.51569 1.98983 9.52349C1.99945 9.52739 2.00749 9.53054 2.01371 9.53294L2.02169 9.53586L2.02678 9.53781L4.22071 10.2764C4.21331 10.414 4.22696 10.5544 4.26346 10.6929L5.36243 14.8617C5.49272 15.3559 5.9399 15.7003 6.45107 15.6999C6.90927 15.6996 7.31565 15.4224 7.48828 15.0088L9.20402 13.1743L12.1508 15.4334L12.1927 15.4517C12.4604 15.5686 12.7106 15.6055 12.9392 15.5743C13.1676 15.5431 13.349 15.4474 13.4854 15.3383C13.6196 15.231 13.7114 15.1099 13.7693 15.0187C13.7987 14.9723 13.8206 14.9316 13.8357 14.9009C13.8434 14.8855 13.8494 14.8726 13.8539 14.8624L13.8596 14.8493L13.8616 14.8445L13.8623 14.8426ZM5.35126 10.4061C5.32628 10.3114 5.36549 10.2113 5.44821 10.1588L12.8897 5.43312C12.8897 5.43312 13.3274 5.16739 13.3118 5.43312C13.3118 5.43312 13.3899 5.48004 13.1553 5.69883C12.9329 5.90664 7.85162 10.8124 7.33743 11.3089C7.30775 11.3375 7.29004 11.3704 7.27958 11.4103L6.45023 14.5749L5.35126 10.4061Z" fill="currentColor"></path>
+                        </svg>
+                        Помощь
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Обратиться в поддержку
+                        </span>
+                        <span class="description">
+                            Поможем в кратчайшее время
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="https://discord.gg/zelenka" target="_blank">
+                    <div class="activePrefix purple">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="none">
+                        <g clip-path="url(#clip0_1_141)">
+                        <path d="M15.2477 1.32135C14.0651 0.77992 12.8166 0.39581 11.5342 0.178833C11.3587 0.492549 11.1999 0.815321 11.0585 1.1458C9.69245 0.93995 8.30327 0.93995 6.93722 1.1458C6.79573 0.815355 6.63694 0.492587 6.46152 0.178833C5.17826 0.397642 3.92896 0.782664 2.74515 1.32418C0.394984 4.8013 -0.242109 8.19205 0.0764376 11.5347C1.45275 12.5515 2.99324 13.3249 4.63094 13.8211C4.99971 13.3251 5.32601 12.799 5.6064 12.2482C5.07384 12.0493 4.55982 11.8039 4.0703 11.5148C4.19914 11.4214 4.32514 11.3251 4.4469 11.2317C5.87129 11.9015 7.42594 12.2489 8.99999 12.2489C10.574 12.2489 12.1287 11.9015 13.5531 11.2317C13.6762 11.3322 13.8023 11.4285 13.9297 11.5148C13.4392 11.8044 12.9242 12.0502 12.3907 12.2496C12.6708 12.8001 12.9971 13.3259 13.3662 13.8211C15.0053 13.3269 16.547 12.5539 17.9235 11.5361C18.2973 7.65972 17.285 4.30012 15.2477 1.32135ZM6.0099 9.47898C5.12221 9.47898 4.38885 8.67341 4.38885 7.68237C4.38885 6.69134 5.09673 5.87869 6.00707 5.87869C6.9174 5.87869 7.6451 6.69134 7.62953 7.68237C7.61396 8.67341 6.91457 9.47898 6.0099 9.47898ZM11.9901 9.47898C11.101 9.47898 10.3704 8.67341 10.3704 7.68237C10.3704 6.69134 11.0783 5.87869 11.9901 5.87869C12.9018 5.87869 13.6239 6.69134 13.6083 7.68237C13.5927 8.67341 12.8947 9.47898 11.9901 9.47898Z" fill="currentColor"></path>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1_141">
+                        <rect width="18" height="13.6423" fill="white" transform="translate(0 0.178833)"></rect>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                        Discord
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Вступить в Discord сервер Lolzteam
+                        </span>
+                        <span class="description">
+                            Общение и новые знакомства
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="https://vk.com/main.php?subdir=invite&amp;subsubdir=iBKPTXc" target="_blank">
+                    <div class="activePrefix blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                            <path d="M9.80382 11.6159C3.65391 11.6159 0.146159 7.39977 0 0.384155H3.08057C3.18176 5.53344 5.45279 7.71457 7.25166 8.16429V0.384155H10.1525V4.82513C11.9289 4.634 13.795 2.61026 14.4246 0.384155H17.3253C16.8419 3.12744 14.8181 5.15118 13.379 5.98316C14.8181 6.65774 17.123 8.42288 18 11.6159H14.8069C14.1211 9.47972 12.4123 7.827 10.1525 7.60215V11.6159H9.80382Z" fill="currentColor"></path>
+                        </svg>
+                        ВКонтакте
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Наша группа в ВКонтакте
+                        </span>
+                        <span class="description">
+                            Локальные мемы про Lolzteam
+                        </span>
+                    </div>
+                </a>
+                <a class="activeItem" href="/misc/ads/" target="_blank">
+                    <div class="activePrefix green">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M8.25 2.8125C6.6967 2.8125 5.4375 4.0717 5.4375 5.625C5.4375 7.1783 6.6967 8.4375 8.25 8.4375C9.80333 8.4375 11.0625 7.1783 11.0625 5.625C11.0625 4.0717 9.80333 2.8125 8.25 2.8125Z" fill="currentColor"></path>
+                            <path d="M5.25 9.9375C3.6967 9.9375 2.4375 11.1967 2.4375 12.75V13.6412C2.4375 14.2061 2.84691 14.6878 3.40445 14.7788C6.61357 15.3028 9.88642 15.3028 13.0955 14.7788C13.6531 14.6878 14.0625 14.2061 14.0625 13.6412V12.75C14.0625 11.1967 12.8033 9.9375 11.25 9.9375H10.9943C10.8559 9.9375 10.7185 9.9594 10.5869 10.0023L9.9378 10.2143C8.84107 10.5724 7.65893 10.5724 6.56219 10.2143L5.91305 10.0023C5.78152 9.9594 5.64402 9.9375 5.50565 9.9375H5.25Z" fill="currentColor"></path>
+                            <path d="M14.625 4.6875C14.9357 4.6875 15.1875 4.93934 15.1875 5.25V6.5625H16.5C16.8106 6.5625 17.0625 6.81434 17.0625 7.125C17.0625 7.43566 16.8106 7.6875 16.5 7.6875H15.1875V9C15.1875 9.31065 14.9357 9.5625 14.625 9.5625C14.3143 9.5625 14.0625 9.31065 14.0625 9V7.6875H12.75C12.4394 7.6875 12.1875 7.43566 12.1875 7.125C12.1875 6.81434 12.4394 6.5625 12.75 6.5625H14.0625V5.25C14.0625 4.93934 14.3143 4.6875 14.625 4.6875Z" fill="currentColor"></path>
+                        </svg>
+                        Реклама
+                    </div>
+                    <div class="text">
+                        <span class="title">
+                            Покупка рекламы на форуме
+                        </span>
+                        <span class="description">
+                            Закрепы и рассылка по уведомлениям
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div></div>

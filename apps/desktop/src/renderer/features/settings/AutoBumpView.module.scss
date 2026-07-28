@@ -1,0 +1,374 @@
+.wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  position: relative;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.back {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  color: $color-text-soft;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+
+  &:hover {
+    color: $color-text;
+    background: $color-surface-overlay;
+  }
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-lg;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.subtitle {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.fieldLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  font-weight: 600;
+  color: $color-text;
+}
+
+.fieldHint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.input {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: $fs-sm;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+}
+
+.inputSm {
+  @extend .input;
+  width: 72px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-3;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: $space-3;
+}
+
+.addRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.primary {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  flex: 0 0 auto;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.link {
+  @include button-reset;
+  @include clickable;
+  color: $color-accent;
+  font-size: $fs-xs;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.empty {
+  padding: $space-5;
+  text-align: center;
+  color: $color-text-muted;
+  font-size: $fs-sm;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-lg;
+}
+
+.threadCard {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.threadHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.threadTitleWrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
+}
+
+.prefixes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+}
+
+.prefix {
+  font-size: $fs-xs;
+  font-weight: 600;
+  padding: 1px $space-2;
+  border-radius: $radius-pill;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+}
+
+.threadTitle {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-base;
+  font-weight: 600;
+  color: $color-text;
+  text-align: left;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.threadMeta {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.threadActions {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex: 0 0 auto;
+}
+
+.icon {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  color: $color-text-soft;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+.weekdays {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: $space-2;
+}
+
+.weekday {
+  @include button-reset;
+  @include clickable;
+  width: 40px;
+  padding: $space-2 0;
+  text-align: center;
+  border-radius: $radius-md;
+  border: 1px solid $color-border-strong;
+  background: $color-surface-raised;
+  color: $color-text-muted;
+  font-size: $fs-xs;
+  font-weight: 600;
+}
+
+.weekdayOn {
+  border-color: $color-accent;
+  background: $color-accent;
+  color: #fff;
+}
+
+.maxPerDay {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  margin-left: auto;
+}
+
+.threadStatus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+}
+
+.statusText {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.statusMsg {
+  font-size: $fs-xs;
+  color: $color-text-soft;
+}
+
+.badge {
+  font-size: $fs-xs;
+  font-weight: 600;
+  padding: 1px $space-2;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border;
+  color: $color-text;
+}
+
+.badge_ok {
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.5);
+  background: rgba(22, 163, 74, 0.12);
+}
+
+.badge_error {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.badge_cooldown {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.badge_skipped {
+  color: $color-text-muted;
+}
+
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.logItem {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-xs;
+}
+
+.logTime {
+  color: $color-text-muted;
+  flex: 0 0 auto;
+}
+
+.logThread {
+  color: $color-text;
+  @include truncate;
+}
+
+.logMsg {
+  color: $color-text-muted;
+  @include truncate;
+}

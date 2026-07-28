@@ -1,0 +1,1050 @@
+<style>
+.section {
+    margin-top: 0px;
+}
+
+.sectionMain {
+    padding: 0px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+@media (min-width: 1072px) {
+    .mainContentBlock {
+        max-width: 805px;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+    }
+}
+.mainContentBlock {
+    border-radius: 10px;
+    vertical-align: top;
+    margin: 0;
+    margin-right: 15px;
+    zoom: 1;
+    float: right;
+    height: fit-content;
+}
+.sectionMain {
+    background-color: rgb(28, 28, 28);
+    border-radius: 10px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    padding: 10px;
+}
+.section {
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 15px;
+}
+
+.help_bb_codes .section .header {
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #2f2f2f;
+    background: rgb(28, 28, 28);
+    border-radius: 10px 10px 0 0;
+}
+
+.primaryContent {
+    padding: 20px;
+    border-bottom: 1px solid #2F2F2F;
+}
+
+.primaryContent, .secondaryContent {
+    padding: 10px;
+    background: rgb(28, 28, 28);
+    border-bottom: 1px solid rgb(36, 36, 36);
+}
+
+.bbCode > dl {
+    width: 49.25%;
+    _width: 48%;
+    float: left;
+    margin-top: 10px;
+}
+
+.bbCode > dl > dt {
+    color: #2BAD72;
+    font-family: Open Sans;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.bbCode > dl > dd {
+    padding: 12px;
+    border-radius: 8px;
+    background: linear-gradient(0deg, rgb(36, 36, 36) 0%, rgb(36, 36, 36) 100%);
+    zoom: 1;
+    margin-top: 12px;
+}
+
+.bbCode > dl > dd {
+    padding: 12px;
+    border-radius: 8px;
+    background: linear-gradient(0deg, rgb(36, 36, 36) 0%, rgb(36, 36, 36) 100%);
+    zoom: 1;
+    margin-top: 12px;
+}
+</style>
+<div class="mainContentBlock section sectionMain">
+
+
+
+
+
+<ul class="section">
+
+	<div class="header">
+		BB-коды
+	</div>
+
+	
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[B], [I], [U], [S] - полужирный, курсив, подчёркивание и зачёркивание</h3>
+			<p class="description">Делает выделенный текст полужирным, наклонным, подчёркнутым или зачёркнутым.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>Это [B]полужирный[/B] текст.<br>
+Это текст [I]курсивом[/I].<br>
+Это [U]подчёркнутый[/U] текст.<br>
+Это [S]перечёркнутый[/S] текст.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml">Это <b>полужирный</b> текст.<br>
+Это текст <i>курсивом</i>.<br>
+Это <span style="text-decoration: underline">подчёркнутый</span> текст.<br>
+Это <span style="text-decoration: line-through">перечёркнутый</span> текст.</dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_b_i_u_s -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[COLOR=<span class="option">цвет</span>], [SIZE=<span class="option">размер</span>] - цвет текста, шрифт и размер</h3>
+			<p class="description">Изменяет цвет, шрифт или размер выделенного текста.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>Это [COLOR=red]красный[/COLOR] и [COLOR=#0000cc]синий[/COLOR] текст.<br>
+Это [SIZE=1]маленький[/SIZE] и [SIZE=7]большой[/SIZE] текст.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml">Это <span style="color: red">красный</span> и <span style="color: #0000cc">синий</span> текст.<br>
+Это <span style="font-size: 9px">маленький</span> и <span style="font-size: 26px">большой</span> текст.</dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_color_font_size -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[URL], [EMAIL] - ссылки</h3>
+			<p class="description">Создаёт ссылку из выделенного текста.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[URL]http://www.example.com[/URL]<br>
+[EMAIL]example@example.com[/EMAIL]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><a href="http://www.example.com" target="_blank" class="externalLink" rel="nofollow">http://www.example.com</a><br>
+<a href="mailto:example@example.com">example@example.com</a></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_url_email -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[URL=<span class="option">ссылка</span>], [EMAIL=<span class="option">адрес</span>] - ссылки (дополнительно)</h3>
+			<p class="description">Делает выделенный текст ссылкой на интернет-страницу или на адрес электронной почты.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[URL=http://www.example.com]Ссылка на example.com[/URL]<br>
+[EMAIL=example@example.com]Моя почта[/EMAIL]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><a href="http://www.example.com" target="_blank" class="externalLink" rel="nofollow">Ссылка на example.com</a><br>
+<a href="mailto:example@example.com">Моя почта</a></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_email_advanced -->
+
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[USER=<span class="option">ID</span>] - ссылка на профиль</h3>
+			<p class="description">Ссылка на профиль пользователя. Как правило добавляется автоматически при упоминании пользователя.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[USER=4315635]ahk_lzt[/USER]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><a href="https://lolz.team/members/4315635/" class="notranslate username mention highlight" contenteditable="false" style="white-space: normal;" translate="no" data-user="4315635, ahk_lzt"><img alt="avatar" loading="lazy" class="avatar" src="https://nztcdn.com/avatar/s/1772741895/4315635.webp"><span class="styleUserNickname style23">ahk_lzt</span></a></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_user -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[IMG] - изображения</h3>
+			<p class="description">Показывает изображение, используя выделенный текст как URL-адрес.</p>
+
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[IMG]https://lolz.team/styles/brivium/rezinc/xenforo/avatars/avatar_s.png[/IMG]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><a href="https://lolz.team/styles/brivium/rezinc/xenforo/avatars/avatar_s.png" class="LbTrigger" data-href="misc/lightbox" data-fancybox="gallery"><img src="https://lolz.team/styles/brivium/rezinc/xenforo/avatars/avatar_s.png" class="bbCodeImage LbImage" style="" data-url="https://lolz.team/styles/brivium/rezinc/xenforo/avatars/avatar_s.png" alt="[IMG]" title="[IMG]" loading="lazy" data-fallback-src=""></a></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_img -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[MEDIA=<span class="option">сайт</span>] - вставка медиа-файлов</h3>
+			<p class="description">Вставляет в сообщение медиа с разрешенных сайтов. Рекомендуется использовать кнопку добавления медиа в панели инструментов редактора. Одобренные сайты:
+				
+					
+						<a href="https://coub.com" target="_blank" rel="nofollow">Coub.com</a>;
+					
+				
+					
+						<a href="https://imgur.com" target="_blank" rel="nofollow">Imgur</a>;
+					
+				
+					
+				
+					
+						<a href="https://music.yandex" target="_blank" rel="nofollow">Music.yandex</a>;
+					
+				
+					
+						<a href="https://reddit.com" target="_blank" rel="nofollow">Reddit</a>;
+					
+				
+					
+						<a href="https://rutube.ru/" target="_blank" rel="nofollow">Rutube</a>;
+					
+				
+					
+						<a href="https://soundcloud.com" target="_blank" rel="nofollow">SoundCloud</a>;
+					
+				
+					
+						<a href="http://www.spotify.com/" target="_blank" rel="nofollow">Spotify</a>;
+					
+				
+					
+						<a href="https://telegram.org" target="_blank" rel="nofollow">Telegram</a>;
+					
+				
+					
+						<a href="https://www.twitch.tv" target="_blank" rel="nofollow">Twitch</a>;
+					
+				
+					
+				
+					
+						<a href="http://www.vimeo.com" target="_blank" rel="nofollow">Vimeo</a>;
+					
+				
+					
+						<a href="http://www.youtube.com" target="_blank" rel="nofollow">YouTube</a>;
+					
+				
+			</p>
+			<dl class="example">
+				<dt>Пример:</dt>
+				<dd>
+					[MEDIA=youtube]oHg5SJYRHA0[/MEDIA]
+				</dd>
+			</dl>
+			<dl class="output">
+				<dt>Вывод:</dt>
+				<dd class="baseHtml">
+					<i>Встроенный YouTube плеер появится здесь.</i>
+				</dd>
+			</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_media -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[LIST] - список</h3>
+			<p class="description">Отображает нумерованный или маркированный список.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[LIST]<br>
+[*]Маркер 1<br>
+[*]Маркер 2<br>
+[/LIST]<br>
+[LIST=1]<br>
+[*]Запись 1<br>
+[*]Запись 2<br>
+[/LIST]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><ul>
+<li>Маркер 1</li>
+<li>Маркер 2</li>
+</ul><ol>
+<li>Запись 1</li>
+<li>Запись 2</li>
+</ol></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_list -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[LEFT], [CENTER], [RIGHT] - выравнивание текста</h3>
+			<p class="description">Изменяет выравнивание выделенного текста.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[LEFT]По левому краю[/LEFT]<br>
+[CENTER]По центру[/CENTER]<br>
+[RIGHT]По правому краю[/RIGHT]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="content--align--left" style="text-align: left">По левому краю&ZeroWidthSpace;</div><div class="content--align--center" style="text-align: center">По центру&ZeroWidthSpace;</div><div class="content--align--right" style="text-align: right">По правому краю&ZeroWidthSpace;</div></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_align -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[QUOTE] - цитата текста</h3>
+			<p class="description">Отображает текст, как процитированный из другого источника. Можно также указать имя этого источника.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[QUOTE]Процитированный текст[/QUOTE]<br>
+[QUOTE=root]Что-то сказал[/QUOTE]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="bbCodeBlock bbCodeQuote">
+	<aside>
+		<blockquote class="quoteContainer"><div class="quote">
+			
+				<span class="quoteAuthor">
+					 
+					
+				</span>
+			
+			
+			Процитированный текст</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+	</aside>
+</div>
+
+
+<div class="bbCodeBlock bbCodeQuote" data-author="root">
+	<aside>
+		<blockquote class="quoteContainer"><div class="quote">
+			
+				<span class="quoteAuthor">
+					
+						<span class="username"><span class="styleUserNickname style3">root</span></span>
+						
+				</span>
+			
+			
+			Что-то сказал</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+	</aside>
+</div></dd>
+</dl>
+			
+		</div>
+	</li>
+	
+	<!-- slot: after_quote -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[SPOILER] - текст, содержащий спойлеры</h3>
+			<p class="description">Скрывает текст, который может содержать спойлеры (преждевременно раскрытая важная сюжетная информация). Чтобы увидеть текст, нужно нажать кнопку спойлера.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[SPOILER]Простой спойлер[/SPOILER]<br>
+[SPOILER=Заголовок спойлера]Спойлер с заголовком[/SPOILER]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="ToggleTriggerAnchor bbCodeSpoilerContainer" style="text-align: left">
+	<button type="button" class="button bbCodeSpoilerButton ToggleTrigger Tooltip JsOnly" title="" data-target="&gt; .SpoilerTarget" data-cachedtitle="Раскрыть или скрыть спойлер"><span>Спойлер
+			<span class="arrowWidget"></span>
+		</span>
+	
+	</button>
+	<div class="SpoilerTarget bbCodeSpoilerText">Простой спойлер</div>
+</div>
+
+
+<div class="ToggleTriggerAnchor bbCodeSpoilerContainer" style="text-align: left">
+	<button type="button" class="button bbCodeSpoilerButton ToggleTrigger Tooltip JsOnly" title="" data-target="&gt; .SpoilerTarget" data-cachedtitle="Раскрыть или скрыть спойлер"><span><span class="SpoilerTitle">Заголовок спойлера</span>
+			<span class="arrowWidget"></span>
+		</span>
+	
+	</button>
+	<div class="SpoilerTarget bbCodeSpoilerText">Спойлер с заголовком</div>
+</div></dd>
+</dl>
+			
+		</div>
+	</li>
+	
+	<!-- slot: after_spoiler -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[CODE], [PHP], [HTML] - вставка программного кода</h3>
+			<p class="description">Отображает текст на одном из языков программирования, выделяя синтаксис где это возможно.</p>
+			
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[CODE]Основной<br>
+код[/CODE]<br>
+[PHP]echo $hello . 'world';[/PHP]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="csiXF_bbCode_FAF39740 bbCodeBlock bbCodeCode bbCodeSource bbCodeSourceBlock" style="max-width: 352.75px;">
+	
+	<div class="sourceCode hidden">
+		Основной<br>
+код
+	</div>
+	
+	<div class="type"><div class="bbCodeBlock-header">
+				<div class="bbCodeBlock-title">
+					<span title="">Код</span>
+				</div>
+				<div class="bbCodeBlock-actions">
+					<i class="fa--xf far fa-expand-alt action action--expand bbCodeAction" aria-hidden="true" title="Expand" style="display: none;"></i>
+					<i class="fa--xf far fa-compress-alt action action--collapse action--hidden bbCodeAction" aria-hidden="true" title="Collapse"></i>
+					<i class="fa--xf far fa-paste action action--copy bbCodeAction" aria-hidden="true" title="Copy" data-phr="Код был скопирован в буфер обмена"></i>
+				</div>
+			</div></div>
+	<div class="scroll-wrapper scrollbar-macosx scrollbar-dynamic line-numbers" style="position: relative; max-height: 350px;"><pre class="scrollbar-macosx scrollbar-dynamic line-numbers scroll-content language-none" style="height: auto; scrollbar-width: none; margin-bottom: 0px; margin-right: 0px; max-height: 58px;" tabindex="0"><div class="scrollbar-macosx scrollbar-dynamic language-none" style="position: relative;">Основной
+код<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></div></pre><div class="scroll-element scroll-x"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="width: 0px;"></div></div></div><div class="scroll-element scroll-y"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="height: 0px;"></div></div></div></div>
+</div><div class="csiXF_bbCode_FAF39740 bbCodeBlock bbCodeCode bbCodeSource bbCodeSourceBlock" style="max-width: 352.75px;">
+	
+	<div class="sourceCode hidden">
+		echo $hello . 'world';
+	</div>
+	
+	<div class="type"><div class="bbCodeBlock-header">
+				<div class="bbCodeBlock-title">
+					<span title="">PHP</span>
+				</div>
+				<div class="bbCodeBlock-actions">
+					<i class="fa--xf far fa-expand-alt action action--expand bbCodeAction" aria-hidden="true" title="Expand" style="display: none;"></i>
+					<i class="fa--xf far fa-compress-alt action action--collapse action--hidden bbCodeAction" aria-hidden="true" title="Collapse"></i>
+					<i class="fa--xf far fa-paste action action--copy bbCodeAction" aria-hidden="true" title="Copy" data-phr="Код был скопирован в буфер обмена"></i>
+				</div>
+			</div></div>
+	<div class="scroll-wrapper scrollbar-macosx scrollbar-dynamic line-numbers" style="position: relative; max-height: 350px;"><pre class="scrollbar-macosx scrollbar-dynamic line-numbers scroll-content language-php" style="height: auto; scrollbar-width: none; margin-bottom: 0px; margin-right: 0px; max-height: 37px;" tabindex="0"><div class="scrollbar-macosx scrollbar-dynamic language-php" style="position: relative;"><span class="token keyword">echo</span> <span class="token variable">$hello</span> <span class="token operator">.</span> <span class="token string single-quoted-string">'world'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></div></pre><div class="scroll-element scroll-x"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="width: 0px;"></div></div></div><div class="scroll-element scroll-y"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="height: 0px;"></div></div></div></div>
+</div></dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_code -->
+	
+	
+	<!-- slot: after_indent -->
+	
+	<li class="primaryContent">
+		<div class="bbCode">
+			<h3 class="title">[PLAIN] - обычный текст</h3>
+			<p class="description">Отключает распознавание BB-кодов внутри выделенного текста.</p>
+
+			<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[PLAIN]Это не [B]полужирный[/B] текст.[/PLAIN]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml">Это не [B]полужирный[/B] текст.</dd>
+</dl>
+		</div>
+	</li>
+	
+	<!-- slot: after_plain -->
+	
+		
+	<!-- slot: after_attach -->
+
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[API], 
+					[API=<span class="option">option</span>]
+					- Получить данные с сайта
+				</h3>
+				<p class="description">ББ-код получит данные с вашего сайта и вставит в сообщение.
+Также можно получить значение из JSON объекта, если указать путь к нему.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[api]https://jsonplaceholder.typicode.com/todos/1[/api]<br>
+<br>
+[api=title]https://jsonplaceholder.typicode.com/todos/1[/api]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml">{<br>
+  "userId": 1,<br>
+  "id": 1,<br>
+  "title": "delectus aut autem",<br>
+  "completed": false<br>
+}<br>
+<br>
+
+
+delectus aut autem</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[BUTTON=<span class="option">option</span>]
+					- Кнопка
+				</h3>
+				<p class="description">Данный код работает аналогично коду url, но вместо обычной текстовой ссылки будет отображена ссылка в виде кнопки.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[button=https://lolz.team/members/]Топ пользователей[/button]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><a href="https://lolz.team/members/" target="_blank" class="button primary" style="margin-bottom: 10px">Топ пользователей</a></dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[CENSOR]
+					
+					- Скрытый контент
+				</h3>
+				<p class="description">Открывается по клику</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[censor]Привет![/censor]<br>
+<br>
+Текст будет отображен после нажатия на него.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="CensorSpoiler">Привет!</div><br>
+Текст будет отображен после нажатия на него.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[CLUB], 
+					[CLUB=<span class="option">option</span>]
+					- Скрытый текст для команды форума
+				</h3>
+				<p class="description">Информация внутри кода отображается только команде форума.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[club]Привет, мир![/club]<br>
+Отображается только участникам команды форума.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div style="max-width: 940px;text-align:" class="bbCodeBlock bbCodeQuote bbCodeHide">
+    <aside>
+        
+    <blockquote class="quoteContainer hideContainer"><div class="quote">Скрытый контент для команды форума.</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+    </aside>
+</div><br>
+Отображается только участникам команды форума.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[DAYS=<span class="option">option</span>]
+					- Скрыть текст по времени с момента регистрации
+				</h3>
+				<p class="description">Информация внутри кода отображается только определенным, зарегистрированным пользователям, которые провели на форуме указанное количество дней.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[days=5]Привет, мир![/days]<br>
+Отображается только зарегистрированным пользователям, которые зарегистрированы не раньше 5 дней назад.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div style="max-width: 940px;text-align:left" class="bbCodeBlock bbCodeQuote bbCodeHide">
+    <aside>
+        
+            <div class="attribution type">
+                <span>
+                Скрытый контент. Для просмотра информации необходимо провести 5 дней на форуме.
+                </span>
+                <span data-phr="Хайд был скопирован в буфер обмена" style="padding: 0;" class="copyButton fl_r Tooltip copyButton--withCheck" title="" data-cachedtitle="Скопировать хайд">
+                  <i class="far fa-clone" aria-hidden="true"></i>
+                  <i class="fa fa-check greenColor" aria-hidden="true"></i>
+                </span>
+            </div>
+        
+    <blockquote class="quoteContainer hideContainer"><div class="quote">Привет, мир!</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+    </aside>
+</div><br>
+Отображается только зарегистрированным пользователям, которые зарегистрированы не раньше 5 дней назад.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[EXCEPTIDS=<span class="option">option</span>]
+					- Скрыть текст от пользователей
+				</h3>
+				<p class="description">Информация внутри кода отображается всем, исключая тех, кто указан в хайде.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[exceptids=1,3,3124696]Привет, мир![/exceptids]<br>
+Не отображается пользователям с идентификаторами 1, 3 и 3124696.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div style="max-width: 940px;text-align:left" class="bbCodeBlock bbCodeQuote bbCodeHide">
+    <aside>
+        
+            <div class="attribution type">
+                <span>
+                Контент запрещен для просмотра <a href="alex/" class="notranslate username" translate="no" dir="auto" data-user="3124696, Alex"><span class="styleUserNickname style22">Alex</span></a>, <a href="rays/" class="notranslate username" translate="no" dir="auto" data-user="1, RaysMorgan"><span class="styleUserNickname style3">RaysMorgan</span></a>, <a href="members/3/" class="notranslate username" translate="no" dir="auto" data-user="3, root"><span class="styleUserNickname style3">root</span></a>.
+                </span>
+                <span data-phr="Хайд был скопирован в буфер обмена" style="padding: 0;" class="copyButton fl_r Tooltip copyButton--withCheck" title="" data-cachedtitle="Скопировать хайд">
+                  <i class="far fa-clone" aria-hidden="true"></i>
+                  <i class="fa fa-check greenColor" aria-hidden="true"></i>
+                </span>
+            </div>
+        
+    <blockquote class="quoteContainer hideContainer"><div class="quote">Привет, мир!</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+    </aside>
+</div><br>
+Не отображается пользователям с идентификаторами 1, 3 и 3124696.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[LANG=<span class="option">option</span>]
+					- Текст в зависимости от языка
+				</h3>
+				<p class="description">Покажет текст, если у человека выбран определенный язык.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[lang=ru]Будет показано только пользователем на русском языке[/lang]<br>
+[lang=en]Will be shown only for users with English language[/lang]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml">Будет показано только пользователем на русском языке</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[LIKES=<span class="option">option</span>]
+					- Скрыть текст по количеству симпатий
+				</h3>
+				<p class="description">Информация внутри кода отображается только определенным, зарегистрированным пользователям, набравшим необходимое количество благодарностей на форуме.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[likes=5]Привет, мир![/likes]<br>
+Отображается только зарегистрированным пользователям, количество симпатий на форуме которых больше или равно 5.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div style="max-width: 940px;text-align:left" class="bbCodeBlock bbCodeQuote bbCodeHide">
+    <aside>
+        
+            <div class="attribution type">
+                <span>
+                Скрытый контент. Для просмотра информации необходимо иметь 5 симпатий.
+                </span>
+                <span data-phr="Хайд был скопирован в буфер обмена" style="padding: 0;" class="copyButton fl_r Tooltip copyButton--withCheck" title="" data-cachedtitle="Скопировать хайд">
+                  <i class="far fa-clone" aria-hidden="true"></i>
+                  <i class="fa fa-check greenColor" aria-hidden="true"></i>
+                </span>
+            </div>
+        
+    <blockquote class="quoteContainer hideContainer"><div class="quote">Привет, мир!</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+    </aside>
+</div><br>
+Отображается только зарегистрированным пользователям, количество симпатий на форуме которых больше или равно 5.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[LIKES2=<span class="option">option</span>]
+					- Скрыть текст по количеству лайков
+				</h3>
+				<p class="description">Информация внутри кода отображается только определенным, зарегистрированным пользователям, набравшим необходимое количество лайков на форуме.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[likes2=5]Привет, мир![/likes2]<br>
+Отображается только зарегистрированным пользователям, количество лайков на форуме которых больше или равно 5.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div style="max-width: 940px;text-align:left" class="bbCodeBlock bbCodeQuote bbCodeHide">
+    <aside>
+        
+            <div class="attribution type">
+                <span>
+                Скрытый контент. Для просмотра информации необходимо иметь 5 лайков.
+                </span>
+                <span data-phr="Хайд был скопирован в буфер обмена" style="padding: 0;" class="copyButton fl_r Tooltip copyButton--withCheck" title="" data-cachedtitle="Скопировать хайд">
+                  <i class="far fa-clone" aria-hidden="true"></i>
+                  <i class="fa fa-check greenColor" aria-hidden="true"></i>
+                </span>
+            </div>
+        
+    <blockquote class="quoteContainer hideContainer"><div class="quote">Привет, мир!</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+    </aside>
+</div><br>
+Отображается только зарегистрированным пользователям, количество лайков на форуме которых больше или равно 5.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[PRICE], 
+					[PRICE=<span class="option">option</span>]
+					- Price
+				</h3>
+				<p class="description">Displays a price with a live-converted equivalent in the viewer's currency.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[price]1000[/price]<br>
+[price=USD]12.5[/price]<br>
+Показывает цену с автоматическим пересчётом в валюту пользователя по текущему курсу. Без указания валюты сумма считается в рублях.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><span class="bbCodePrice" title="1000 ₽" data-price-amount="1000" data-price-currency="RUB">1000 ₽</span><br>
+<span class="bbCodePrice" title="12.5 $" data-price-amount="12.5" data-price-currency="USD">12.5 $ <span class="bbCodePrice-converted" style="opacity:.7;font-size:.9em">(≈&nbsp;977,62&nbsp;₽)</span></span><br>
+Показывает цену с автоматическим пересчётом в валюту пользователя по текущему курсу. Без указания валюты сумма считается в рублях.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[SRC], 
+					[SRC=<span class="option">option</span>]
+					- Код: подсветка синтаксиса
+				</h3>
+				<p class="description">Подсветка синтаксиса - выделение синтаксических конструкций текста с использованием различных цветов, шрифтов и начертаний. Обычно применяется в текстовых редакторах для облегчения чтения исходного текста программ. [SRC] - автоматическая подсветка синтаксиса. [SRC="подсветка"] - с определённым языком, где подсветка это: python (Python), ruby (Ruby), perl (Perl), php (PHP), xml (XML), html (HTML), css (CSS), javascript (javascript), java (Java), cpp (C++), sql (SQL), smalltalk (Smalltalk), ini (INI file), dos (DOS Style), bash (Bash Style), diff (DIFF). В скобках указаны оригинальные названия языков.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[SRC]<br>
+<br>
+<title>Hello World</title><br>
+<br>
+<br>
+<?php echo '<p?>Hello World<p></p>'; ?&gt;<br>
+<br>
+[/SRC]<br>
+<br>
+[SRC="html"]<br>
+<br>
+<br>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><br>
+<title>Подсветка синтаксиса HTML</title><br>
+<br>
+<br>
+<h1>Заголовок страницы</h1><br>
+<p>Основной текст.</p><br>
+<br>
+[/SRC]<br>
+<br>
+[SRC="php"]<!--?php<br /-->
+$ch = curl_init("http://www.example.com/");<br>
+$fp = fopen("example_homepage.txt", "w");<br>
+<br>
+curl_setopt($ch, CURLOPT_FILE, $fp);<br>
+curl_setopt($ch, CURLOPT_HEADER, 0);<br>
+<br>
+curl_exec($ch);<br>
+curl_close($ch);<br>
+fclose($fp);<br>
+?&gt;[/SRC]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="csiXF_bbCode_FAF39740 bbCodeBlock bbCodeCode bbCodeSource bbCodeSourceBlock" style="max-width: 352.75px;">
+	
+	<div class="sourceCode hidden">
+		&lt;html&gt;<br>
+&lt;head&gt;<br>
+&lt;title&gt;Hello World&lt;/title&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;?php echo '&lt;p&gt;Hello World&lt;/p&gt;'; ?&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;
+	</div>
+	
+	<div class="type"><div class="bbCodeBlock-header">
+				<div class="bbCodeBlock-title">
+					<span title="">Код</span>
+				</div>
+				<div class="bbCodeBlock-actions">
+					<i class="fa--xf far fa-expand-alt action action--expand bbCodeAction" aria-hidden="true" title="Expand" style="display: none;"></i>
+					<i class="fa--xf far fa-compress-alt action action--collapse action--hidden bbCodeAction" aria-hidden="true" title="Collapse"></i>
+					<i class="fa--xf far fa-paste action action--copy bbCodeAction" aria-hidden="true" title="Copy" data-phr="Код был скопирован в буфер обмена"></i>
+				</div>
+			</div></div>
+	<div class="scroll-wrapper scrollbar-macosx scrollbar-dynamic line-numbers" style="position: relative; max-height: 350px;"><pre class="scrollbar-macosx scrollbar-dynamic line-numbers scroll-content language-none" style="height: auto; scrollbar-width: none; margin-bottom: 0px; margin-right: 0px; max-height: 184px;" tabindex="0"><div class="scrollbar-macosx scrollbar-dynamic language-none" style="position: relative;">&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Hello World&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;?php echo '&lt;p&gt;Hello World&lt;/p&gt;'; ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></div></pre><div class="scroll-element scroll-x"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="width: 0px;"></div></div></div><div class="scroll-element scroll-y"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="height: 0px;"></div></div></div></div>
+</div><br>
+<div class="csiXF_bbCode_FAF39740 bbCodeBlock bbCodeCode bbCodeSource bbCodeSourceBlock" style="max-width: 352.75px;">
+	
+	<div class="sourceCode hidden">
+		&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+&lt;head&gt;<br>
+&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;<br>
+&lt;title&gt;Подсветка синтаксиса HTML&lt;/title&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&lt;h1&gt;Заголовок страницы&lt;/h1&gt;<br>
+&lt;p&gt;Основной текст.&lt;/p&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;
+	</div>
+	
+	<div class="type"><div class="bbCodeBlock-header">
+				<div class="bbCodeBlock-title">
+					<span title="">html</span>
+				</div>
+				<div class="bbCodeBlock-actions">
+					<i class="fa--xf far fa-expand-alt action action--expand bbCodeAction" aria-hidden="true" title="Expand" style="display: none;"></i>
+					<i class="fa--xf far fa-compress-alt action action--collapse action--hidden bbCodeAction" aria-hidden="true" title="Collapse"></i>
+					<i class="fa--xf far fa-paste action action--copy bbCodeAction" aria-hidden="true" title="Copy" data-phr="Код был скопирован в буфер обмена"></i>
+				</div>
+			</div></div>
+	<div class="scroll-wrapper scrollbar-macosx scrollbar-dynamic line-numbers" style="position: relative; max-height: 350px;"><pre class="scrollbar-macosx scrollbar-dynamic line-numbers scroll-content language-html scroll-scrollx_visible" style="height: auto; scrollbar-width: none; margin-bottom: 0px; margin-right: 0px; max-height: 247px;" tabindex="0"><div class="scrollbar-macosx scrollbar-dynamic language-html" style="position: relative;"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/html; charset=utf-8<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Подсветка синтаксиса HTML<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>Заголовок страницы<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Основной текст.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></div></pre><div class="scroll-element scroll-x scroll-scrollx_visible"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="width: 216px; left: 0px;"></div></div></div><div class="scroll-element scroll-y scroll-scrollx_visible"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="height: 0px;"></div></div></div></div>
+</div><br>
+<div class="csiXF_bbCode_FAF39740 bbCodeBlock bbCodeCode bbCodeSource bbCodeSourceBlock" style="max-width: 352.75px;">
+	
+	<div class="sourceCode hidden">
+		&lt;?php<br>
+$ch = curl_init("http://www.example.com/");<br>
+$fp = fopen("example_homepage.txt", "w");<br>
+<br>
+curl_setopt($ch, CURLOPT_FILE, $fp);<br>
+curl_setopt($ch, CURLOPT_HEADER, 0);<br>
+<br>
+curl_exec($ch);<br>
+curl_close($ch);<br>
+fclose($fp);<br>
+?&gt;
+	</div>
+	
+	<div class="type"><div class="bbCodeBlock-header">
+				<div class="bbCodeBlock-title">
+					<span title="">php</span>
+				</div>
+				<div class="bbCodeBlock-actions">
+					<i class="fa--xf far fa-expand-alt action action--expand bbCodeAction" aria-hidden="true" title="Expand" style="display: none;"></i>
+					<i class="fa--xf far fa-compress-alt action action--collapse action--hidden bbCodeAction" aria-hidden="true" title="Collapse"></i>
+					<i class="fa--xf far fa-paste action action--copy bbCodeAction" aria-hidden="true" title="Copy" data-phr="Код был скопирован в буфер обмена"></i>
+				</div>
+			</div></div>
+	<div class="scroll-wrapper scrollbar-macosx scrollbar-dynamic line-numbers" style="position: relative; max-height: 350px;"><pre class="scrollbar-macosx scrollbar-dynamic line-numbers scroll-content language-php scroll-scrollx_visible" style="height: auto; scrollbar-width: none; margin-bottom: 0px; margin-right: 0px; max-height: 247px;" tabindex="0"><div class="scrollbar-macosx scrollbar-dynamic language-php" style="position: relative;"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"http://www.example.com/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$fp</span> <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"example_homepage.txt"</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"w"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_FILE</span><span class="token punctuation">,</span> <span class="token variable">$fp</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_HEADER</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">curl_close</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$fp</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></div></pre><div class="scroll-element scroll-x scroll-scrollx_visible"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="width: 320px; left: 0px;"></div></div></div><div class="scroll-element scroll-y scroll-scrollx_visible"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-bar" style="height: 0px;"></div></div></div></div>
+</div></dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[SRCI], 
+					[SRCI=<span class="option">option</span>]
+					- Однострочный код
+				</h3>
+				<p class="description">Подсветка синтаксиса - выделение синтаксических конструкций текста с использованием различных цветов, шрифтов и начертаний. Обычно применяется в текстовых редакторах для облегчения чтения исходного текста программ. [SRCI] - автоматическая подсветка синтаксиса. [SRCI="подсветка"] - с определённым языком, где подсветка это: python (Python), ruby (Ruby), perl (Perl), php (PHP), xml (XML), html (HTML), css (CSS), javascript (javascript), java (Java), cpp (C++), sql (SQL), smalltalk (Smalltalk), ini (INI file), dos (DOS Style), bash (Bash Style), diff (DIFF). В скобках указаны оригинальные названия языков.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[srci]config.php[/srci]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div class="csiXF_bbCode_FAF39740 bbCodeSource bbCodeSourceInline">
+	<code class="language- language-none" data-lang="">config.php</code>
+</div></dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[TOOLTIP=<span class="option">option</span>]
+					- Tooltip
+				</h3>
+				<p class="description"></p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[tooltip=5]Lolzteam[/tooltip]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><abbr title="" class="KWMOver Tooltip" data-cachedtitle="Lolzteam — название нашего форума!">Lolzteam</abbr></dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					
+					[USERIDS=<span class="option">option</span>]
+					- Скрытый текст для пользователей
+				</h3>
+				<p class="description">Отображение информации только для пользователей с указанными идентификаторами.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[userids=1,3,3124696]Привет, мир![/userids]<br>
+Отображается только для пользователей с идентификаторами 1, 3 и 3124696.</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml"><div style="max-width: 940px;text-align:" class="bbCodeBlock bbCodeQuote bbCodeHide">
+    <aside>
+        
+    <blockquote class="quoteContainer hideContainer"><div class="quote">Скрытый контент для пользователей <a href="alex/" class="notranslate username" translate="no" dir="auto" data-user="3124696, Alex"><span class="styleUserNickname style22">Alex</span></a>, <a href="rays/" class="notranslate username" translate="no" dir="auto" data-user="1, RaysMorgan"><span class="styleUserNickname style3">RaysMorgan</span></a>, <a href="members/3/" class="notranslate username" translate="no" dir="auto" data-user="3, root"><span class="styleUserNickname style3">root</span></a>.</div><div class="quoteExpand">Нажмите, чтобы раскрыть...</div></blockquote>
+    </aside>
+</div><br>
+Отображается только для пользователей с идентификаторами 1, 3 и 3124696.</dd>
+</dl>
+			</div>
+		</li>
+	
+		<li class="primaryContent">
+			<div class="bbCode">
+				<h3 class="title">
+					[VISITOR]
+					
+					- Имя пользователя
+				</h3>
+				<p class="description">Вместо BB-кода будет отображено имя пользователя, который просматривает страницу.</p>
+				<dl class="example">
+	<dt>Пример:</dt>
+	<dd>[visitor][/visitor]</dd>
+</dl>
+<dl class="output">
+	<dt>Вывод:</dt>
+	<dd class="baseHtml">ahk_lzt</dd>
+</dl>
+			</div>
+		</li>
+	
+
+	<!-- slot: after_custom -->
+	
+	
+</ul></div>
