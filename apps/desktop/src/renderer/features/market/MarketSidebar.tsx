@@ -36,6 +36,12 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { useSession } from '~/stores/session'
 import { useMarketRoute } from '~/stores/marketRoute'
+import type { MarketItem, MarketPayment } from '@lzt/shared'
+import { MailToolsModal } from './MailToolsModal'
+import { useViewStore } from '~/stores/view'
+import { useSettingsRoute } from '~/stores/settingsRoute'
+import { useMailTarget } from '~/stores/mailTarget'
+import { useForumStore } from '~/features/forum/forum-store'
 import { CurrencyModal } from '~/features/profile/CurrencyModal'
 import { SiteAccessModal } from './SiteAccessModal'
 import { TransferModal } from './TransferModal'
@@ -79,6 +85,54 @@ const formatBalance = (balance: number | null, currency: string | null): string 
   }
 }
 
+const openForumCreate = (forumId: number, title: string): void => {
+  useViewStore.getState().setView('forum')
+  useForumStore.getState().selectSection({ type: 'forum', forumId, title })
+  useForumStore.getState().openCreate()
+}
+
+const openDevApi = (): void => {
+  useViewStore.getState().setView('settings')
+  setTimeout(() => useSettingsRoute.getState().open('devapi'), 0)
+}
+
+const openMailTool = (): void => {
+  useViewStore.getState().setView('tools')
+  useMailTarget.getState().requestOpen()
+}
+
+const fmtMoney = (
+  value: number,
+  currency: string | null,
+  signed = false,
+): string => {
+  const code = (currency ?? 'rub').toUpperCase()
+  const sign = !signed ? '' : value > 0 ? '+' : value < 0 ? '\u2212' : ''
+  const abs = Math.abs(value)
+  try {
+    return `${sign}${new Intl.NumberFormat('ru-RU', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(abs)} ${code === 'RUB' ? '\u20bd' : code}`
+  } catch {
+    return `${sign}${abs} ${code}`
+  }
+}
+
+const fmtOpDate = (unix: number): string => {
+  if (!unix) return ''
+  try {
+    return new Intl.DateTimeFormat('ru-RU', {
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(unix * 1000))
+  } catch {
+    return ''
+  }
+}
+
 export const MarketSidebar = () => {
   const { t } = useTranslation()
   const status = useSession((s) => s.status)
@@ -98,6 +152,11 @@ export const MarketSidebar = () => {
   const [transferOpen, setTransferOpen] = useState(false)
   const [currencyOpen, setCurrencyOpen] = useState(false)
   const [tagsOpen, setTagsOpen] = useState(false)
+  const [viewedItems, setViewedItems] = useState<MarketItem[]>([])
+  const [payments, setPayments] = useState<MarketPayment[]>([])
+  const [mailToolsMode, setMailToolsMode] = useState<'letters' | 'guard' | null>(
+    null,
+  )
 
   useEffect(() => {
     let cancelled = false
@@ -111,6 +170,23 @@ export const MarketSidebar = () => {
       cancelled = true
     }
   }, [])
+
+  useEffect(() => {
+    if (!profile) return
+    let cancelled = false
+    void (async () => {
+      const [viewed, history] = await Promise.all([
+        window.moderator.market.getViewed(1),
+        window.moderator.market.getPayments({ showPaymentStats: false }),
+      ])
+      if (cancelled) return
+      if (viewed.ok) setViewedItems(viewed.page.items.slice(0, 5))
+      if (history.ok) setPayments(history.page.payments.slice(0, 5))
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [profile])
 
   const pair = selected && suggested ? `${selected}:${suggested}` : ''
   const showCurrency = Boolean(
@@ -139,7 +215,7 @@ export const MarketSidebar = () => {
       ) : null}
 
       {showCurrency ? (
-        <section className={styles.sbCard}>
+        <section className={`${styles.sbCard} ${styles.sbCurrencyCard}`}>
           <div className={styles.sbCardHead}>
             <Wallet size={15} />
             <span>{t('market.sidebar.currency.title')}</span>
@@ -171,7 +247,7 @@ export const MarketSidebar = () => {
         </section>
       ) : null}
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbBalanceCard}`}>
         <div className={styles.sbBalanceLabel}>{t('market.sidebar.balance.title')}</div>
         <div className={styles.sbBalanceValue}>
           {profile ? (
@@ -208,7 +284,7 @@ export const MarketSidebar = () => {
         </div>
       </section>
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbNavigationCard}`}>
         <div className={styles.sbMenu}>
           <MenuItem
             icon={User}
@@ -317,7 +393,7 @@ export const MarketSidebar = () => {
         </div>
       </section>
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbNavigationCard}`}>
         <div className={styles.sbMenu}>
           <MenuItem
             icon={ShieldCheck}
@@ -347,14 +423,18 @@ export const MarketSidebar = () => {
           <MenuItem
             icon={Bug}
             label={t('market.sidebar.links.reportBug')}
-            onClick={() => openLztLinkOrExternal(getForumWebBase() + '/forums/826/')}
+            onClick={() => openForumCreate(826, 'Недочеты')}
           />
           <MenuItem
             icon={Lightbulb}
             label={t('market.sidebar.links.suggestIdea')}
-            onClick={() => openLztLinkOrExternal(getForumWebBase() + '/forums/707/')}
+            onClick={() => openForumCreate(707, 'Предложения')}
           />
-          <MenuItem icon={Code2} label={t('market.sidebar.links.api')} />
+          <MenuItem
+            icon={Code2}
+            label={t('market.sidebar.links.api')}
+            onClick={openDevApi}
+          />
           <MenuItem
             icon={Rocket}
             label={t('market.sidebar.links.launcher')}
@@ -378,61 +458,102 @@ export const MarketSidebar = () => {
         </div>
       </section>
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbActivityCard}`}>
         <div className={styles.sbTitle}>
           <Clock size={14} />
           <span>{t('market.sidebar.recent.title')}</span>
         </div>
-        <p className={styles.sbEmpty}>{t('market.sidebar.empty')}</p>
+        {viewedItems.length === 0 ? (
+          <p className={styles.sbEmpty}>{t('market.sidebar.empty')}</p>
+        ) : (
+          viewedItems.map((item) => (
+            <div key={item.item_id} className={styles.sbListEntry}>
+              <span className={styles.sbListEntryTitle}>
+                {item.title ?? item.title_en ?? ''}
+              </span>
+              <span className={styles.sbListEntryMeta}>
+                {fmtMoney(item.rub_price ?? item.price ?? 0, 'rub')}
+                {item.seller?.username ? ` \u00b7 ${item.seller.username}` : ''}
+              </span>
+            </div>
+          ))
+        )}
       </section>
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbActivityCard}`}>
         <div className={styles.sbTitle}>
           <Activity size={14} />
           <span>{t('market.sidebar.activity.title')}</span>
         </div>
-        <p className={styles.sbEmpty}>{t('market.sidebar.empty')}</p>
+        {payments.length === 0 ? (
+          <p className={styles.sbEmpty}>{t('market.sidebar.empty')}</p>
+        ) : (
+          payments.map((payment) => (
+            <div key={payment.operation_id} className={styles.sbListEntry}>
+              <span className={styles.sbListEntryTitle}>
+                {payment.data.commentPlain ??
+                  payment.data.comment ??
+                  payment.operation_type}
+              </span>
+              <span className={styles.sbListEntryMeta}>
+                {fmtMoney(
+                  payment.incoming_sum > 0
+                    ? payment.incoming_sum
+                    : -payment.outgoing_sum,
+                  null,
+                  true,
+                )}
+                {` \u00b7 ${fmtOpDate(payment.operation_date)}`}
+              </span>
+            </div>
+          ))
+        )}
       </section>
 
-      <section className={styles.sbCard}>
-        <div className={styles.sbTitle}>
-          <Users size={14} />
-          <span>{t('market.sidebar.online.title', { count: 0 })}</span>
-        </div>
-        <p className={styles.sbEmpty}>{t('market.sidebar.empty')}</p>
-      </section>
-
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbToolCard}`}>
         <div className={styles.sbTitle}>
           <KeyRound size={14} />
           <span>{t('market.sidebar.mailTools.getCode.title')}</span>
         </div>
         <p className={styles.sbNote}>{t('market.sidebar.mailTools.getCode.desc')}</p>
-        <button type="button" className={styles.sbWideBtn}>
+        <button type="button" className={styles.sbWideBtn} onClick={openMailTool}>
           {t('market.sidebar.mailTools.getCode.title')}
         </button>
       </section>
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbToolCard}`}>
         <div className={styles.sbTitle}>
           <Inbox size={14} />
           <span>{t('market.sidebar.mailTools.anyMail')}</span>
         </div>
-        <button type="button" className={styles.sbWideBtn}>
+        <button
+          type="button"
+          className={styles.sbWideBtn}
+          onClick={() => setMailToolsMode('letters')}
+        >
           {t('market.sidebar.mailTools.anyMail')}
         </button>
       </section>
 
-      <section className={styles.sbCard}>
+      <section className={`${styles.sbCard} ${styles.sbToolCard}`}>
         <div className={styles.sbTitle}>
           <Bell size={14} />
           <span>{t('market.sidebar.mailTools.steamGuard')}</span>
         </div>
-        <button type="button" className={styles.sbWideBtn}>
+        <button
+          type="button"
+          className={styles.sbWideBtn}
+          onClick={() => setMailToolsMode('guard')}
+        >
           {t('market.sidebar.mailTools.steamGuard')}
         </button>
       </section>
 
+      <MailToolsModal
+        open={mailToolsMode !== null}
+        mode={mailToolsMode ?? 'letters'}
+        onClose={() => setMailToolsMode(null)}
+      />
       <SiteAccessModal
         open={siteUrl !== null}
         url={siteUrl ?? ''}

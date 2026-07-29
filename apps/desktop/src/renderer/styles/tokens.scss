@@ -1,21 +1,35 @@
 :root {
-  --pageBackground: rgb(20, 20, 20);
-  --contentBackground: rgb(28, 28, 28);
-  --contentText: rgb(214, 214, 214);
-  --faintTextColor: rgb(234, 234, 234);
-  --mutedTextColor: rgb(148, 148, 148);
+  --theme-bg: #141414;
+  --theme-surface: #1c1c1c;
+  --theme-surface-raised: #242424;
+  --theme-surface-overlay: #303030;
+  --theme-text: #eaeaea;
+  --theme-text-soft: #d6d6d6;
+  --theme-text-muted: #949494;
+  --theme-accent: #00ba78;
+  --theme-accent-soft: #228e5d;
+  --theme-accent-dark: #009660;
+  --theme-border: rgba(255, 255, 255, 0.08);
+  --theme-border-strong: rgba(255, 255, 255, 0.15);
+  --theme-shadow: rgba(0, 0, 0, 0.55);
+
+  --pageBackground: var(--theme-bg);
+  --contentBackground: var(--theme-surface);
+  --contentText: var(--theme-text-soft);
+  --faintTextColor: var(--theme-text);
+  --mutedTextColor: var(--theme-text-muted);
   --mutedTextColorStill: rgb(80, 80, 80);
   --dimmedTextColor: rgb(117, 147, 180);
 
-  --primary: rgb(54, 54, 54);
-  --primaryDark: rgb(48, 48, 48);
-  --primaryDarker: rgb(36, 36, 36);
-  --primaryLight: rgb(18, 76, 50);
-  --primaryLighter: rgb(34, 142, 93);
-  --primaryLighterStill: rgb(48, 48, 48);
+  --primary: var(--theme-surface-overlay);
+  --primaryDark: var(--theme-surface-overlay);
+  --primaryDarker: var(--theme-surface-raised);
+  --primaryLight: color-mix(in srgb, var(--theme-accent) 35%, var(--theme-surface));
+  --primaryLighter: var(--theme-accent-soft);
+  --primaryLighterStill: var(--theme-surface-overlay);
   --primaryLightest: rgb(83, 91, 99);
   --primaryLightish: rgb(35, 148, 188);
-  --primaryMedium: rgb(0, 186, 120);
+  --primaryMedium: var(--theme-accent);
 
   --secondaryDark: #8f6c3f;
   --secondaryDarker: rgb(136, 68, 68);
@@ -25,21 +39,21 @@
   --secondaryMedium: #e68c17;
 
   --inlineMod: rgb(255, 243, 200);
-  --loaderbar: rgb(18, 76, 50);
+  --loaderbar: var(--theme-accent-dark);
   --overlayMaskColor: rgb(0, 0, 0);
-  --tooltipBackground: rgb(54, 54, 54);
+  --tooltipBackground: var(--theme-surface-overlay);
   --textCtrlBackground: #f5f5f5;
   --textCtrlText: #000000;
-  --dad_mbabc_color: rgb(0, 186, 120);
+  --dad_mbabc_color: var(--theme-accent);
   --nobita_AvatarAlive_backgroundColor: #176093;
 
   --bg: var(--pageBackground);
   --bg-elevated: var(--contentBackground);
-  --border: rgba(255, 255, 255, 0.08);
+  --border: var(--theme-border);
   --text: var(--faintTextColor);
   --text-muted: var(--mutedTextColor);
   --accent: var(--primaryMedium);
-  --accent-hover: #00d089;
+  --accent-hover: var(--theme-accent-soft);
   --danger: var(--secondaryLight);
   --success: var(--primaryMedium);
   --radius: 12px;

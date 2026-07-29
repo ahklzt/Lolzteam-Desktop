@@ -7,10 +7,19 @@ import { UserNoteCard } from './UserNoteCard'
 import { ProfileWall } from './ProfileWall'
 import './profile-site.css'
 import './profile-legacy.css'
+import './profile-reference.css'
 import { useAvatarOverride } from '~/lib/avatar'
+import { formatAgo } from '~/lib/time'
 import { useViewStore } from '~/stores/view'
 import { useForumStore } from '~/features/forum/forum-store'
 import { useMarketRoute } from '~/stores/marketRoute'
+import telegramIcon from '~/assets/profile-contact-icons/telegram.svg'
+import vkIcon from '~/assets/profile-contact-icons/vk.svg'
+import discordIcon from '~/assets/profile-contact-icons/discord.svg'
+import steamIcon from '~/assets/profile-contact-icons/steam.svg'
+import matrixIcon from '~/assets/profile-contact-icons/matrix.svg'
+import jabberIcon from '~/assets/profile-contact-icons/jabber.svg'
+import githubIcon from '~/assets/profile-contact-icons/github.svg'
 
 const SCHEME = 'https' + '://'
 
@@ -46,6 +55,12 @@ const fmtDate = (unix: unknown): string => {
   }
 }
 
+const fmtAgo = (unix: unknown): string => {
+  const n = typeof unix === 'number' ? unix : Number(unix)
+  if (!n) return ''
+  return formatAgo(n * 1000, 'ru')
+}
+
 const fmtThreadDate = (v: unknown): string => {
   if (typeof v === 'number' || /^\d+$/.test(str(v))) return fmtDate(v)
   return stripHtml(str(v))
@@ -62,6 +77,62 @@ const STAT_LABELS: Record<string, string> = {
   followers: 'подписчиков',
   reputation: 'репутация',
   posts: 'сообщений',
+}
+
+type ContactKind = 'telegram' | 'vk' | 'discord' | 'steam' | 'matrix' | 'jabber' | 'github'
+
+const CONTACT_ICONS: Record<ContactKind, string> = {
+  telegram: telegramIcon,
+  vk: vkIcon,
+  discord: discordIcon,
+  steam: steamIcon,
+  matrix: matrixIcon,
+  jabber: jabberIcon,
+  github: githubIcon,
+}
+
+const fieldIdentity = (field: Mini): string =>
+  `${pick(field, 'key', 'id')} ${pick(field, 'label', 'title', 'name')}`.toLowerCase()
+
+const getContactKind = (field: Mini): ContactKind | null => {
+  const identity = fieldIdentity(field)
+  if (identity.includes('telegram')) return 'telegram'
+  if (identity.includes('вконтакте') || identity.includes(' vk')) return 'vk'
+  if (identity.includes('discord')) return 'discord'
+  if (identity.includes('steam')) return 'steam'
+  if (identity.includes('matrix')) return 'matrix'
+  if (identity.includes('jabber')) return 'jabber'
+  if (identity.includes('github')) return 'github'
+  return null
+}
+
+const INFO_FIELD_ORDER = [
+  ['homepage', 'website', 'сайт'],
+  ['occupation', 'род занятий'],
+  ['location', 'адрес'],
+  ['interests', 'интересы'],
+  ['porn', 'порно'],
+  ['anime', 'аниме'],
+  ['ашкудиш'],
+]
+
+const infoFieldWeight = (field: Mini): number => {
+  const identity = fieldIdentity(field)
+  const index = INFO_FIELD_ORDER.findIndex((aliases) =>
+    aliases.some((alias) => identity.includes(alias)),
+  )
+  return index === -1 ? INFO_FIELD_ORDER.length : index
+}
+
+const findStatCount = (stats: Mini[], ...keys: string[]): number | null => {
+  const wanted = new Set(keys.map((key) => key.toLowerCase()))
+  for (const stat of stats) {
+    const key = pick(stat, 'key', 'label', 'title').toLowerCase()
+    if (!wanted.has(key)) continue
+    const value = Number(pick(stat, 'value', 'count'))
+    if (Number.isFinite(value)) return value
+  }
+  return null
 }
 
 type TabId =
@@ -336,6 +407,24 @@ export const ProfileCard = ({
   const threads = useMemo(() => asList((profile as unknown as Mini).threads), [profile])
   const customFields = useMemo(() => asList((profile as unknown as Mini).customFields), [profile])
   const stats = useMemo(() => asList((profile as unknown as Mini).stats), [profile])
+  const contactFields = useMemo(
+    () => customFields.filter((field) => getContactKind(field) !== null),
+    [customFields],
+  )
+  const infoFields = useMemo(
+    () =>
+      customFields
+        .filter((field) => getContactKind(field) === null)
+        .map((field, index) => ({ field, index }))
+        .sort(
+          (a, b) =>
+            infoFieldWeight(a.field) - infoFieldWeight(b.field) || a.index - b.index,
+        )
+        .map(({ field }) => field),
+    [customFields],
+  )
+  const followingCount = findStatCount(stats, 'followings', 'following') ?? following.length
+  const followersCount = findStatCount(stats, 'followers') ?? followers.length
 
   const nameHtml = profile.usernameHtml || profile.username
   const plainName = stripHtml(profile.username)
@@ -389,7 +478,11 @@ export const ProfileCard = ({
                         style={{ cursor: profile.avatarUrl ? 'pointer' : 'default' }}
                       >
                         {(avatarOverride ?? profile.avatarUrl) && (
-                          <img className="LbImage" src={avatarOverride ?? profile.avatarUrl} alt={plainName} />
+                          <img
+                            className="LbImage"
+                            src={(avatarOverride ?? profile.avatarUrl) ?? undefined}
+                            alt={plainName}
+                          />
                         )}
                       </a>
                     </div>
@@ -457,13 +550,13 @@ export const ProfileCard = ({
 
             <AvatarList
               title="подписок"
-              count={following.length}
+              count={followingCount}
               people={following}
               onOpenProfile={onOpenProfile}
             />
             <AvatarList
               title="подписчиков"
-              count={followers.length}
+              count={followersCount}
               people={followers}
               onOpenProfile={onOpenProfile}
             />
@@ -478,7 +571,7 @@ export const ProfileCard = ({
                     {profile.isOnline
                       ? 'В сети'
                       : profile.lastSeenDate
-                        ? `Был(а) ${fmtDate(profile.lastSeenDate)}`
+                        ? `Был(а) ${fmtAgo(profile.lastSeenDate)}`
                         : ''}
                   </h4>
                   <h1 itemProp="name" className="username">
@@ -508,15 +601,38 @@ export const ProfileCard = ({
                         <CopyButton value={String(profile.userId)} />
                       </div>
                     </div>
-                    {customFields.map((f, i) => {
+                    {profile.gender && (
+                      <div className="clear_fix profile_info_row">
+                        <div className="label fl_l">Пол:</div>
+                        <div className="labeled">
+                          {profile.gender === 'male' ? 'Мужской' : 'Женский'}
+                        </div>
+                      </div>
+                    )}
+                    {infoFields.map((f, i) => {
                       const label = stripHtml(pick(f, 'title', 'label', 'name'))
                       const value = stripHtml(pick(f, 'value', 'text'))
+                      const href = pick(f, 'href')
                       if (!label && !value) return null
                       return (
                         <div key={i} className="clear_fix profile_info_row">
                           <div className="label fl_l">{label}:</div>
                           <div className="labeled">
-                            {value}
+                            {href ? (
+                              <a
+                                className="externalLink"
+                                onClick={() =>
+                                  void window.moderator.app.openExternal(href, {
+                                    forceExternal: true,
+                                  })
+                                }
+                                style={{ cursor: 'pointer' }}
+                              >
+                                {value}
+                              </a>
+                            ) : (
+                              <span>{value}</span>
+                            )}
                             {value && <CopyButton value={value} />}
                           </div>
                         </div>
@@ -524,6 +640,44 @@ export const ProfileCard = ({
                     })}
                   </div>
                 </div>
+
+                {contactFields.length > 0 && (
+                  <div className="contactsBlock">
+                    {contactFields.map((field, index) => {
+                      const kind = getContactKind(field)
+                      if (!kind) return null
+                      const label = stripHtml(pick(field, 'label', 'title', 'name'))
+                      const value = stripHtml(pick(field, 'value', 'text'))
+                      const href = pick(field, 'href')
+                      return (
+                        <div key={`${kind}-${index}`} className={`contactItem ${kind}`}>
+                          {href && (
+                            <a
+                              className="ContactClicker"
+                              onClick={() =>
+                                void window.moderator.app.openExternal(href, {
+                                  forceExternal: true,
+                                })
+                              }
+                              aria-label={`Открыть ${label}`}
+                            />
+                          )}
+                          <img
+                            className="contactIcon"
+                            src={CONTACT_ICONS[kind]}
+                            alt=""
+                            aria-hidden="true"
+                          />
+                          <span className="contactText">
+                            <strong>{label}</strong>
+                            <span>{value}</span>
+                          </span>
+                          <CopyButton value={value} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
 
                 <div className="userContentLinks">
                   <a className="button" onClick={openUserThreads} style={{ cursor: 'pointer' }}>
@@ -543,7 +697,7 @@ export const ProfileCard = ({
                 {trophies.length > 0 && (
                   <div className="memberViewTrophies">
                     <ol className="ChangeableTrophies">
-                      {trophies.map((tr) => (
+                      {trophies.slice(0, 10).map((tr) => (
                         <li key={tr.id} className="trophy" title={tr.description ?? tr.title}>
                           <div
                             className="trophy-icon"
@@ -611,8 +765,8 @@ export const ProfileCard = ({
             </div>
 
             {}
-            <ul id="ProfilePanes">
-              <li className="profileContent">
+            <div id="ProfilePanes">
+              <div className="profileContent">
                 {tab === 'profilePosts' ? (
                   <ProfileWall userId={profile.userId} isOwn={isOwn} />
                 ) : (
@@ -620,8 +774,8 @@ export const ProfileCard = ({
                     Раздел «{TABS.find((x) => x.id === tab)?.label}» скоро появится.
                   </div>
                 )}
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ export const IPC = {
   SETTINGS_SET: "settings:set",
   SETTINGS_RESET: "settings:reset",
   SETTINGS_CHANGED: "settings:changed",
+  ERROR_REPORT_SUBMIT: "error-report:submit",
 
   AUTOBUMP_GET: "autobump:get",
   AUTOBUMP_SET_GLOBAL: "autobump:set-global",
@@ -100,6 +101,9 @@ export const IPC = {
   PROFILE_GET_TROPHIES: "profile:get-trophies",
 
   MAIL_GET_LETTERS: "mail:get-letters",
+  MASS_MAIL_START: "mass-mail:start",
+  MASS_MAIL_STOP: "mass-mail:stop",
+  MASS_MAIL_PROGRESS: "mass-mail:progress",
 
   PROXY_TEST: "proxy:test",
   PROXY_FETCH_MARKET: "proxy:fetch-market",
@@ -130,6 +134,7 @@ export const IPC = {
 
   MARKET_GET_ORDERS: "market:get-orders",
   MARKET_GET_FAVOURITES: "market:get-favourites",
+  MARKET_GET_VIEWED: "market:get-viewed",
   MARKET_GET_PAYMENTS: "market:get-payments",
 
   MARKET_GET_TAGS: "market:get-tags",
@@ -147,6 +152,8 @@ export const IPC = {
 
   MARKET_GET_TEMP_EMAIL_PASSWORD: "market:get-temp-email-password",
   MARKET_GET_MAFILE: "market:get-mafile",
+  MARKET_GET_LETTERS: "market:get-letters",
+  MARKET_GET_GUARD_CODE: "market:get-guard-code",
 
   MARKET_DOWNLOAD: "market:download",
   MARKET_ACCOUNTS_CACHE_GET: "market:accounts-cache-get",

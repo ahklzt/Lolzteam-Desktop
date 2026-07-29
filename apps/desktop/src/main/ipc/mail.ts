@@ -1,6 +1,13 @@
-import { IPC, type MailFetchResult } from "@lzt/shared";
+import {
+  IPC,
+  type MailFetchResult,
+  type MassMailRunInput,
+  type MassMailRunResult,
+  type MassMailStopResult,
+} from "@lzt/shared";
 import { ipcMain } from "electron";
 import { fetchInbox } from "../services/mail-imap";
+import { runMassMail, stopMassMail } from "../services/mail-mass";
 
 export const registerMailIpc = (): void => {
   ipcMain.handle(
@@ -24,5 +31,18 @@ export const registerMailIpc = (): void => {
         typeof payload?.limit === "number" ? payload.limit : undefined;
       return fetchInbox(email, password, provider, limit);
     },
+  );
+  ipcMain.handle(
+    IPC.MASS_MAIL_START,
+    async (event, input: MassMailRunInput): Promise<MassMailRunResult> =>
+      runMassMail(input, (progress) => {
+        if (!event.sender.isDestroyed()) {
+          event.sender.send(IPC.MASS_MAIL_PROGRESS, progress);
+        }
+      }),
+  );
+  ipcMain.handle(
+    IPC.MASS_MAIL_STOP,
+    (): MassMailStopResult => stopMassMail(),
   );
 };

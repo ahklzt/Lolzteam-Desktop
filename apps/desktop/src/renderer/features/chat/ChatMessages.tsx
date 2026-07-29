@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pencil } from "lucide-react";
+import { AtSign, Copy, Pencil, Reply, Trash2, UserX } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { ChatMessage } from "@lzt/shared";
 import { pushToast } from "~/stores/toast";
 import { RichUsername } from "~/features/profile/RichUsername";
@@ -141,7 +142,12 @@ export const ChatMessages = () => {
     });
   };
 
-  const ctxItem = (label: string, action: () => void, danger = false) => (
+  const ctxItem = (
+    Icon: LucideIcon,
+    label: string,
+    action: () => void,
+    danger = false,
+  ) => (
     <button
       type="button"
       className={danger ? `${styles.ctxItem} ${styles.ctxDanger}` : styles.ctxItem}
@@ -150,7 +156,8 @@ export const ChatMessages = () => {
         setCtx(null);
       }}
     >
-      {label}
+      <Icon size={17} className={styles.ctxItemIcon} />
+      <span>{label}</span>
     </button>
   );
 
@@ -247,25 +254,26 @@ export const ChatMessages = () => {
           style={{ left: ctx.x, top: ctx.y }}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          {ctxItem(t("chat.reply"), () => {
+          {ctxItem(Reply, t("chat.reply"), () => {
             const store = useChatStore.getState();
             store.setReply(ctx.msg);
             store.insertDraft(`@${ctx.msg.user.username}, `);
           })}
-          {ctxItem(t("chat.mention"), () =>
+          {ctxItem(AtSign, t("chat.mention"), () =>
             useChatStore.getState().insertDraft(`@${ctx.msg.user.username}, `),
           )}
-          {ctxItem(t("chat.copyText"), () => copyText(ctx.msg))}
+          {ctxItem(Copy, t("chat.copyText"), () => copyText(ctx.msg))}
           {myUserId !== null && myUserId !== ctx.msg.user.userId &&
-            ctxItem(t("chat.ignore"), () =>
+            ctxItem(UserX, t("chat.ignore"), () =>
               void useChatStore.getState().ignore(ctx.msg.user.userId),
             )}
           {myUserId !== null && myUserId === ctx.msg.user.userId && (
             <>
-              {ctxItem(t("chat.edit"), () =>
+              {ctxItem(Pencil, t("chat.edit"), () =>
                 useChatStore.getState().setEditing(ctx.msg),
               )}
               {ctxItem(
+                Trash2,
                 t("chat.delete"),
                 () => void useChatStore.getState().remove(ctx.msg.messageId),
                 true,

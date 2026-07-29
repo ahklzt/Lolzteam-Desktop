@@ -60,6 +60,58 @@
   gap: $space-2;
 }
 
+.fileControl {
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: min(360px, 100%);
+}
+
+.filePreview {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: min(360px, 100%);
+  padding: $space-2;
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+}
+
+.filePreviewThumb {
+  width: 72px;
+  height: 44px;
+  flex: 0 0 auto;
+  border-radius: $radius-sm;
+  border: 1px solid $color-border;
+  object-fit: cover;
+  background: $color-surface-overlay;
+}
+
+.filePreviewText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.filePreviewName {
+  @include truncate;
+  font-size: $fs-sm;
+  color: $color-text;
+}
+
+.filePreviewHint {
+  font-size: $fs-xs;
+  color: $color-text-muted;
+}
+
+.fileButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: $space-2;
+}
+
 .select {
   padding: 6px 10px;
   background: $color-surface-raised;
@@ -228,6 +280,13 @@
   }
   .rowControl {
     justify-content: flex-end;
+  }
+  .fileControl {
+    align-items: stretch;
+    min-width: 0;
+  }
+  .fileButtons {
+    justify-content: flex-start;
   }
   .range {
     width: 100%;

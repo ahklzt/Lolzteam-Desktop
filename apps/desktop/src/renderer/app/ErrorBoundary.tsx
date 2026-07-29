@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { reportRendererError } from '../lib/error-reporter'
 
 interface Props {
   children: ReactNode
@@ -9,7 +10,7 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { error: null }
+  override state: State = { error: null }
 
   static getDerivedStateFromError(error: Error): State {
     return { error }
@@ -17,6 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   override componentDidCatch(error: Error, info: ErrorInfo): void {
     console.error('[ui] неперехваченная ошибка', error, info)
+    reportRendererError(error, info.componentStack)
   }
 
   override render(): ReactNode {

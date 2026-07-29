@@ -7,6 +7,13 @@ import log from 'electron-log/main'
 import { atomicWrite, backupCorrupt } from '../services/atomic-store'
 
 const FILE_NAME = 'settings.json'
+const APP_THEMES = new Set<ModeratorSettings['appTheme']>([
+  'dark',
+  'light',
+  'green',
+  'purple',
+  'custom'
+])
 const settingsFile = () => join(app.getPath('userData'), FILE_NAME)
 
 const serialize = (json: string): Buffer =>
@@ -24,6 +31,16 @@ const deserialize = (buf: Buffer): string => {
 
 class SettingsStore extends EventEmitter {
   private cached: ModeratorSettings | null = null
+  private writeQueue: Promise<void> = Promise.resolve()
+
+  private enqueueWrite<T>(write: () => Promise<T>): Promise<T> {
+    const result = this.writeQueue.then(write, write)
+    this.writeQueue = result.then(
+      () => undefined,
+      () => undefined
+    )
+    return result
+  }
 
   async load(): Promise<ModeratorSettings> {
     if (this.cached) return this.cached
@@ -32,6 +49,7 @@ class SettingsStore extends EventEmitter {
       const parsed = JSON.parse(raw) as Partial<ModeratorSettings>
       const merged: ModeratorSettings = { ...DEFAULT_SETTINGS, ...parsed }
       if (merged.locale !== 'ru' && merged.locale !== 'en') merged.locale = DEFAULT_SETTINGS.locale
+      if (!APP_THEMES.has(merged.appTheme)) merged.appTheme = DEFAULT_SETTINGS.appTheme
       if (!Array.isArray(merged.mailHistory)) merged.mailHistory = []
       if (!Array.isArray(merged.proxies)) merged.proxies = []
       if (!Array.isArray(merged.accountLabels)) merged.accountLabels = []
@@ -47,20 +65,24 @@ class SettingsStore extends EventEmitter {
   }
 
   async update(patch: Partial<ModeratorSettings>): Promise<ModeratorSettings> {
-    const current = await this.load()
-    const next: ModeratorSettings = { ...current, ...patch }
-    await atomicWrite(settingsFile(), serialize(JSON.stringify(next)))
-    this.cached = next
-    this.emit('change', next)
-    return next
+    return this.enqueueWrite(async () => {
+      const current = await this.load()
+      const next: ModeratorSettings = { ...current, ...patch }
+      await atomicWrite(settingsFile(), serialize(JSON.stringify(next)))
+      this.cached = next
+      this.emit('change', next)
+      return next
+    })
   }
 
   async reset(): Promise<ModeratorSettings> {
-    const next: ModeratorSettings = { ...DEFAULT_SETTINGS }
-    await atomicWrite(settingsFile(), serialize(JSON.stringify(next)))
-    this.cached = next
-    this.emit('change', next)
-    return next
+    return this.enqueueWrite(async () => {
+      const next: ModeratorSettings = { ...DEFAULT_SETTINGS }
+      await atomicWrite(settingsFile(), serialize(JSON.stringify(next)))
+      this.cached = next
+      this.emit('change', next)
+      return next
+    })
   }
 
   getCached(): ModeratorSettings | null {

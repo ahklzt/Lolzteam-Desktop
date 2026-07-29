@@ -4,8 +4,11 @@
   flex-direction: column;
   gap: $space-4;
   width: 100%;
-  max-width: 920px;
+  max-width: 1120px;
+  min-height: 100%;
   margin: 0 auto;
+  padding-bottom: 112px;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -22,9 +25,13 @@
 }
 
 .wrap > .toolbar,
-.wrap > .card {
+.cardWrap {
   position: relative;
   z-index: 1;
+}
+
+.cardWrap {
+  width: 100%;
 }
 
 .center {

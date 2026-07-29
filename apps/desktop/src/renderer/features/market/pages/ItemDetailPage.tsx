@@ -36,19 +36,6 @@ const formatDate = (unix: number): string =>
     year: 'numeric',
   })
 
-const formatAgo = (unix: number): string => {
-  const diff = Date.now() - unix * 1000
-  const s = Math.floor(diff / 1000)
-  if (s < 5) return 'только что'
-  if (s < 60) return `${s} сек. назад`
-  const m = Math.floor(diff / 60000)
-  if (m < 60) return `${m} мин. назад`
-  const h = Math.floor(m / 60)
-  if (h < 24) return `${h} ч. назад`
-  const d = Math.floor(h / 24)
-  return `${d} дн. назад`
-}
-
 const TRUSTED: Array<{
   id: string
   keys: string[]
@@ -66,6 +53,21 @@ const TRUSTED: Array<{
 export const ItemDetailPage = () => {
   const { t, i18n } = useTranslation()
   const isEn = i18n.language.startsWith('en')
+  const formatAgo = useCallback(
+    (unix: number): string => {
+      const diff = Date.now() - unix * 1000
+      const s = Math.floor(diff / 1000)
+      if (s < 5) return t('market.justNow')
+      if (s < 60) return t('market.relativeTime.secondsAgo', { count: s })
+      const m = Math.floor(diff / 60000)
+      if (m < 60) return t('market.relativeTime.minutesAgo', { count: m })
+      const h = Math.floor(m / 60)
+      if (h < 24) return t('market.relativeTime.hoursAgo', { count: h })
+      const d = Math.floor(h / 24)
+      return t('market.relativeTime.daysAgo', { count: d })
+    },
+    [t],
+  )
   const route = useMarketRoute((s) => s.item)
   const itemId = route?.itemId ?? 0
 

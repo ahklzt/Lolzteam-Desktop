@@ -1,0 +1,599 @@
+.member_view {
+  --contentBackground: var(--theme-surface);
+  --pageBackground: var(--theme-bg);
+  --primaryDarker: var(--theme-border-strong);
+  --contentText: var(--theme-text);
+  --mutedTextColor: var(--theme-text-muted);
+  --primaryMedium: var(--theme-accent);
+  width: 100%;
+  color: var(--contentText);
+}
+
+.member_view .profilePage,
+.member_view .profilePage .box-back {
+  width: 100%;
+}
+
+.member_view .profilePage .box-back {
+  display: flow-root;
+}
+
+.member_view .profilePage .sidebar {
+  float: left;
+  width: 230px;
+  margin: 0;
+}
+
+.member_view .profilePage .sidebar .section {
+  margin: 0 0 15px;
+}
+
+.member_view .profilePage .sidebar .section .secondaryContent,
+.member_view .darkBackground,
+.member_view .profile_threads_block,
+.member_view .member_tabs,
+.member_view #ProfilePanes > .profileContent {
+  border: 1px solid var(--primaryDarker);
+  background: var(--contentBackground);
+  border-radius: 12px;
+}
+
+.member_view .profilePage .sidebar .section .secondaryContent {
+  padding: 15px;
+}
+
+.member_view .profilePage .sidebar .section.membersOnline .secondaryContent {
+  padding: 0;
+  overflow: hidden;
+}
+
+.member_view .profilePage .sidebar .section.membersOnline h3 {
+  margin: 0;
+  padding: 12px 16px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--primaryDarker);
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member_view .profilePage .sidebar .section.membersOnline h3 .mainc {
+  padding: 0 6px;
+  color: var(--primaryMedium);
+  background: rgb(0 186 120 / 16%);
+  border-radius: 10px;
+}
+
+.member_view .profilePage .sidebar .section.membersOnline .avatarList {
+  padding: 16px;
+}
+
+.member_view .profilePage .sidebar .avatarList li {
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.member_view .profilePage .sidebar .avatarList li:last-child {
+  margin-bottom: 0;
+}
+
+.member_view .profilePage .sidebar .avatarList .memberInfo {
+  min-width: 0;
+  justify-content: center;
+}
+
+.member_view .profilePage .sidebar .avatarList .memberInfo > * {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member_view .profilePage .sidebar .avatarList .avatar img {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.member_view .profilePage .avatarScaler {
+  margin-bottom: 10px;
+}
+
+.member_view .profilePage .avatarScaler img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.member_view .profilePage .topblock .button.block {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 36px;
+  margin-top: 10px;
+  border: 1px solid var(--primaryDarker);
+  background: var(--theme-surface-raised);
+  border-radius: 10px;
+}
+
+.member_view .profilePage .insuranceDeposit .secondaryContent {
+  overflow: hidden;
+}
+
+.member_view .profilePage .insuranceDeposit .depositUsername {
+  display: block;
+  margin-bottom: 15px;
+  overflow: hidden;
+  color: var(--mutedTextColor);
+  text-overflow: ellipsis;
+}
+
+.member_view .profilePage .insuranceDeposit .insuranceMoney {
+  margin: 0;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.member_view .profilePage .insuranceDeposit .actionsDeposit {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.member_view .profilePage .insuranceDeposit .buttonContainer {
+  min-width: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.member_view .profilePage .insuranceDeposit .buttonContainer .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--primaryDarker);
+  background: var(--theme-surface-raised);
+  border-radius: 10px;
+}
+
+.member_view .profilePage .mainProfileColumn {
+  width: auto;
+  min-width: 0;
+  margin-left: 245px;
+  overflow: visible;
+}
+
+.member_view .darkBackground {
+  overflow: hidden;
+}
+
+.member_view #page_info_wrap {
+  padding: 0;
+}
+
+.member_view .page_top {
+  display: flow-root;
+  padding: 16px;
+  border-bottom: 1px solid var(--primaryDarker);
+}
+
+.member_view .page_top .username {
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.member_view .page_top .profile_online {
+  max-width: 45%;
+  margin: 4px 0 0 12px;
+  overflow: hidden;
+  color: var(--mutedTextColor);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member_view .page_top .page_current_info {
+  margin-top: 4px;
+}
+
+.member_view .profile_info_short {
+  padding: 16px;
+  line-height: 150%;
+}
+
+.member_view .profile_info_short .pairsJustified {
+  display: grid;
+  gap: 8px;
+}
+
+.member_view .profile_info_row {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+}
+
+.member_view .profile_info .profile_info_row .label {
+  display: flex;
+  width: 165px;
+  min-width: 165px;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--mutedTextColor);
+}
+
+.member_view .profile_info .profile_info_row .labeled {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  line-height: 20px;
+  word-break: break-word;
+}
+
+.member_view .profile_info .externalLink {
+  color: var(--primaryMedium);
+}
+
+.member_view .profile_info .externalLink:hover {
+  text-decoration: underline;
+}
+
+.member_view .contactsBlock {
+  display: flex;
+  margin: 0 16px 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.member_view .contactsBlock .contactItem {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  padding: 8px 12px;
+  align-items: center;
+  gap: 4px;
+  outline: 1px solid var(--theme-border-strong);
+  outline-offset: -1px;
+  background-color: var(--theme-surface-raised);
+  border-radius: 12px;
+  font-weight: 500;
+  line-height: 24px;
+  user-select: none;
+  transition: all 100ms ease-in-out;
+}
+
+.member_view .contactsBlock .contactItem:hover {
+  filter: brightness(1.2);
+}
+
+.member_view .contactsBlock .contactItem:active {
+  opacity: 0.72;
+  transform: scale(0.97);
+}
+
+.member_view .contactsBlock .contactItem .ContactClicker {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.member_view .contactsBlock .contactIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 2px;
+  flex: 0 0 20px;
+}
+
+.member_view .contactsBlock .contactText {
+  display: flex;
+  min-width: 0;
+  max-width: 220px;
+  pointer-events: none;
+}
+
+.member_view .contactsBlock .contactText strong {
+  display: none;
+}
+
+.member_view .contactsBlock .contactText span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member_view .contactsBlock .contactItem > .copyButton {
+  position: relative;
+  z-index: 2;
+  margin-left: 0 !important;
+  padding: 0 4px;
+}
+
+.member_view .contactsBlock .contactItem.telegram {
+  outline-color: #2f74a685;
+  background-color: #2f74a648;
+}
+
+.member_view .contactsBlock .contactItem.telegram .copyButton {
+  color: #bfe4ffab;
+}
+
+.member_view .contactsBlock .contactItem.vk {
+  outline-color: #3b6fc485;
+  background-color: #3b6fc448;
+}
+
+.member_view .contactsBlock .contactItem.discord {
+  outline-color: #4b54c085;
+  background-color: #4b54c048;
+}
+
+.member_view .contactsBlock .contactItem.steam {
+  outline-color: #4a7fa685;
+  background-color: #4a7fa648;
+}
+
+.member_view .contactsBlock .contactItem.matrix,
+.member_view .contactsBlock .contactItem.jabber,
+.member_view .contactsBlock .contactItem.github {
+  outline-color: #515a6485;
+  background-color: #515a6448;
+}
+
+.member_view .userContentLinks {
+  display: flex;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 0 16px 16px;
+  flex-wrap: wrap;
+  overflow: hidden;
+  outline: 1px solid var(--primaryDarker);
+  outline-offset: -1px;
+  border-radius: 12px;
+}
+
+.member_view .userContentLinks .button {
+  display: inline-flex;
+  min-height: 40px;
+  margin: 0;
+  padding: 4px 12px;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--theme-surface-raised);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member_view .userContentLinks .button:not(:last-child) {
+  border-right: 1px solid var(--theme-border-strong);
+}
+
+.member_view .userContentLinks .button:hover {
+  color: var(--primaryMedium);
+  background: var(--theme-surface-overlay);
+}
+
+.member_view .memberViewTrophies {
+  margin: 0 16px 16px;
+}
+
+.member_view .ChangeableTrophies {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.member_view .ChangeableTrophies li.trophy {
+  width: 48px;
+  height: 52px;
+  margin: 0 8px 4px 0;
+  padding: 2px 0;
+  overflow: visible;
+  transition: transform 200ms ease;
+}
+
+.member_view .memberViewTrophies .trophy .trophy-icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.member_view .memberViewTrophies .trophy:hover {
+  z-index: 4;
+  transform: translateY(-4px) scale(1.12);
+}
+
+.member_view .counts_module {
+  display: flex;
+  max-height: 69px;
+  overflow: hidden;
+  justify-content: center;
+  text-align: center;
+  border-top: 1px solid var(--primaryDarker);
+}
+
+.member_view .page_counter {
+  display: inline-block;
+  min-width: 0;
+  padding: 15px;
+}
+
+.member_view .page_counter .count {
+  padding-bottom: 3px;
+  color: var(--primaryMedium);
+  font-size: 19px;
+  line-height: 21px;
+}
+
+.member_view .page_counter .label {
+  overflow: hidden;
+  line-height: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member_view .profile_threads_block {
+  display: flex;
+  margin-top: 10px;
+  padding: 16px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.member_view .profile_threads_header_title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.member_view .profile_threads_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.member_view .profile_threads_list .discussionListItem {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--primaryDarker);
+  background: var(--theme-surface-raised);
+}
+
+.member_view .profile_threads_list .discussionListItem:hover {
+  background: var(--theme-surface-overlay);
+  text-decoration: none;
+}
+
+.member_view .member_tabs {
+  width: 100%;
+  margin: 15px 0 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.member_view .member_tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.member_view .member_tabs ul {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 0 8px;
+}
+
+.member_view .member_tabs li {
+  flex: 0 0 auto;
+}
+
+.member_view .member_tabs li a {
+  position: relative;
+  display: block;
+  height: 46px;
+  padding: 0 12px;
+  line-height: 46px;
+  white-space: nowrap;
+}
+
+.member_view .member_tabs li.active a {
+  color: var(--primaryMedium);
+}
+
+.member_view .member_tabs li.active a::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  left: 10px;
+  height: 2px;
+  background: var(--primaryMedium);
+  border-radius: 2px 2px 0 0;
+}
+
+.member_view #ProfilePanes {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-margin-top: 50px;
+}
+
+.member_view #ProfilePanes > .profileContent {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.member_view .profile-pane-placeholder {
+  padding: 40px 20px;
+  color: var(--mutedTextColor);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .member_view .profilePage .sidebar {
+    float: none;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .member_view .profilePage .mainProfileColumn {
+    margin-left: 0;
+  }
+
+  .member_view .profilePage .topblock .secondaryContent {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .member_view .profilePage .avatarScaler {
+    margin: 0;
+  }
+
+  .member_view .profilePage .avatarScaler img {
+    width: 96px;
+    height: 96px;
+    min-width: 96px;
+  }
+
+  .member_view .profilePage .topblock .button.block {
+    margin: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .member_view .profile_info .profile_info_row .label {
+    width: 130px;
+    min-width: 130px;
+  }
+
+  .member_view .counts_module {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .member_view .page_counter {
+    min-width: 92px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}

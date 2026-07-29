@@ -6,9 +6,25 @@ const ALLOWED_TAGS = new Set([
   "DEL", "INS", "STRIKE", "SUB", "SUP", "CODE", "PRE", "BLOCKQUOTE", "ABBR",
   "UL", "OL", "LI", "DL", "DD", "DT",
   "ASIDE", "BUTTON", "H1", "H2", "H3", "H4", "H5", "H6",
+  "VIDEO", "AUDIO", "SOURCE", "IFRAME",
 ]);
 
 const ALLOWED_ATTRS = new Set(["class", "style", "title", "alt"]);
+const FRAME_HOSTS = new Set([
+  "www.youtube.com",
+  "www.youtube-nocookie.com",
+  "player.vimeo.com",
+  "coub.com",
+  "www.coub.com",
+  "streamable.com",
+  "www.streamable.com",
+  "vk.com",
+  "rutube.ru",
+  "www.dailymotion.com",
+  "w.soundcloud.com",
+  "giphy.com",
+]);
+const HTTPS_PROTOCOL = "https" + ":";
 
 const isSafeStyle = (value: string): boolean =>
   !/javascript:|expression\s*\(|url\s*\(/i.test(value);
@@ -19,6 +35,20 @@ const absolutize = (href: string): string | null => {
   if (url.startsWith("//")) return "https:" + url;
   if (url.startsWith("/")) return getForumWebBase() + url;
   return null;
+};
+
+const safeFrameUrl = (src: string): string | null => {
+  const absolute = absolutize(src);
+  if (!absolute) return null;
+  try {
+    const url = new URL(absolute);
+    if (url.protocol !== HTTPS_PROTOCOL || !FRAME_HOSTS.has(url.hostname.toLowerCase())) {
+      return null;
+    }
+    return url.toString();
+  } catch {
+    return null;
+  }
 };
 
 const replaceEmojiInText = (node: Text): void => {
@@ -61,7 +91,7 @@ const walk = (el: Element): void => {
     }
     const child = node as Element;
     const tag = child.tagName.toUpperCase();
-    if (tag === "SCRIPT" || tag === "STYLE" || tag === "IFRAME") {
+    if (tag === "SCRIPT" || tag === "STYLE") {
       child.remove();
       continue;
     }
@@ -73,7 +103,31 @@ const walk = (el: Element): void => {
     for (const attr of [...child.attributes]) {
       const name = attr.name.toLowerCase();
       if (name === "href" && tag === "A") continue;
-      if (name === "src" && tag === "IMG") continue;
+      if (
+        name === "src" &&
+        (tag === "IMG" || tag === "VIDEO" || tag === "AUDIO" || tag === "SOURCE" || tag === "IFRAME")
+      ) {
+        continue;
+      }
+      if (name === "poster" && tag === "VIDEO") continue;
+      if (name === "type" && tag === "SOURCE") continue;
+      if (
+        (tag === "VIDEO" || tag === "AUDIO") &&
+        (name === "controls" || name === "preload" || name === "loop" || name === "muted")
+      ) {
+        continue;
+      }
+      if (
+        tag === "IFRAME" &&
+        (name === "width" ||
+          name === "height" ||
+          name === "allow" ||
+          name === "allowfullscreen" ||
+          name === "loading" ||
+          name === "referrerpolicy")
+      ) {
+        continue;
+      }
       if (name === "data-cachedtitle") continue;
       const keep =
         ALLOWED_ATTRS.has(name) &&
@@ -99,6 +153,41 @@ const walk = (el: Element): void => {
       }
       child.setAttribute("src", abs);
       child.setAttribute("loading", "lazy");
+    }
+    if (tag === "VIDEO" || tag === "AUDIO" || tag === "SOURCE") {
+      const source = child.getAttribute("src");
+      if (source) {
+        const absolute = absolutize(source);
+        if (absolute) child.setAttribute("src", absolute);
+        else child.removeAttribute("src");
+      }
+      if (tag === "VIDEO") {
+        const poster = child.getAttribute("poster");
+        if (poster) {
+          const absolutePoster = absolutize(poster);
+          if (absolutePoster) child.setAttribute("poster", absolutePoster);
+          else child.removeAttribute("poster");
+        }
+      }
+      if (tag !== "SOURCE") {
+        child.setAttribute("controls", "");
+        child.setAttribute("preload", "metadata");
+      }
+    }
+    if (tag === "IFRAME") {
+      const source = safeFrameUrl(child.getAttribute("src") ?? "");
+      if (!source) {
+        child.remove();
+        continue;
+      }
+      child.setAttribute("src", source);
+      child.setAttribute("loading", "lazy");
+      child.setAttribute("referrerpolicy", "no-referrer");
+      child.setAttribute("allowfullscreen", "");
+      child.setAttribute(
+        "allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+      );
     }
     if (tag === "ABBR") {
       const tip = child.getAttribute("data-cachedtitle");

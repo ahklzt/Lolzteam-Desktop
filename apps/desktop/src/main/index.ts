@@ -58,8 +58,6 @@ log.initialize();
 log.transports.file.level = "info";
 log.transports.console.level = "debug";
 
-app.disableHardwareAcceleration();
-
 const gotLock = app.requestSingleInstanceLock();
 if (!gotLock) {
   app.quit();

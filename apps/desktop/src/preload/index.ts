@@ -15,6 +15,10 @@ import {
   type CurrencyResult,
   type IpLookupResult,
   type MailResult,
+  type MassMailProgressEvent,
+  type MassMailRunInput,
+  type MassMailRunResult,
+  type MassMailStopResult,
   type FollowOptions,
   type FollowersResult,
   type MarketCurrency,
@@ -44,6 +48,8 @@ import {
   type MarketCheckResult,
   type MarketTempEmailPasswordResult,
   type MarketMafileResult,
+  type MarketLettersResult,
+  type MarketGuardCodeResult,
   type MarketDownloadQuery,
   type MarketDownloadResult,
   type MarketPublishInput,
@@ -71,6 +77,8 @@ import {
   type NetworkStatus,
   type PersonalInfoResult,
   type PersonalInfoUpdate,
+  type ErrorReportPayload,
+  type ErrorReportResult,
   type ProfileActionResult,
   type ProfileFetchResult,
   type ProfileTokenStatus,
@@ -374,6 +382,8 @@ const api = {
         userId,
         message,
       }),
+    submitErrorReport: (payload: ErrorReportPayload) =>
+      invoke<ErrorReportResult>(IPC.ERROR_REPORT_SUBMIT, payload),
     getNote: (userId: number) =>
       invoke<UserNote>(IPC.PROFILE_NOTE_GET, { userId }),
     setNote: (userId: number, text: string) =>
@@ -480,6 +490,13 @@ const api = {
         provider,
         limit,
       }),
+  },
+  massMail: {
+    start: (input: MassMailRunInput) =>
+      invoke<MassMailRunResult>(IPC.MASS_MAIL_START, input),
+    stop: () => invoke<MassMailStopResult>(IPC.MASS_MAIL_STOP),
+    onProgress: (handler: (event: MassMailProgressEvent) => void) =>
+      on<MassMailProgressEvent>(IPC.MASS_MAIL_PROGRESS, handler),
   },
   chat: {
     getRooms: () => invoke<ChatRoomsResult>(IPC.CHAT_GET_ROOMS),
@@ -633,6 +650,8 @@ const api = {
       invoke<MarketItemsResult>(IPC.MARKET_GET_ORDERS, { page, query }),
     getFavourites: (page?: number, query?: MarketUserItemsQuery) =>
       invoke<MarketItemsResult>(IPC.MARKET_GET_FAVOURITES, { page, query }),
+    getViewed: (page?: number, query?: MarketUserItemsQuery) =>
+      invoke<MarketItemsResult>(IPC.MARKET_GET_VIEWED, { page, query }),
     getPayments: (query?: MarketPaymentsQuery) =>
       invoke<MarketPaymentsResult>(IPC.MARKET_GET_PAYMENTS, { query }),
     getTags: () => invoke<MarketTagsResult>(IPC.MARKET_GET_TAGS),
@@ -666,6 +685,14 @@ const api = {
       ),
     getMafile: (itemId: number) =>
       invoke<MarketMafileResult>(IPC.MARKET_GET_MAFILE, { itemId }),
+    getLetters: (email: string, password?: string, limit?: number) =>
+      invoke<MarketLettersResult>(IPC.MARKET_GET_LETTERS, {
+        email,
+        password,
+        limit,
+      }),
+    getGuardCode: (itemId: number) =>
+      invoke<MarketGuardCodeResult>(IPC.MARKET_GET_GUARD_CODE, { itemId }),
     downloadAccounts: (query: MarketDownloadQuery) =>
       invoke<MarketDownloadResult>(IPC.MARKET_DOWNLOAD, { query }),
     getItemNote: (itemId: number) =>

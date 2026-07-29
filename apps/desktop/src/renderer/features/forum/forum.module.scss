@@ -1,6 +1,28 @@
 
 
 @mixin bbContent {
+  :global(video),
+  :global(iframe) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    max-height: 420px;
+    margin: 10px 0;
+    border: 0;
+    border-radius: 8px;
+    background: #111;
+  }
+
+  :global(iframe) {
+    aspect-ratio: 16 / 9;
+  }
+
+  :global(audio) {
+    display: block;
+    width: min(100%, 520px);
+    margin: 10px 0;
+  }
+
   :global(b),
   :global(strong) {
     font-weight: 700;
@@ -51,7 +73,7 @@
   :global(.bbCodeQuote) {
     margin: 10px 0;
     border-radius: 6px;
-    background: rgba(34, 142, 93, 0.12);
+    background: color-mix(in srgb, $color-accent 12%, transparent);
   }
   :global(.bbCodeQuote aside) {
     display: block;
@@ -66,7 +88,7 @@
     display: block;
     margin-bottom: 2px;
     font-weight: 600;
-    color: rgb(214, 214, 214);
+    color: $color-text-soft;
   }
   :global(.bbCodeQuote .quoteExpand) {
     display: none;
@@ -74,9 +96,9 @@
 
   :global(.bbCodeHide.bbCodeQuote) {
     overflow: hidden;
-    border: 1px solid #404040;
+    border: 1px solid $color-border-strong;
     border-radius: 10px;
-    background: rgb(36, 36, 36);
+    background: $color-surface-raised;
   }
   :global(.bbCodeHide.bbCodeQuote .hideContainer) {
     padding: 15px;
@@ -86,7 +108,7 @@
     margin: 10px 0;
     padding: 5px;
     border-radius: 10px;
-    background: rgb(36, 36, 36);
+    background: $color-surface-raised;
   }
   :global(.bbCodeSpoilerButton) {
     display: block;
@@ -94,8 +116,8 @@
     padding: 8px 12px;
     border: none;
     border-radius: 8px;
-    background: rgb(36, 36, 36);
-    color: rgb(214, 214, 214);
+    background: $color-surface-raised;
+    color: $color-text-soft;
     font-weight: 600;
     text-align: left;
     cursor: pointer;
@@ -116,7 +138,7 @@
     margin-top: 5px;
     padding: 10px 12px;
     border-radius: 6px;
-    background: rgb(28, 28, 28);
+    background: $color-surface;
     word-break: break-word;
   }
 
@@ -136,12 +158,12 @@
     overflow: hidden;
     margin: 12px 0;
     border-radius: 10px;
-    background: rgb(28, 28, 28);
+    background: $color-surface;
   }
   :global(.bbCodeBlock .type) {
     padding: 10px 15px;
-    background: rgb(36, 36, 36);
-    color: rgb(214, 214, 214);
+    background: $color-surface-raised;
+    color: $color-text-soft;
     font-size: 13px;
   }
   :global(.bbCodeCode pre),
@@ -152,7 +174,7 @@
     font-family: "JetBrains Mono", "Consolas", "Menlo", monospace;
     font-size: 12px;
     line-height: 1.5;
-    color: rgb(214, 214, 214);
+    color: $color-text-soft;
   }
   :global(.sourceCode.hidden),
   :global(.line-numbers-rows) {
@@ -164,8 +186,8 @@
   :global(.bbCodeSourceInline code) {
     padding: 1px 6px;
     border-radius: 4px;
-    background: rgb(48, 48, 48);
-    color: rgb(0, 186, 120);
+    background: $color-surface-overlay;
+    color: $color-accent;
     font-size: 12px;
     word-break: break-all;
   }
@@ -208,8 +230,8 @@
     height: 34px;
     padding: 0 15px;
     border-radius: 8px;
-    background: rgb(48, 48, 48);
-    color: rgb(214, 214, 214);
+    background: $color-surface-overlay;
+    color: $color-text-soft;
     font-weight: 600;
     line-height: 34px;
     text-decoration: none;
@@ -218,9 +240,9 @@
   :global(a.button.primary) {
     background: linear-gradient(
       88deg,
-      #1c6946 0.29%,
-      #329c6c 51.58%,
-      #1d8254 100%
+      $color-accent-dark 0.29%,
+      color-mix(in srgb, $color-accent 76%, white) 51.58%,
+      color-mix(in srgb, $color-accent-dark 88%, $color-surface) 100%
     );
     color: #f5f5f5;
   }
@@ -235,8 +257,9 @@
     margin: 2px 0;
     padding: 2px 6px;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    background-color: color-mix(in srgb, $color-text 8%, transparent);
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, $color-text 12%, transparent);
     line-height: 20px;
     vertical-align: middle;
     overflow: hidden;
@@ -245,8 +268,9 @@
   }
   :global(a.mention.highlight),
   :global(a.username.mention.highlight) {
-    background: rgba(11, 80, 49, 0.56);
-    box-shadow: inset 0 0 0 1px rgba(26, 127, 81, 0.56);
+    background: color-mix(in srgb, $color-accent-dark 56%, transparent);
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, $color-accent 56%, transparent);
   }
   :global(a.mention .avatar),
   :global(a.mention img),
@@ -277,9 +301,9 @@
 .layout {
   display: flex;
   align-items: flex-start;
-  gap: $space-4;
+  gap: 15px;
   width: 100%;
-  max-width: 1220px;
+  max-width: 1076px;
   margin: 0 auto;
   color: $color-text;
 }
@@ -293,11 +317,11 @@
 }
 
 .sidebar {
-  flex: 0 0 260px;
-  width: 260px;
+  flex: 0 0 261px;
+  width: 261px;
   display: flex;
   flex-direction: column;
-  gap: $space-3;
+  gap: 15px;
 }
 
 .block {
@@ -558,6 +582,143 @@
   color: $color-text-muted;
 }
 
+.threadSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 14px;
+}
+
+.threadSkeletonRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 13px 16px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+}
+
+.threadSkeletonAvatar,
+.threadSkeletonLine,
+.threadSkeletonLineShort {
+  position: relative;
+  overflow: hidden;
+  background: $color-surface-overlay;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, $color-text 9%, transparent),
+      transparent
+    );
+    animation: forumShimmer 1.25s ease-in-out infinite;
+  }
+}
+
+.threadSkeletonAvatar {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 10px;
+}
+
+.threadSkeletonBody {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.threadSkeletonLine,
+.threadSkeletonLineShort {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.threadSkeletonLine {
+  width: min(72%, 520px);
+}
+
+.threadSkeletonLineShort {
+  width: min(42%, 300px);
+}
+
+.threadLoadingBar {
+  position: relative;
+  height: 2px;
+  margin: -2px 0 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, $color-accent 16%, transparent);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 38%;
+    border-radius: inherit;
+    background: $color-accent;
+    animation: forumLoadingBar 1s ease-in-out infinite;
+  }
+}
+
+.loadingMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+
+  span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $color-accent;
+    animation: forumLoadingDot 0.9s ease-in-out infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.24s;
+    }
+  }
+}
+
+@keyframes forumLoadingBar {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  100% {
+    transform: translateX(365%);
+  }
+}
+
+@keyframes forumLoadingDot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
 
 .listWrap {
   display: flex;
@@ -566,24 +727,76 @@
 
 .listHead {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-3;
-  flex-wrap: wrap;
-  margin-bottom: $space-3;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
 }
 
 .listTitle {
   margin: 0;
-  font-size: $fs-lg;
+  padding: 10px 16px;
+  border-bottom: 1px solid $color-border;
+  color: $color-text-soft;
+  font-size: $fs-sm;
   font-weight: 600;
 }
 
 .toolbar {
   display: flex;
   align-items: center;
-  gap: $space-2;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.orderControl {
+  position: relative;
+  display: block;
+  width: min(280px, calc(100% - 96px));
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid $color-text-muted;
+    border-bottom: 2px solid $color-text-muted;
+    transform: translateY(-65%) rotate(45deg);
+    pointer-events: none;
+  }
+}
+
+.orderSelect {
+  width: 100%;
+  height: 36px;
+  appearance: none;
+  padding: 0 38px 0 12px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-surface-raised;
+  color: $color-text;
+  font: inherit;
+  font-size: $fs-sm;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border-color: $color-border-strong;
+    background: $color-surface-overlay;
+  }
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .toolBtn {
@@ -591,16 +804,19 @@
   @include clickable;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: $color-surface-raised;
   color: $color-text-soft;
   font-size: $fs-xs;
 
   &:hover {
-    background: $color-surface-raised;
+    border-color: $color-border-strong;
+    background: $color-surface-overlay;
     color: $color-text;
   }
 }
@@ -655,16 +871,28 @@
   gap: 12px;
 }
 
+.compactThreads {
+  gap: 0;
+}
+
 .card {
   display: flex;
   flex-direction: column;
   border: 1px solid $color-border;
-  border-radius: var(--msg-radius, #{$radius-lg});
+  border-radius: 12px;
   background: $color-surface;
   overflow: hidden;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 
   &:hover {
     border-color: $color-border-strong;
+    background: color-mix(in srgb, $color-surface-raised 62%, $color-surface);
+
+    .cardTitleText {
+      color: $color-accent;
+    }
   }
 }
 
@@ -673,7 +901,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 16px 0;
+  padding: 12px 16px;
 }
 
 .cardAuthor {
@@ -685,8 +913,8 @@
 }
 
 .cardAvatar {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   border-radius: var(--avatar-radius, 50%);
   object-fit: cover;
@@ -719,9 +947,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
   flex-shrink: 0;
   border-radius: 7px;
   background: $color-surface-overlay;
@@ -786,10 +1014,10 @@
   gap: 6px;
   flex-wrap: wrap;
   margin: 0;
-  padding: 8px 16px 0;
-  font-size: $fs-lg;
+  padding: 0 16px;
+  font-size: 17px;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 24px;
 
   &:hover .cardTitleText {
     color: $color-accent;
@@ -817,7 +1045,7 @@
 
 .cardContent {
   @include clickable;
-  padding: 6px 16px 12px;
+  padding: 16px;
   color: $color-text-soft;
   font-size: $fs-sm;
   line-height: 1.6;
@@ -856,13 +1084,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 16px;
+  padding: 12px 16px;
 }
 
 .cardCounters {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .counter {
@@ -871,8 +1099,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: 4px 10px;
+  border-radius: 20px;
   background: $color-surface-overlay;
   color: $color-text-soft;
   font-size: $fs-sm;
@@ -909,7 +1137,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: $color-surface-overlay;
   color: $color-text-muted;
   font-size: $fs-sm;
   font-weight: 600;
@@ -948,14 +1178,14 @@
 .lastPost {
   @include clickable;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   padding: 12px 16px;
   background: $color-surface-raised;
 }
 
 .lastPostAvatar {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: var(--avatar-radius, 50%);
   object-fit: cover;
@@ -1388,17 +1618,19 @@
 .comments {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 12px;
-  padding: 12px 14px;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid $color-border;
 }
 
 .comment {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+  padding: 10px 0;
+
+  & + & {
+    border-top: 1px solid $color-border;
+  }
 }
 
 .commentsMore {
@@ -1409,16 +1641,11 @@
   gap: 8px;
   align-self: flex-start;
   max-width: 100%;
-  padding: 4px 10px 4px 4px;
-  border: 1px solid $color-border;
-  border-radius: $radius-pill;
-  background: $color-surface;
-  color: $color-text-soft;
+  margin-bottom: 4px;
+  padding: 0 0 10px;
+  color: $color-text-muted;
   font-size: $fs-xs;
-  transition:
-    background $duration-fast $ease-out,
-    border-color $duration-fast $ease-out,
-    color $duration-fast $ease-out;
+  transition: color $duration-fast $ease-out;
 
   svg {
     flex-shrink: 0;
@@ -1426,12 +1653,10 @@
   }
 
   &:hover {
-    background: $color-surface-overlay;
-    border-color: $color-border-strong;
-    color: $color-text;
+    color: $color-text-soft;
 
     svg {
-      color: $color-text;
+      color: $color-text-soft;
     }
   }
 }
@@ -1446,11 +1671,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   border-radius: var(--avatar-radius, 50%);
-  border: 2px solid $color-surface-raised;
+  border: 2px solid $color-surface;
   background: $color-surface-overlay;
   color: $color-text-soft;
   font-size: 10px;
@@ -1458,7 +1683,7 @@
   object-fit: cover;
 
   & + & {
-    margin-left: -8px;
+    margin-left: -9px;
   }
 }
 
@@ -1471,30 +1696,37 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
-  border-radius: var(--avatar-radius, 50%);
+  border-radius: var(--avatar-radius, 8px);
   background: $color-surface-overlay;
   color: $color-text-soft;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   object-fit: cover;
 }
 
 .commentBody {
+  display: flex;
   flex: 1 1 auto;
   min-width: 0;
+  flex-direction: column;
 }
 
 .commentTop {
   display: flex;
   align-items: center;
-  gap: 6px;
+  min-height: 20px;
+  flex-wrap: wrap;
+  gap: 3px 6px;
 }
 
 .commentNick {
-  font-size: $fs-xs;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: $fs-sm;
   font-weight: 600;
 }
 
@@ -1506,20 +1738,21 @@
 .commentReplyBtn {
   @include button-reset;
   @include clickable;
-  margin-left: auto;
-  padding: 2px 8px;
-  border-radius: $radius-pill;
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 0;
   font-size: $fs-xs;
   color: $color-text-muted;
-  transition: background $duration-fast $ease-out, color $duration-fast $ease-out;
+  transition: color $duration-fast $ease-out;
 
   &:hover {
-    background: $color-surface-raised;
-    color: $color-text;
+    color: $color-text-soft;
   }
 }
 
 .commentText {
+  min-height: 19px;
+  margin-top: 4px;
   font-size: calc(#{$fs-xs} * var(--msg-scale, 1));
   line-height: 1.45;
   word-break: break-word;
@@ -1546,7 +1779,9 @@
 }
 
 .commentForm {
-  margin-top: 8px;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid $color-border;
 }
 
 .threadAvatarBtn,
@@ -2293,26 +2528,76 @@
 
 
 .pickRoot {
+  position: relative;
+  display: flex;
+  min-height: min(720px, calc(100vh - 64px));
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+  background: $color-surface-raised;
+}
+
+.pickTitleContainer {
+  padding: 16px 20px;
+  border-radius: 12px 12px 0 0;
+  background:
+    radial-gradient(
+      circle at 18% 25%,
+      color-mix(in srgb, $color-accent 18%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(120deg, $color-surface-overlay, $color-surface-raised);
+}
+
+.pickTitleWrap {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 320px;
+  gap: 6px;
+}
+
+.pickTitle {
+  color: $color-text;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
 }
 
 .pickDescription {
-  margin: 0;
-  font-size: $fs-sm;
   color: $color-text-muted;
+  font-size: $fs-sm;
+  line-height: 20px;
+}
+
+.pickContentContainer {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  padding: 0 4px 4px;
+}
+
+.pickContent {
+  display: flex;
+  min-width: 0;
+  min-height: 40vh;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 16px 16px;
+  border-radius: 8px;
+  background: $color-surface;
 }
 
 .pickSearch {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border: 1px solid $color-border-strong;
-  border-radius: $radius-md;
-  background: $color-surface;
+  width: 100%;
+  height: 38px;
+  gap: 10px;
+  margin: 16px 0 20px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: $color-surface-raised;
   color: $color-text-muted;
 
   input {
@@ -2320,7 +2605,8 @@
     border: none;
     background: transparent;
     color: $color-text;
-    font-size: $fs-sm;
+    min-width: 0;
+    font-size: 14px;
     font-family: inherit;
 
     &:focus {
@@ -2329,15 +2615,34 @@
   }
 
   &:focus-within {
-    border-color: $color-accent;
+    box-shadow: 0 0 0 2px color-mix(in srgb, $color-accent 38%, transparent);
+    color: $color-text;
+  }
+}
+
+.pickSearchClear {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  border-radius: 7px;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
   }
 }
 
 .pickScroll {
   display: flex;
+  min-height: 0;
   flex-direction: column;
-  gap: 18px;
-  max-height: 52vh;
+  flex: 1;
   overflow-y: auto;
   padding-right: 4px;
   @include scrollbar;
@@ -2350,22 +2655,67 @@
   color: $color-text-muted;
 }
 
+.pickSkeleton {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 4px 0 20px;
+}
+
+.pickSkeletonRow,
+.sideSkeletonRow,
+.threadSkeletonLine {
+  position: relative;
+  overflow: hidden;
+  background: $color-surface-overlay;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, $color-text 9%, transparent),
+      transparent
+    );
+    animation: forumShimmer 1.25s ease-in-out infinite;
+  }
+}
+
+.pickSkeletonRow {
+  height: 42px;
+  border-radius: 10px;
+}
+
+@keyframes forumShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .pickGroup {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
+
+  & + & {
+    margin-top: 16px;
+  }
 }
 
 .pickGroupTitle {
-  font-size: $fs-sm;
-  font-weight: 700;
-  color: $color-text;
+  padding: 0 0 8px 4px;
+  color: $color-text-muted;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .pickGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px 8px;
 }
 
 .pickItem {
@@ -2373,74 +2723,98 @@
   @include clickable;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  padding: 10px 12px;
+  min-height: 42px;
+  padding: 8px 8px 8px 12px;
   border: 2px solid transparent;
-  border-radius: $radius-md;
-  background: #ffffff08;
+  border-radius: 10px;
+  background: color-mix(in srgb, $color-text 4%, transparent);
   color: $color-text;
   text-align: left;
   min-width: 0;
 
   &:hover {
-    background: #ffffff12;
+    background: color-mix(in srgb, $color-text 7%, transparent);
   }
 }
 
 .pickItemActive {
-  border-color: $color-accent;
-  background: #192f27;
+  border-color: color-mix(in srgb, $color-accent 62%, $color-border);
+  background: color-mix(in srgb, $color-accent 14%, $color-surface-raised);
+  color: $color-accent;
 }
 
 .pickIcon {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   flex: 0 0 auto;
-  color: rgb(80, 80, 80);
+  color: $color-text-muted;
 }
 
 .pickItemActive .pickIcon {
-  color: #00ba78;
+  color: $color-accent;
 }
 
 .pickItemTitle {
   @include truncate;
   flex: 1;
   font-size: $fs-sm;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .pickChevron {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border-radius: 6px;
   color: $color-text-muted;
 }
 
 .pickItemActive .pickChevron {
-  color: #00ba78;
+  color: $color-accent;
 }
 
 .pickSub {
   grid-column: 1 / -1;
-  padding: 8px 0 8px 14px;
-  margin-bottom: 2px;
-  border-left: 2px solid $color-border-strong;
+  overflow: hidden;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: color-mix(in srgb, $color-text 4%, transparent);
+}
+
+.pickFooterContainer {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  padding: 0 4px 4px;
+  border-radius: 0 0 12px 12px;
+  background: $color-surface-raised;
 }
 
 .pickFooter {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px;
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+  background: $color-surface-raised;
+  box-shadow: 0 -9px 24px rgba(0, 0, 0, 0.25);
+}
+
+.pickFooterLeft {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 15px;
 }
 
 .pickFooterIcon {
@@ -2450,10 +2824,10 @@
   width: 44px;
   height: 44px;
   flex: 0 0 auto;
-  border-radius: $radius-md;
-  background: #192f27;
-  border: 1px solid #0b7d54;
-  color: #00ba78;
+  border-radius: 12px;
+  background: color-mix(in srgb, $color-accent 14%, $color-surface-raised);
+  border: 1px solid color-mix(in srgb, $color-accent 55%, $color-border);
+  color: $color-accent;
 }
 
 .pickFooterInfo {
@@ -2470,7 +2844,7 @@
 
 .pickFooterDesc {
   font-size: $fs-xs;
-  color: #949494;
+  color: $color-text-muted;
   @include truncate;
 }
 
@@ -2481,7 +2855,12 @@
   min-width: 160px;
   padding: 10px 18px;
   border-radius: $radius-md;
-  background: linear-gradient(88deg, #1c6946, #329c6c, #1d8254);
+  background: linear-gradient(
+    88deg,
+    $color-accent-dark,
+    color-mix(in srgb, $color-accent 78%, white),
+    $color-accent-dark
+  );
   color: #fff;
   font-size: $fs-sm;
   font-weight: 600;
@@ -2521,10 +2900,177 @@
   gap: $space-4;
 }
 
+.threadComposeForm {
+  padding: 20px;
+  border-radius: 12px;
+  background: $color-surface;
+}
+
+.composeHeader {
+  margin: -20px -20px 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface-raised;
+  color: $color-text;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.notificationRules {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, $color-accent 35%, $color-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, $color-accent 8%, $color-surface-raised);
+}
+
+.notificationRulesText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+
+  strong {
+    color: $color-text;
+    font-size: $fs-sm;
+  }
+
+  span {
+    color: $color-text-muted;
+    font-size: $fs-xs;
+    line-height: 1.5;
+  }
+}
+
+.notificationRulesButton {
+  @include button-reset;
+  @include clickable;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid $color-border-strong;
+  border-radius: 8px;
+  background: $color-surface-overlay;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    border-color: color-mix(in srgb, $color-accent 55%, $color-border);
+    color: $color-text;
+  }
+}
+
+.composeControlUnit {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.composeUnitLabel {
+  padding-top: 9px;
+  color: $color-text;
+  font-size: $fs-sm;
+  font-weight: 600;
+}
+
+.composeUnitBody {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.composeHintRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: $color-text-muted;
+  font-size: $fs-xs;
+}
+
+.composeEditorUnit {
+  min-width: 0;
+}
+
+.composeForumCard {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: 14px 16px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-surface-raised;
+}
+
+.composeForumIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 10px;
+  background: $color-accent-soft;
+  color: $color-text;
+}
+
+.composeForumInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  strong {
+    color: $color-text;
+    font-size: $fs-sm;
+  }
+
+  span {
+    color: $color-text-muted;
+    font-size: $fs-xs;
+    line-height: 1.45;
+  }
+}
+
 .composeField {
   display: flex;
   flex-direction: column;
   gap: $space-1;
+}
+
+.composeSection {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 8px 20px;
+  padding: 14px 0 0;
+  border: 0;
+  border-top: 1px solid $color-border;
+  border-radius: 0;
+  background: transparent;
+
+  > .composeLabel {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: start;
+    padding-top: 3px;
+  }
+
+  > :not(.composeLabel) {
+    grid-column: 2;
+  }
+}
+
+.composeScheduleSection {
+  > * {
+    grid-column: 2;
+  }
 }
 
 .composeLabel {
@@ -2670,6 +3216,7 @@
 .composeActions {
   display: flex;
   gap: $space-2;
+  margin-left: 200px;
 }
 
 .checkRow {
@@ -2700,10 +3247,12 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: $space-2;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface-raised;
+  margin-left: 200px;
+  padding: 14px 0 0;
+  border: 0;
+  border-top: 1px solid $color-border;
+  border-radius: 0;
+  background: transparent;
 }
 
 .radioRow {
@@ -2735,10 +3284,32 @@
   background: $color-surface-raised;
   color: $color-text;
   font-size: $fs-sm;
+  color-scheme: inherit;
 
   &:focus {
     outline: none;
     border-color: $color-accent;
+  }
+}
+
+@media (max-width: 980px) {
+  .pickGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pickGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pickFooter {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .pickFooterBtn {
+    width: 100%;
   }
 }
 
@@ -2806,7 +3377,8 @@
   align-items: center;
   justify-content: center;
   gap: $space-2;
-  width: 100%;
+  width: calc(100% - 200px);
+  margin-left: 200px;
   padding: $space-3;
   border: 1px dashed $color-border-strong;
   border-radius: $radius-md;
@@ -2822,23 +3394,53 @@
   }
 }
 
+@media (max-width: 760px) {
+  .composeControlUnit,
+  .composeSection {
+    grid-template-columns: 1fr;
+  }
+
+  .composeSection > .composeLabel,
+  .composeSection > :not(.composeLabel),
+  .composeScheduleSection > * {
+    grid-column: 1;
+  }
+
+  .composeSection > .composeLabel {
+    grid-row: auto;
+  }
+
+  .composeActions,
+  .radioGroup,
+  .pollBtn {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .notificationRules {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .notificationRulesButton {
+    align-self: flex-start;
+  }
+}
+
 
 .sectionHeader {
   display: flex;
   flex-direction: column;
-  gap: $space-3;
-  margin-bottom: $space-3;
-  background: #1c1c1c;
-  padding: 30px;
+  margin-bottom: 15px;
+  border: 1px solid $color-border;
   border-radius: 12px;
+  background: $color-surface;
+  overflow: hidden;
 }
 
 .secTitleRow {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: $space-3;
-  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-bottom: 1px solid $color-border;
 }
 
 .secTitle {
@@ -2849,9 +3451,18 @@
 }
 
 .secDesc {
-  margin: 4px 0 0;
+  margin: 5px 0 0;
   font-size: $fs-sm;
+  line-height: 1.45;
   color: $color-text-muted;
+}
+
+.sectionNavRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px 0;
 }
 
 .secActions {
@@ -2867,7 +3478,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
+  min-height: 34px;
+  padding: 0 12px;
   border: 1px solid $color-border;
   border-radius: $radius-md;
   background: $color-surface;
@@ -2896,8 +3508,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border: 1px solid $color-border;
   border-radius: $radius-md;
   background: $color-surface;
@@ -2913,7 +3525,8 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: $space-2;
+  gap: 6px;
+  padding: 15px 20px 0;
   font-size: $fs-xs;
 }
 
@@ -2938,13 +3551,22 @@
   color: $color-text-soft;
 }
 
+.sectionPager {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+}
+
 .pagerBtn {
   @include button-reset;
   @include clickable;
-  padding: 5px 12px;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
   color: $color-text-soft;
   font-size: $fs-xs;
 
@@ -2961,41 +3583,84 @@
 }
 
 .filtersLabel {
-  font-size: $fs-xs;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: $color-text-muted;
+  display: none;
 }
 
 .filtersGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-2;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px 10px;
+  border-top: 1px solid $color-border;
 }
 
 .sfSelect,
 .sfDate {
+  appearance: none;
   width: 100%;
-  padding: 7px 10px;
+  min-width: 148px;
+  height: 40px;
+  padding: 0 34px 0 12px;
   border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface;
+  border-radius: 10px;
+  background-color: $color-surface-raised;
+  background-image:
+    linear-gradient(45deg, transparent 50%, $color-text-muted 50%),
+    linear-gradient(135deg, $color-text-muted 50%, transparent 50%);
+  background-position:
+    calc(100% - 15px) 17px,
+    calc(100% - 10px) 17px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
   color: $color-text;
-  font-size: $fs-sm;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    border-color $duration-fast $ease-out,
+    background-color $duration-fast $ease-out;
+
+  &:hover {
+    border-color: $color-border-strong;
+    background-color: $color-surface-overlay;
+  }
 
   &:focus {
     outline: none;
     border-color: $color-accent;
+    box-shadow: 0 0 0 2px color-mix(in srgb, $color-accent 18%, transparent);
+  }
+
+  option {
+    background: $color-surface-raised;
+    color: $color-text;
   }
 }
 
+.sfDate {
+  appearance: auto;
+  padding-right: 8px;
+  background-image: none;
+  color-scheme: dark;
+}
+
 .sfRange {
-  grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: $space-2;
-  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 1px solid $color-border;
+  grid-column: 1 / -1;
+  border-radius: 10px;
+  background: $color-surface-raised;
+
+  .sfDate {
+    min-width: 125px;
+    height: 30px;
+    padding: 0 6px;
+    border: 0;
+  }
 }
 
 .sfRangeLabel {
@@ -3006,9 +3671,9 @@
 .sfBottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: $space-3;
   flex-wrap: wrap;
+  gap: 10px;
+  padding: 2px 20px 16px;
 }
 
 .sfCreateTab {
@@ -3017,7 +3682,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 12px;
+  align-self: flex-start;
+  min-height: 34px;
+  padding: 0 12px;
   border: 1px solid $color-border-strong;
   border-radius: $radius-md;
   background: transparent;
@@ -3035,9 +3702,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: $space-2;
+  min-width: 240px;
   flex: 1;
-  min-width: 220px;
 }
 
 .sfSearchIcon {
@@ -3048,10 +3714,11 @@
 }
 
 .sfSearchInput {
-  flex: 1;
-  padding: 7px 10px 7px 30px;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
+  width: 100%;
+  height: 42px;
+  padding: 0 32px 0 15px;
+  border: 1px solid $color-border-strong;
+  border-radius: 10px;
   background: $color-surface;
   color: $color-text;
   font-size: $fs-sm;
@@ -3066,7 +3733,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: $fs-xs;
+  font-size: 13px;
   color: $color-text-soft;
   white-space: nowrap;
   cursor: pointer;
@@ -3074,6 +3741,26 @@
   input {
     accent-color: $color-accent;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 760px) {
+  .sectionNavRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filtersGrid {
+    align-items: stretch;
+  }
+
+  .sfSelect,
+  .sfRange {
+    width: 100%;
+  }
+
+  .sfRange {
+    flex-wrap: wrap;
   }
 }
 
@@ -3145,11 +3832,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 520px;
+  max-width: 620px;
   max-height: 85vh;
   border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  background: $color-surface;
+  border-radius: 12px;
+  background: $color-surface-raised;
   box-shadow: $shadow-lg;
 }
 
@@ -3157,7 +3844,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $space-3 $space-4;
+  padding: 16px 20px;
   border-bottom: 1px solid $color-border;
   font-size: $fs-lg;
   font-weight: 600;
@@ -3180,24 +3867,32 @@
   }
 }
 
+.tabModalForm {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .tabModalBody {
-  display: flex;
-  flex-direction: column;
-  gap: $space-3;
-  padding: $space-4;
+  padding: 20px 15px;
+  max-height: calc(85vh - 58px);
   overflow-y: auto;
+  @include scrollbar;
 }
 
 .tabField {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+
+  & + & {
+    margin-top: 25px;
+  }
 }
 
 .tabLabel {
-  font-size: $fs-xs;
+  margin-bottom: 15px;
+  font-size: 15px;
   font-weight: 600;
-  color: $color-text-muted;
+  color: $color-text;
 }
 
 .tabForumList {
@@ -3231,9 +3926,10 @@
 
 .tabInput {
   width: 100%;
-  padding: 7px 10px;
+  min-height: 44px;
+  padding: 0 10px;
   border: 1px solid $color-border;
-  border-radius: $radius-md;
+  border-radius: 10px;
   background: $color-surface;
   color: $color-text;
   font-size: $fs-sm;
@@ -3250,10 +3946,41 @@
   gap: $space-2;
 }
 
+.tabAdvanced {
+  margin-top: 25px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-surface;
+  overflow: hidden;
+
+  summary {
+    padding: 12px 14px;
+    color: $color-text-soft;
+    font-size: $fs-sm;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      color: $color-text;
+      background: $color-surface-overlay;
+    }
+  }
+}
+
+.tabAdvancedBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: 14px;
+  border-top: 1px solid $color-border;
+}
+
 .tabToggle {
   display: flex;
   align-items: flex-start;
   gap: $space-2;
+  margin-top: 25px;
   cursor: pointer;
 
   input {
@@ -3276,41 +4003,24 @@
 }
 
 .tabToggleDesc {
+  margin-top: 8px;
   font-size: $fs-xs;
   color: $color-text-muted;
 }
 
-.tabModalFoot {
+.tabSubmitContainer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: $space-2;
-  padding: $space-3 $space-4;
-  border-top: 1px solid $color-border;
-}
-
-.tabCancelBtn {
-  @include button-reset;
-  @include clickable;
-  padding: 9px 16px;
-  border-radius: $radius-md;
-  border: 1px solid $color-border-strong;
-  background: transparent;
-  color: $color-text-soft;
-  font-size: $fs-sm;
-  font-weight: 600;
-
-  &:hover {
-    background: $color-surface-overlay;
-    color: $color-text;
-  }
+  margin-top: 25px;
 }
 
 .tabSubmitBtn {
   @include button-reset;
   @include clickable;
-  padding: 9px 18px;
-  border-radius: $radius-md;
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 10px;
   background: $color-accent;
   color: #fff;
   font-size: $fs-sm;
@@ -3323,6 +4033,30 @@
   &:disabled {
     opacity: 0.5;
     cursor: default;
+  }
+}
+
+.tabModal .prefixControl {
+  min-height: 44px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: $color-surface;
+}
+
+.tabModal .prefixChip {
+  min-height: 30px;
+  padding: 0 8px 0 12px;
+  border-radius: 8px;
+}
+
+.tabModal .prefixMenu {
+  border-radius: 10px;
+  background: $color-surface-raised;
+}
+
+@media (max-width: 620px) {
+  .tabRow {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -3732,7 +4466,8 @@
   flex-shrink: 0;
   border-radius: 50%;
   background: $color-accent;
-  box-shadow: 0 0 0 2px rgba(0, 186, 120, 0.25);
+  box-shadow: 0 0 0 2px
+    color-mix(in srgb, $color-accent 25%, transparent);
 }
 
 .authorBadge {
@@ -3812,6 +4547,332 @@
 
   &:hover {
     color: $color-accent;
+  }
+}
+
+.specialListHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.specialTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.specialTitle {
+  margin: 0;
+  color: $color-text;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.specialRefresh,
+.specialReset {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface-raised;
+  color: $color-text-muted;
+
+  &:hover {
+    border-color: $color-border-strong;
+    color: $color-text;
+  }
+}
+
+.specialRefresh {
+  width: 34px;
+  padding: 0;
+}
+
+.bookmarkHelp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 20px;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface-raised;
+}
+
+.bookmarkHelpText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+
+  strong {
+    color: $color-text;
+    font-size: $fs-lg;
+    font-weight: 700;
+  }
+
+  span {
+    max-width: 650px;
+    color: $color-text-muted;
+    font-size: $fs-sm;
+    line-height: 1.5;
+  }
+}
+
+.bookmarkHelpButton {
+  @include button-reset;
+  @include clickable;
+  flex-shrink: 0;
+  padding: 9px 16px;
+  border-radius: $radius-md;
+  background: $color-accent;
+  color: #fff;
+  font-size: $fs-sm;
+  font-weight: 600;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.specialFilters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  background: $color-surface-raised;
+}
+
+.specialFilterRow,
+.specialFilterBottom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.specialFilterRow .sfSelect {
+  flex: 1 1 180px;
+  min-width: 150px;
+}
+
+.specialFilterBottom {
+  padding-top: 10px;
+  border-top: 1px solid $color-border;
+}
+
+.specialDateRange {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-text-muted;
+
+  .sfDate {
+    min-width: 120px;
+    border: 0;
+    background: transparent;
+  }
+}
+
+.specialSearch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 220px;
+  flex: 1 1 280px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-text-muted;
+
+  &:focus-within {
+    border-color: $color-accent;
+  }
+
+  input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: $color-text;
+    font: inherit;
+  }
+}
+
+.specialReset {
+  margin-left: auto;
+  font-size: $fs-xs;
+}
+
+.matchedThreadCount {
+  padding: 4px 2px 0;
+  color: $color-text-soft;
+  font-size: $fs-sm;
+  font-weight: 600;
+}
+
+.threadViewWrap {
+  gap: 10px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.threadViewWrap .breadcrumb,
+.threadViewWrap .threadInfoCard,
+.threadViewWrap .threadActionsBar,
+.threadViewWrap .postsSortBar,
+.threadViewWrap .replyCard {
+  margin-bottom: 0;
+}
+
+.threadInfoCard {
+  padding: 20px 22px;
+  border-radius: 10px;
+  background: $color-surface-raised;
+}
+
+.threadInfoTitle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 8px;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.posts {
+  gap: 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 12px;
+  padding: 16px 18px;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-surface-raised;
+
+  & + & {
+    border-top: 1px solid $color-border;
+  }
+}
+
+.post > .postAvatarBtn {
+  align-self: flex-start;
+  margin: 0;
+}
+
+.postAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--avatar-radius, 8px);
+}
+
+.postMain {
+  gap: 10px;
+}
+
+.postTop {
+  min-height: 28px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $color-border;
+}
+
+.postBody {
+  min-height: 48px;
+  padding: 3px 0 8px;
+  color: $color-text;
+  font-size: calc(#{$fs-base} * var(--msg-scale, 1));
+  line-height: 1.55;
+}
+
+.postFooter {
+  min-height: 28px;
+  padding-top: 8px;
+  border-top: 1px solid $color-border;
+}
+
+.postFooterActions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.comments {
+  gap: 0;
+  margin-top: 6px;
+  padding: 10px 12px 2px;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+}
+
+.comment {
+  padding: 10px 0;
+}
+
+.commentAvatar {
+  width: 36px;
+  height: 36px;
+}
+
+@media (max-width: 760px) {
+  .bookmarkHelp {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bookmarkHelpButton {
+    align-self: flex-start;
+  }
+
+  .specialDateRange {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .specialSearch {
+    flex-basis: 100%;
+  }
+
+  .specialReset {
+    margin-left: 0;
+  }
+
+  .post {
+    grid-template-columns: 40px minmax(0, 1fr);
+    padding: 13px;
+  }
+
+  .postAvatar {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -4241,27 +5302,37 @@
 
 .sidebarWrapper {
   padding: 15px 20px;
-  background: rgb(28, 28, 28);
-  border-radius: 10px;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  border-radius: 12px;
 
   & + & {
     margin-top: 12px;
   }
 }
 
+.sidebarTop {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .createBtnFull {
   @include button-reset;
   @include clickable;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 34px;
-  line-height: 34px;
+  padding: 0 10px;
   border-radius: 8px;
   background: linear-gradient(
     88deg,
-    #1c6946 0.29%,
-    #329c6c 51.58%,
-    #1d8254 100%
+    color-mix(in srgb, $color-accent-dark 88%, $color-surface) 0.29%,
+    color-mix(in srgb, $color-accent 76%, white) 51.58%,
+    $color-accent-dark 100%
   );
   color: #f5f5f5;
   font-size: $fs-sm;
@@ -4276,7 +5347,7 @@
 
 .nodeList {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 15px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -4291,16 +5362,17 @@
 .nodeRow {
   display: flex;
   align-items: center;
-  border-radius: 6px;
+  position: relative;
+  border-radius: 10px;
   transition: background $duration-fast $ease-out;
 
   &:hover {
-    background: rgb(36, 36, 36);
+    background: $color-surface-raised;
   }
 }
 
 .nodeRowActive {
-  background: rgb(36, 36, 36);
+  background: color-mix(in srgb, $color-accent 9%, transparent);
 
   .nodeLink,
   .nodeSvgIcon {
@@ -4313,9 +5385,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  min-width: 22px;
+  order: 2;
+  z-index: 2;
+  width: 30px;
+  min-width: 30px;
   height: 36px;
+  margin-left: -30px;
   color: rgb(120, 120, 120);
   flex: 0 0 auto;
 
@@ -4334,10 +5409,10 @@ button.nodeChevron {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   height: 36px;
-  padding: 0 12px;
-  color: rgb(214, 214, 214);
+  padding: 0 32px 0 12px;
+  color: $color-text-soft;
   font-size: 14px;
   text-align: left;
   transition: color $duration-fast $ease-out;
@@ -4377,13 +5452,13 @@ button.nodeChevron {
   min-width: 20px;
   height: 20px;
   line-height: 20px;
-  color: rgb(130, 130, 130);
+  color: $color-text-muted;
   flex: 0 0 auto;
   transition: color $duration-fast $ease-out;
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -4410,11 +5485,11 @@ button.nodeChevron {
 }
 
 .categoryStrip {
-  margin: 16px 0 6px;
-  padding: 0 12px;
+  margin: 25px 0 10px;
+  padding: 0;
   font-size: 14px;
-  font-weight: 700;
-  color: rgb(148, 148, 148);
+  font-weight: 500;
+  color: $color-text-muted;
 }
 
 .categoryBlock {
@@ -4431,11 +5506,11 @@ button.nodeChevron {
 
 .subForumList {
   list-style: none;
-  margin: 2px 0 6px 22px;
+  margin: 3px 0 7px 28px;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .subRow {
@@ -4446,23 +5521,25 @@ button.nodeChevron {
   flex: 1;
   min-width: 0;
   width: 100%;
-  padding: 6px 10px;
-  border-radius: 6px;
-  color: rgb(170, 170, 170);
-  font-size: 13px;
+  min-height: 34px;
+  padding: 7px 30px 7px 10px;
+  border-radius: 8px;
+  color: $color-text-soft;
+  font-size: 13.5px;
+  line-height: 20px;
   text-align: left;
   transition:
     background $duration-fast $ease-out,
     color $duration-fast $ease-out;
 
   &:hover {
-    background: rgb(36, 36, 36);
+    background: $color-surface-raised;
     color: rgb(214, 214, 214);
   }
 }
 
 .subRowActive {
-  background: rgb(36, 36, 36);
+  background: $color-surface-raised;
   color: $color-accent;
 }
 
@@ -4473,7 +5550,8 @@ button.nodeChevron {
 .subLine {
   display: flex;
   align-items: center;
-  gap: 2px;
+  position: relative;
+  min-height: 34px;
 }
 
 .subChevron {
@@ -4481,9 +5559,12 @@ button.nodeChevron {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  min-width: 16px;
-  height: 28px;
+  order: 2;
+  z-index: 2;
+  width: 30px;
+  min-width: 30px;
+  height: 34px;
+  margin-left: -30px;
   color: rgb(110, 110, 110);
   flex: 0 0 auto;
 
@@ -4516,15 +5597,56 @@ button.subChevron {
   align-items: center;
   gap: 8px;
   height: 34px;
-  margin: 0 0 8px;
+  margin: 0 0 12px;
   padding: 0 10px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: rgb(36, 36, 36);
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-surface-raised;
   transition: border-color $duration-fast $ease-out;
 
   &:focus-within {
-    border-color: rgba(0, 186, 120, 0.45);
+    border-color: color-mix(in srgb, $color-accent 45%, transparent);
+  }
+}
+
+.sideSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px 0 4px;
+  list-style: none;
+}
+
+.sideSkeletonRow {
+  height: 34px;
+  border-radius: 9px;
+
+  &:nth-child(2n) {
+    width: 84%;
+  }
+
+  &:nth-child(3n) {
+    width: 92%;
+  }
+}
+
+@media (max-width: 760px) {
+  .pickRoot {
+    min-height: calc(100vh - 32px);
+  }
+
+  .pickGrid,
+  .pickSkeleton {
+    grid-template-columns: 1fr;
+  }
+
+  .sfBottom {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sfSearchRow {
+    min-width: 0;
   }
 }
 
@@ -4581,4 +5703,223 @@ button.subChevron {
   margin-left: 6px;
   color: $color-text-muted;
   vertical-align: middle;
+}
+
+.threadControlActive {
+  color: $color-accent;
+  background: color-mix(in srgb, $color-accent 12%, transparent);
+}
+
+.compactThread {
+  position: relative;
+  display: flex;
+  min-height: 66px;
+  margin: 0 -12px;
+  padding: 0 12px;
+  border-radius: 12px;
+  outline: 1px solid transparent;
+  background: $color-surface;
+  transition:
+    background 0.15s ease,
+    outline-color 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    background: $color-surface-raised;
+    outline-color: $color-border-strong;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  &:hover .compactControls {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+}
+
+.compactMain,
+.compactLastPost {
+  @include button-reset;
+  @include clickable;
+  min-width: 0;
+  text-align: left;
+}
+
+.compactMain {
+  flex: 1 1 auto;
+  display: block;
+  padding: 13px 210px 13px 0;
+}
+
+.compactBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.compactTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: $color-text;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.compactTitle {
+  @include truncate;
+  min-width: 0;
+}
+
+.compactFlag {
+  flex: 0 0 auto;
+  color: $color-text-muted;
+}
+
+.compactPrefixes {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.compactMeta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: $color-text-muted;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.compactCreator {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compactMetaDivider {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: $color-text-muted;
+}
+
+.compactStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: $color-text-muted;
+
+  svg {
+    color: $color-text-muted;
+  }
+}
+
+.compactLastPost {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  bottom: 0;
+  width: 185px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+}
+
+.compactLastAvatar {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: var(--avatar-radius, 50%);
+  object-fit: cover;
+  background: $color-surface-overlay;
+  color: $color-text-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compactLastInfo {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.compactLastName,
+.compactLastDate {
+  @include truncate;
+  display: block;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.compactLastName {
+  font-weight: 600;
+}
+
+.compactLastDate {
+  color: $color-text-muted;
+}
+
+.compactControls {
+  position: absolute;
+  right: 205px;
+  bottom: 13px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 2px;
+  border-radius: 8px;
+  background: $color-surface-raised;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.compactControl {
+  @include button-reset;
+  @include clickable;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  color: $color-text-muted;
+
+  &:hover {
+    color: $color-text;
+    background: $color-surface-overlay;
+  }
+}
+
+@media (max-width: 900px) {
+  .compactMain {
+    padding-right: 0;
+  }
+
+  .compactLastPost {
+    display: none;
+  }
+
+  .compactControls {
+    position: static;
+    flex: 0 0 auto;
+    align-self: center;
+    opacity: 1;
+    pointer-events: auto;
+    background: transparent;
+  }
 }

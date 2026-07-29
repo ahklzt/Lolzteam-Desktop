@@ -3,8 +3,8 @@
   align-items: stretch;
   height: 32px;
   flex: 0 0 32px;
-  background: #141414;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: $color-bg;
+  border-bottom: 1px solid $color-border;
   user-select: none;
 }
 
@@ -29,14 +29,14 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: #d8d8d8;
+  color: $color-text-soft;
   cursor: pointer;
   transition: background 0.12s ease, color 0.12s ease;
 }
 
 .btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  background: $color-surface-overlay;
+  color: $color-text;
 }
 
 .close:hover {

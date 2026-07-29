@@ -2,7 +2,7 @@
   display: flex;
   align-items: flex-start;
   gap: $space-4;
-  max-width: 1220px;
+  max-width: var(--app-content-width, 1220px);
   margin: 0 auto;
   width: 100%;
 }
@@ -468,7 +468,7 @@
   position: relative;
   padding: 15px 20px;
   border-radius: 10px;
-  background: rgb(28, 28, 28);
+  background: $color-surface;
 }
 
 .rightCol {
@@ -528,7 +528,7 @@
   padding: 4px 12px;
   line-height: 22px;
   border-radius: 31px;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   color: #d6d6d6;
   font-size: $fs-xs;
   margin-bottom: 5px;
@@ -629,7 +629,7 @@
   gap: 4px;
   padding: 0 10px;
   border-radius: 6px;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   color: $color-text;
   font-size: $fs-xs;
   line-height: 26px;
@@ -667,7 +667,7 @@
   margin-left: 4px;
   padding: 0 6px;
   border-radius: 6px;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   color: #d6d6d6;
   font-weight: 600;
   line-height: 22px;
@@ -720,7 +720,7 @@
   padding: 0 10px;
   border: none;
   border-radius: 8px;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   color: rgb(214, 214, 214);
 
   &:hover {
@@ -829,7 +829,7 @@
 }
 
 .subPage {
-  max-width: 1220px;
+  max-width: var(--app-content-width, 1220px);
   margin: 0 auto;
   width: 100%;
   display: flex;
@@ -861,7 +861,7 @@
   min-width: 240px;
   padding: 6px;
   border-radius: 10px;
-  background: rgb(36, 36, 36);
+  background: $color-surface-raised;
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   display: flex;
@@ -885,7 +885,7 @@
 
   svg { flex: 0 0 auto; color: $color-text-muted; }
 
-  &:hover { background: rgb(48, 48, 48); color: #fff; }
+  &:hover { background: $color-surface-overlay; color: #fff; }
 }
 
 .sellerPage { display: flex; flex-direction: column; gap: 16px; }
@@ -895,7 +895,7 @@
   gap: 14px;
   padding: 16px 20px;
   border-radius: 10px;
-  background: rgb(28, 28, 28);
+  background: $color-surface;
 }
 .sellerAvatar {
   flex: 0 0 auto;
@@ -905,7 +905,7 @@
   width: 48px;
   height: 48px;
   border-radius: var(--avatar-radius, 50%);
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   color: $color-text-muted;
 }
 .sellerMeta { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
@@ -928,7 +928,7 @@
   gap: 8px;
   padding: 9px 18px;
   border-radius: 8px;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   color: rgb(214, 214, 214);
   font-size: $fs-sm;
   font-weight: 600;
@@ -944,7 +944,7 @@
   border-radius: var(--avatar-radius, 50%);
   object-fit: cover;
   flex: 0 0 auto;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
 }
 
 .itemPage { display: flex; flex-direction: column; gap: 18px; }
@@ -955,7 +955,7 @@
   height: 42px;
   border-radius: var(--avatar-radius, 50%);
   object-fit: cover;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   flex: 0 0 auto;
 }
 .itemSellerMeta { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
@@ -996,7 +996,7 @@
   gap: 6px;
   padding: 5px 10px;
   border-radius: $radius-md;
-  background: rgb(36, 36, 36);
+  background: $color-surface-raised;
   color: $color-text-soft;
   font-size: $fs-sm;
 }
@@ -1038,7 +1038,7 @@
   gap: 3px;
   padding: 12px 14px;
   border-radius: $radius-md;
-  background: rgb(28, 28, 28);
+  background: $color-surface;
 }
 .itemTrustedValue { font-size: $fs-base; font-weight: 600; color: $color-text; }
 .itemTrustedLabel { font-size: $fs-xs; color: $color-text-muted; }
@@ -1873,5 +1873,637 @@
   &:hover {
     color: $color-accent;
     border-color: $color-accent;
+  }
+}
+
+.layout {
+  width: 100%;
+  max-width: var(--app-content-width, 1220px);
+  margin: 0 auto;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.content {
+  min-width: 0;
+  gap: 12px;
+  overflow: visible;
+}
+
+.marketSidebar {
+  position: relative;
+  top: auto;
+  align-self: flex-start;
+  flex: 0 0 286px;
+  width: 286px;
+  max-height: none;
+  padding: 0;
+  gap: 10px;
+  overflow: visible;
+}
+
+.marketSidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.marketSidebar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: $color-border-strong;
+}
+
+.marketSidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sbCard,
+.sbSellerCard {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 20px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+  box-shadow: none;
+}
+
+.sbCurrencyCard {
+  background: $color-surface-raised;
+}
+
+.sbBalanceCard {
+  isolation: isolate;
+}
+
+.sbBalanceCard::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -96px;
+  right: -74px;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(49, 207, 123, 0.17), transparent 68%);
+  pointer-events: none;
+}
+
+.sbNavigationCard {
+  padding: 2px 0;
+}
+
+.sbActivityCard,
+.sbToolCard {
+  padding: 14px 16px;
+}
+
+.sbBalanceLabel {
+  color: $color-text-muted;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.sbBalanceValue {
+  margin-top: 5px;
+  color: $color-text;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.sbBalanceActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid $color-border;
+  border-radius: 14px;
+  background: $color-surface-raised;
+}
+
+.sbBalanceBtn {
+  min-width: 0;
+  min-height: 58px;
+  padding: 8px 4px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(49, 207, 123, 0.12);
+  color: $color-accent;
+  font-size: 11px;
+  line-height: 14px;
+  text-align: center;
+}
+
+.sbBalanceBtn:hover {
+  background: rgba(49, 207, 123, 0.07);
+}
+
+.sbMenu {
+  gap: 0;
+}
+
+.sbItem {
+  min-height: 42px;
+  padding: 9px 16px;
+  border-radius: 0;
+  color: $color-text-soft;
+}
+
+.sbItem:hover {
+  background: $color-surface-raised;
+  color: $color-text;
+}
+
+.sbItemIcon {
+  color: $color-text-muted;
+}
+
+.sbItem:hover .sbItemIcon {
+  color: $color-accent;
+}
+
+.sbSub {
+  margin: 0 8px 7px;
+  padding: 4px 0;
+  border-left: 1px solid $color-border;
+}
+
+.sbSub .sbItem {
+  min-height: 38px;
+  padding-left: 20px;
+  font-size: 12px;
+}
+
+.sbTitle,
+.sbCardHead {
+  margin-bottom: 10px;
+  color: $color-text;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sbNote,
+.sbEmpty,
+.sbListEntryMeta,
+.sbSellerStat,
+.sellerCatCount {
+  color: $color-text-muted;
+}
+
+.sbListEntry {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: $color-surface-raised;
+}
+
+.sbListEntry + .sbListEntry {
+  margin-top: 6px;
+}
+
+.sbListEntry:hover {
+  border-color: $color-border-strong;
+}
+
+.sbListEntryTitle {
+  overflow: hidden;
+  color: $color-text;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sbListEntryMeta {
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sbPrimary,
+.sbWideBtn {
+  min-height: 36px;
+  border-radius: 10px;
+  background: rgba(49, 207, 123, 0.12);
+  color: $color-accent;
+}
+
+.sbPrimary:hover,
+.sbWideBtn:hover {
+  background: rgba(49, 207, 123, 0.07);
+}
+
+.catGrid,
+.sellerCatRow {
+  padding: 12px 14px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+  box-shadow: none;
+}
+
+.catGrid {
+  grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+  gap: 7px;
+}
+
+.catBtn {
+  min-width: 42px;
+  height: 42px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: $color-surface-raised;
+  color: $color-text-muted;
+}
+
+.catBtn:hover {
+  border-color: $color-border-strong;
+  background: $color-surface-overlay;
+  color: $color-text;
+}
+
+.catBtnActive {
+  border-color: rgba(49, 207, 123, 0.52);
+  background: rgba(49, 207, 123, 0.12);
+  color: $color-accent;
+}
+
+.marketControls {
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+}
+
+.searchRow {
+  display: grid;
+  grid-template-columns: 126px 126px minmax(0, 1fr);
+  gap: 10px;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.priceInput,
+.fieldInput,
+.search {
+  box-sizing: border-box;
+  height: 40px;
+  border: 1px solid $color-border;
+  border-radius: 9px;
+  outline: 0;
+  background: $color-surface-raised;
+  color: $color-text;
+}
+
+.priceInput:hover,
+.fieldInput:hover,
+.search:hover {
+  border-color: $color-border-strong;
+}
+
+.priceInput:focus,
+.fieldInput:focus,
+.search:focus {
+  border-color: $color-accent;
+  box-shadow: 0 0 0 2px rgba(49, 207, 123, 0.1);
+}
+
+.priceInput::placeholder,
+.fieldInput::placeholder,
+.search::placeholder {
+  color: $color-text-muted;
+}
+
+.searchBox {
+  position: relative;
+  min-width: 0;
+}
+
+.search {
+  width: 100%;
+  padding: 0 48px 0 13px;
+}
+
+.searchSubmit {
+  @include button-reset;
+  @include clickable;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(49, 207, 123, 0.12);
+  color: $color-accent;
+}
+
+.searchSubmit:hover {
+  background: rgba(49, 207, 123, 0.2);
+}
+
+.sortRow {
+  gap: 6px;
+  padding: 0 20px 15px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.sortChip,
+.filterToggle,
+.sellerCatChip {
+  min-height: 34px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: $color-surface-raised;
+  color: $color-text-muted;
+}
+
+.sortChip:hover,
+.filterToggle:hover,
+.sellerCatChip:hover {
+  border-color: $color-border-strong;
+  background: $color-surface-overlay;
+  color: $color-text;
+}
+
+.sortChipActive,
+.sellerCatChipActive {
+  border-color: rgba(49, 207, 123, 0.5);
+  background: rgba(49, 207, 123, 0.12);
+  color: $color-accent;
+}
+
+.count {
+  margin-left: auto;
+  color: $color-text-muted;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filters {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid $color-border;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.filtersGrid {
+  padding: 15px 20px;
+}
+
+.filtersActions {
+  padding: 0 20px 15px;
+}
+
+.applyBtn,
+.resetBtn {
+  min-height: 36px;
+  border-radius: 9px;
+}
+
+.list {
+  gap: 10px;
+}
+
+.state {
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+  box-shadow: none;
+}
+
+.sbSellerCard {
+  padding: 16px 20px;
+}
+
+.sbSellerCardPage {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sbSellerTop {
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sbSellerAvatar {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+.sbSellerHead {
+  min-width: 0;
+}
+
+.sbSellerName {
+  color: $color-text;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.sbSellerStats {
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.sbSellerStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.sbSellerMsgBtn {
+  min-height: 36px;
+  margin-top: 13px;
+  border-radius: 10px;
+  background: rgba(49, 207, 123, 0.12);
+  color: $color-accent;
+}
+
+.sellerPage {
+  gap: 12px;
+}
+
+.sellerCatRow {
+  gap: 7px;
+}
+
+.sellerRangeTitle {
+  margin: 0;
+  padding: 15px 20px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+  color: $color-text;
+  box-shadow: none;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.sellerMore {
+  border-radius: 10px;
+}
+
+.itemPage {
+  gap: 12px;
+}
+
+.itemTitleRow {
+  padding: 18px 20px;
+  border: 1px solid $color-border;
+  border-radius: 12px 12px 0 0;
+  background: $color-surface;
+}
+
+.itemTitle {
+  color: $color-text;
+  font-size: 20px;
+  line-height: 27px;
+}
+
+.itemPrice {
+  color: $color-text;
+  font-size: 20px;
+}
+
+.itemMeta {
+  margin-top: -12px;
+  padding: 0 20px 16px;
+  border-right: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+  border-left: 1px solid $color-border;
+  border-radius: 0 0 12px 12px;
+  background: $color-surface;
+}
+
+.itemActions {
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+}
+
+.itemBuyBtn,
+.itemCartBtn,
+.iconBtn {
+  min-height: 38px;
+  border-radius: 9px;
+}
+
+.itemSection,
+.itemGuarantee {
+  padding: 16px 20px;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  background: $color-surface;
+}
+
+.itemSectionTitle {
+  margin-bottom: 12px;
+  color: $color-text;
+  font-size: 16px;
+}
+
+.itemTrustedGrid {
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-border;
+}
+
+.itemTrustedCell {
+  border: 0;
+  border-radius: 0;
+  background: $color-surface-raised;
+}
+
+@media (max-width: 1120px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .marketSidebar {
+    position: relative;
+    top: auto;
+    width: 100%;
+    max-height: 460px;
+    padding-right: 5px;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 780px) {
+  .searchRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .searchBox {
+    grid-column: 1 / -1;
+  }
+
+  .sortRow {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .count {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .itemTitleRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .itemPriceBox {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .searchRow {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+  .searchBox {
+    grid-column: auto;
+  }
+
+  .sbBalanceActions {
+    grid-template-columns: 1fr;
+  }
+
+  .marketSidebar {
+    max-height: 420px;
   }
 }

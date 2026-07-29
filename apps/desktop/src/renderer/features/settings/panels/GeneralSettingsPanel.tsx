@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { DEFAULT_AVATAR_PLACEHOLDER, DEFAULT_SETTINGS } from "@lzt/shared";
 import { useSettingsStore } from "~/stores/settings";
 import { Toggle } from "~/widgets/Toggle";
@@ -9,6 +8,18 @@ interface GeneralSettingsPanelProps {
   onOpenHistory: () => void;
 }
 
+const pathToFileUrl = (value: string): string => {
+  const normalized = value.replace(/\\/g, "/");
+  if (normalized.startsWith("file://")) return normalized;
+  if (/^[a-zA-Z]:\//.test(normalized)) {
+    return encodeURI(`file:///${normalized}`);
+  }
+  if (normalized.startsWith("/")) {
+    return encodeURI(`file://${normalized}`);
+  }
+  return encodeURI(normalized);
+};
+
 export const GeneralSettingsPanel = ({
   onOpenLocalUniq,
   onOpenHistory,
@@ -17,19 +28,13 @@ export const GeneralSettingsPanel = ({
   const patch = useSettingsStore((s) => s.patch);
   const s = settings ?? DEFAULT_SETTINGS;
 
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const onPickPlaceholder = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        void patch({ avatarPlaceholder: reader.result });
-      }
-    };
-    reader.readAsDataURL(file);
+  const pickPlaceholder = async (): Promise<void> => {
+    const filePath = await window.moderator.app.pickFile({
+      title: "Выберите картинку-заглушку",
+      extensions: ["png", "jpg", "jpeg", "webp", "gif", "bmp"],
+    });
+    if (!filePath) return;
+    await patch({ avatarPlaceholder: pathToFileUrl(filePath) });
   };
 
   const placeholderSrc = s.avatarPlaceholder ?? DEFAULT_AVATAR_PLACEHOLDER;
@@ -113,17 +118,10 @@ export const GeneralSettingsPanel = ({
             </div>
             <div className={styles.rowControl}>
               <img className={styles.avatarPreview} src={placeholderSrc} alt="" />
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={onPickPlaceholder}
-              />
               <button
                 type="button"
                 className={styles.btn}
-                onClick={() => fileRef.current?.click()}
+                onClick={() => void pickPlaceholder()}
               >
                 Выбрать
               </button>

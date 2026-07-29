@@ -1,4 +1,5 @@
 import { DEFAULT_SETTINGS } from "@lzt/shared";
+import { useEffect, useState } from "react";
 import { useSettingsStore } from "~/stores/settings";
 import { Toggle } from "~/widgets/Toggle";
 import styles from "./settingControls.module.scss";
@@ -7,6 +8,28 @@ export const ChatSettingsPanel = () => {
   const settings = useSettingsStore((s) => s.snapshot?.settings);
   const patch = useSettingsStore((s) => s.patch);
   const s = settings ?? DEFAULT_SETTINGS;
+  const [messageRadius, setMessageRadius] = useState(s.messageRadius);
+  const [messageFontScale, setMessageFontScale] = useState(
+    s.messageFontScale,
+  );
+
+  useEffect(() => {
+    setMessageRadius(s.messageRadius);
+  }, [s.messageRadius]);
+
+  useEffect(() => {
+    setMessageFontScale(s.messageFontScale);
+  }, [s.messageFontScale]);
+
+  const commitMessageRadius = (): void => {
+    if (messageRadius === s.messageRadius) return;
+    void patch({ messageRadius });
+  };
+
+  const commitMessageFontScale = (): void => {
+    if (messageFontScale === s.messageFontScale) return;
+    void patch({ messageFontScale });
+  };
 
   return (
     <div className={styles.wrap}>
@@ -30,6 +53,22 @@ export const ChatSettingsPanel = () => {
 
         <div className={styles.row}>
           <div className={styles.rowText}>
+            <span className={styles.rowTitle}>Чат в отдельном окне</span>
+            <span className={styles.rowDesc}>
+              Открывает чат отдельным окном приложения и скрывает плавающее окно
+              внутри интерфейса.
+            </span>
+          </div>
+          <div className={styles.rowControl}>
+            <Toggle
+              checked={s.chatSeparateWindow}
+              onChange={(v) => void patch({ chatSeparateWindow: v })}
+            />
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.rowText}>
             <span className={styles.rowTitle}>Закругление сообщений</span>
             <span className={styles.rowDesc}>
               Радиус карточек сообщений и разделов.
@@ -42,12 +81,13 @@ export const ChatSettingsPanel = () => {
               min={0}
               max={24}
               step={1}
-              value={s.messageRadius}
-              onChange={(e) =>
-                void patch({ messageRadius: Number(e.target.value) })
-              }
+              value={messageRadius}
+              onChange={(e) => setMessageRadius(Number(e.target.value))}
+              onPointerUp={commitMessageRadius}
+              onKeyUp={commitMessageRadius}
+              onBlur={commitMessageRadius}
             />
-            <span className={styles.rangeVal}>{s.messageRadius}px</span>
+            <span className={styles.rangeVal}>{messageRadius}px</span>
           </div>
         </div>
 
@@ -65,12 +105,13 @@ export const ChatSettingsPanel = () => {
               min={80}
               max={140}
               step={5}
-              value={s.messageFontScale}
-              onChange={(e) =>
-                void patch({ messageFontScale: Number(e.target.value) })
-              }
+              value={messageFontScale}
+              onChange={(e) => setMessageFontScale(Number(e.target.value))}
+              onPointerUp={commitMessageFontScale}
+              onKeyUp={commitMessageFontScale}
+              onBlur={commitMessageFontScale}
             />
-            <span className={styles.rangeVal}>{s.messageFontScale}%</span>
+            <span className={styles.rangeVal}>{messageFontScale}%</span>
           </div>
         </div>
       </div>

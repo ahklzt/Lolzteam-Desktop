@@ -38,8 +38,25 @@ import { TagPicker } from './TagPicker'
 import { PurchaseLoginData } from './PurchaseLoginData'
 import styles from './AccountCard.module.scss'
 
+const SCHEME = 'https' + '://'
+
 const formatNumber = (value: number): string =>
   new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(value)
+
+const getSellerAvatarUrl = (
+  userId: number | undefined,
+  avatarDate: unknown,
+): string | null => {
+  const id = typeof userId === 'number' ? userId : Number(userId)
+  const stamp =
+    typeof avatarDate === 'number'
+      ? String(avatarDate)
+      : typeof avatarDate === 'string'
+        ? avatarDate
+        : ''
+  if (!Number.isFinite(id) || id <= 0 || !stamp) return null
+  return `${SCHEME}nztcdn.com/avatar/s/${stamp}/${id}.webp`
+}
 
 const daysAgo = (unixSeconds: number): number =>
   Math.max(0, Math.floor((Date.now() - unixSeconds * 1000) / 86_400_000))
@@ -146,6 +163,10 @@ export const AccountCard = ({
 
   const sellerId = seller?.user_id
   const sellerName = seller?.username ?? ''
+  const sellerAvatarUrl = useMemo(
+    () => getSellerAvatarUrl(sellerId, seller?.avatar_date),
+    [sellerId, seller?.avatar_date],
+  )
 
   const [tagOpen, setTagOpen] = useState(false)
   const [starred, setStarred] = useState(context === 'favourites')
@@ -252,7 +273,18 @@ export const AccountCard = ({
   }
 
   return (
-    <article className={styles.item}>
+    <article
+      className={styles.item}
+      role="button"
+      tabIndex={0}
+      onClick={openItem}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          openItem()
+        }
+      }}
+    >
       <div className={styles.rightCol}>
         <span className={styles.price}>
           <span className={styles.value}>{priceValue}</span>
@@ -337,62 +369,93 @@ export const AccountCard = ({
       ) : null}
 
       <div className={styles.otherInfo}>
-        <div className={styles.inlineGroup}>
-          <span className={styles.inlineInfo}>
-            {seller?.username ? (
-              <EnrichedUsername
-                className={styles.username}
-                username={seller.username}
-                html={seller.username_html ?? null}
-                color={seller.username_color ?? null}
-              />
-            ) : null}
-            {typeof sold === 'number' ? (
-              <span className={styles.ratingBox} title={t('market.card.soldCount')}>
-                <span className={styles.ratingReviews}>{formatNumber(sold)}</span>
+        <div className={styles.footerBlock}>
+          <div className={styles.footerInfo}>
+            <button
+              type="button"
+              className={styles.sellerInfoButton}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (typeof sellerId === 'number') {
+                  viewSellerItems()
+                  return
+                }
+                openItem()
+              }}
+            >
+              <span className={styles.sellerAvatarWrap}>
+                {sellerAvatarUrl ? (
+                  <img
+                    className={styles.sellerAvatar}
+                    src={sellerAvatarUrl}
+                    alt={sellerName || title}
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className={styles.sellerAvatarFallback}>
+                    {(sellerName || title).charAt(0).toUpperCase()}
+                  </span>
+                )}
               </span>
-            ) : null}
-            {timeAgo ? (
-              <>
-                <span className={styles.separator} />
-                <span className={styles.muted}>{timeAgo}</span>
-              </>
-            ) : null}
-            {boughtLabel ? (
-              <>
-                <span className={styles.separator} />
-                <span className={styles.muted}>{t('market.card.purchasedAt', { date: boughtLabel })}</span>
-              </>
-            ) : null}
-            {typeof item.view_count === 'number' ? (
-              <>
-                <span className={styles.separator} />
-                <span className={styles.muted}>
-                  <Eye size={13} />
-                  {formatNumber(item.view_count)}
+
+              <span className={styles.sellerInfoMeta}>
+                {seller?.username ? (
+                  <EnrichedUsername
+                    className={styles.username}
+                    username={seller.username}
+                    html={seller.username_html ?? null}
+                    color={seller.username_color ?? null}
+                  />
+                ) : (
+                  <span className={styles.username}>{sellerName || `#${item.item_id}`}</span>
+                )}
+
+                <span className={styles.sellerMetaRow}>
+                  {typeof sold === 'number' ? (
+                    <span className={styles.ratingBox} title={t('market.card.soldCount')}>
+                      <span className={styles.ratingReviews}>{formatNumber(sold)}</span>
+                    </span>
+                  ) : null}
+                  {timeAgo ? <span className={styles.muted}>{timeAgo}</span> : null}
+                  {boughtLabel ? (
+                    <span className={styles.muted}>
+                      {t('market.card.purchasedAt', { date: boughtLabel })}
+                    </span>
+                  ) : null}
+                  {typeof item.view_count === 'number' ? (
+                    <span className={styles.muted}>
+                      <Eye size={13} />
+                      {formatNumber(item.view_count)}
+                    </span>
+                  ) : null}
+                  {checkResult ? (
+                    <span className={checkResult.valid ? styles.checkOk : styles.checkBad}>
+                      {checkResult.valid ? <CheckCircle2 size={13} /> : <XCircle size={13} />}
+                      {checkResult.valid ? t('market.check.valid') : t('market.check.invalid')}
+                    </span>
+                  ) : null}
                 </span>
-              </>
-            ) : null}
-            {checkResult ? (
-              <>
-                <span className={styles.separator} />
-                <span className={checkResult.valid ? styles.checkOk : styles.checkBad}>
-                  {checkResult.valid ? <CheckCircle2 size={13} /> : <XCircle size={13} />}
-                  {checkResult.valid ? t('market.check.valid') : t('market.check.invalid')}
-                </span>
-              </>
-            ) : null}
-          </span>
+              </span>
+            </button>
+          </div>
 
           <span className={styles.inlineButtons}>
-            <div className={styles.menuRoot} ref={menuRef}>
+            <div
+              className={styles.menuRoot}
+              ref={menuRef}
+              onClick={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
               <button
                 type="button"
                 className={`${styles.button} ${styles.buttonIcon}`}
                 title={t('market.card.more')}
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
-                onClick={() => setMenuOpen((v) => !v)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setMenuOpen((v) => !v)
+                }}
               >
                 <MoreHorizontal size={18} />
               </button>
@@ -454,7 +517,11 @@ export const AccountCard = ({
               ) : null}
             </div>
 
-            <div className={`${styles.menuRoot} ${styles.tagsWrapper}`}>
+            <div
+              className={`${styles.menuRoot} ${styles.tagsWrapper}`}
+              onClick={(e) => e.stopPropagation()}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
               <button
                 type="button"
                 className={styles.itemTags}
@@ -462,7 +529,10 @@ export const AccountCard = ({
                 aria-haspopup="menu"
                 aria-expanded={tagOpen}
                 onMouseDown={(e) => e.stopPropagation()}
-                onClick={() => setTagOpen((v) => !v)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setTagOpen((v) => !v)
+                }}
               >
                 {labels.length > 0 ? (
                   labels.map((label) => (
@@ -497,7 +567,10 @@ export const AccountCard = ({
               }
               title={starred ? t('market.card.favorited') : t('market.card.favorite')}
               disabled={starBusy}
-              onClick={() => void toggleStar()}
+              onClick={(e) => {
+                e.stopPropagation()
+                void toggleStar()
+              }}
             >
               <Heart size={16} fill={starred ? 'currentColor' : 'none'} />
             </button>
@@ -506,7 +579,10 @@ export const AccountCard = ({
               <button
                 type="button"
                 className={`${styles.button} ${styles.buttonPrimary}`}
-                onClick={() => void handleLogin()}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  void handleLogin()
+                }}
               >
                 <LogIn size={15} />
                 {t('market.card.login')}
@@ -515,7 +591,10 @@ export const AccountCard = ({
               <button
                 type="button"
                 className={`${styles.button} ${styles.buttonPrimary}`}
-                onClick={openItem}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  openItem()
+                }}
               >
                 {t('market.card.buy')}
               </button>
@@ -524,21 +603,16 @@ export const AccountCard = ({
         </div>
 
         {isPurchased ? (
-          <PurchaseLoginData
-            item={item}
-            categoryName={categoryName}
-            categorySlug={categorySlug}
-            openSignal={loginNonce}
-          />
+          <div onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
+            <PurchaseLoginData
+              item={item}
+              categoryName={categoryName}
+              categorySlug={categorySlug}
+              openSignal={loginNonce}
+            />
+          </div>
         ) : null}
       </div>
-
-      <button
-        type="button"
-        className={styles.linkClicker}
-        aria-label={title}
-        onClick={openItem}
-      />
     </article>
   )
 }

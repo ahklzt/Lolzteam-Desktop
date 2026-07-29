@@ -146,7 +146,27 @@ export const StreamerView = () => {
   }, [loaded, load, subscribe]);
 
   const [banwordDraft, setBanwordDraft] = useState("");
+  const [blurRadiusPx, setBlurRadiusPx] = useState(settings.blurRadiusPx);
+  const [transitionMs, setTransitionMs] = useState(settings.transitionMs);
   const importInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setBlurRadiusPx(settings.blurRadiusPx);
+  }, [settings.blurRadiusPx]);
+
+  useEffect(() => {
+    setTransitionMs(settings.transitionMs);
+  }, [settings.transitionMs]);
+
+  const commitBlurRadius = (): void => {
+    if (blurRadiusPx === settings.blurRadiusPx) return;
+    void patch({ blurRadiusPx });
+  };
+
+  const commitTransition = (): void => {
+    if (transitionMs === settings.transitionMs) return;
+    void patch({ transitionMs });
+  };
 
   const disabled = !settings.enabled;
 
@@ -249,17 +269,18 @@ export const StreamerView = () => {
         <div className={styles.row}>
           <label className={styles.label}>
             {t("settings.streamer.mask.blurRadius")}
-            <span className={styles.value}>{settings.blurRadiusPx}px</span>
+            <span className={styles.value}>{blurRadiusPx}px</span>
           </label>
           <input
             type="range"
             min={2}
             max={30}
             step={1}
-            value={settings.blurRadiusPx}
-            onChange={(e) =>
-              void patch({ blurRadiusPx: Number(e.target.value) })
-            }
+            value={blurRadiusPx}
+            onChange={(e) => setBlurRadiusPx(Number(e.target.value))}
+            onPointerUp={commitBlurRadius}
+            onKeyUp={commitBlurRadius}
+            onBlur={commitBlurRadius}
             disabled={disabled || settings.maskMode !== "blur"}
             className={styles.range}
           />
@@ -268,17 +289,18 @@ export const StreamerView = () => {
         <div className={styles.row}>
           <label className={styles.label}>
             {t("settings.streamer.mask.transition")}
-            <span className={styles.value}>{settings.transitionMs}ms</span>
+            <span className={styles.value}>{transitionMs}ms</span>
           </label>
           <input
             type="range"
             min={0}
             max={600}
             step={20}
-            value={settings.transitionMs}
-            onChange={(e) =>
-              void patch({ transitionMs: Number(e.target.value) })
-            }
+            value={transitionMs}
+            onChange={(e) => setTransitionMs(Number(e.target.value))}
+            onPointerUp={commitTransition}
+            onKeyUp={commitTransition}
+            onBlur={commitTransition}
             disabled={disabled}
             className={styles.range}
           />

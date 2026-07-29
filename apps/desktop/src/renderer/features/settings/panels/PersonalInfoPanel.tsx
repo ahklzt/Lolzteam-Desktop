@@ -38,6 +38,10 @@ const buildUpdate = (a: PersonalInfo, b: PersonalInfo): PersonalInfoUpdate => {
   if (a.occupation !== b.occupation) u.occupation = b.occupation;
   if (a.homepage !== b.homepage) u.homepage = b.homepage;
   if (a.interests !== b.interests) u.interests = b.interests;
+  if (a.favoriteAnime !== b.favoriteAnime) u.favoriteAnime = b.favoriteAnime;
+  if (a.favoritePorn !== b.favoritePorn) u.favoritePorn = b.favoritePorn;
+  if (a.favoriteAshkudishka !== b.favoriteAshkudishka)
+    u.favoriteAshkudishka = b.favoriteAshkudishka;
   return u;
 };
 
@@ -72,14 +76,14 @@ export const PersonalInfoPanel = () => {
     setLoadError(null);
     const res = await window.moderator.profile.getPersonal();
     setLoading(false);
-    if (res.ok) {
+    if (res.ok && res.info) {
       setInfo(res.info);
       setDraft(res.info);
       setDobDayRaw(res.info.dobDay ? String(res.info.dobDay) : "");
       setDobYearRaw(res.info.dobYear ? String(res.info.dobYear) : "");
     } else {
       setLoadError(
-        res.reason === "no_token"
+        !res.ok && res.reason === "no_token"
           ? t("settings.personal.form.notAuthed")
           : t("settings.personal.form.loadFailed"),
       );
@@ -135,7 +139,7 @@ export const PersonalInfoPanel = () => {
     setSaving(true);
     const res = await window.moderator.profile.updatePersonal(update);
     setSaving(false);
-    if (res.ok) {
+    if (res.ok && res.info) {
       setInfo(res.info);
       setDraft(res.info);
       setDobDayRaw(res.info.dobDay ? String(res.info.dobDay) : "");
@@ -503,6 +507,9 @@ export const PersonalInfoPanel = () => {
                 ["occupation", "occupation"],
                 ["homepage", "website"],
                 ["interests", "interests"],
+                ["favoriteAnime", "favoriteAnime"],
+                ["favoritePorn", "favoritePorn"],
+                ["favoriteAshkudishka", "favoriteAshkudishka"],
               ] as const
             ).map(([field, key]) => (
               <div className={styles.field} key={field}>

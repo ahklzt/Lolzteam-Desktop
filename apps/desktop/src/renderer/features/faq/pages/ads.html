@@ -52,7 +52,7 @@
                     <div class="icon"></div>
                     <div class="text-block">
                         <span class="title">
-                            42,2M +
+                            42,3M +
                         </span>
                         <span class="subtitle">
                             Сообщений
@@ -83,7 +83,24 @@
             </div>
             <div class="graphic-block">
                 <div class="graphic-canvas">
-                    <canvas id="dailyViewsChart"></canvas>
+                    <svg class="daily-views-chart" viewBox="0 0 1000 360" preserveAspectRatio="none" role="img" aria-label="График просмотров и посетителей форума">
+                        <defs>
+                            <linearGradient id="dailyViewsFill" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#39DB91" stop-opacity="0.3"></stop>
+                                <stop offset="100%" stop-color="#39DB91" stop-opacity="0"></stop>
+                            </linearGradient>
+                        </defs>
+                        <g class="chart-grid">
+                            <line x1="40" y1="60" x2="970" y2="60"></line>
+                            <line x1="40" y1="130" x2="970" y2="130"></line>
+                            <line x1="40" y1="200" x2="970" y2="200"></line>
+                            <line x1="40" y1="270" x2="970" y2="270"></line>
+                            <line x1="40" y1="330" x2="970" y2="330"></line>
+                        </g>
+                        <path class="chart-area" d="M40 284 L105 250 L170 268 L235 205 L300 226 L365 170 L430 194 L495 128 L560 151 L625 105 L690 132 L755 83 L820 111 L885 62 L970 84 L970 330 L40 330 Z"></path>
+                        <polyline class="chart-line chart-line-views" points="40,284 105,250 170,268 235,205 300,226 365,170 430,194 495,128 560,151 625,105 690,132 755,83 820,111 885,62 970,84"></polyline>
+                        <polyline class="chart-line chart-line-visitors" points="40,308 105,292 170,298 235,266 300,276 365,242 430,252 495,214 560,225 625,198 690,210 755,178 820,192 885,160 970,174"></polyline>
+                    </svg>
                 </div>
                 <div class="graphic-info">
                     <div class="graphic-info-item">

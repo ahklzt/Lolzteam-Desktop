@@ -15,10 +15,10 @@ import {
 import { useFaqRoute } from "~/stores/faqRoute";
 import { FaqSidebar, type FaqNavItem } from "./FaqSidebar";
 import { HtmlPage } from "./HtmlPage";
-import { FAQ_PAGES, type FaqTab } from "./pages";
+import { FAQ_PAGES, FAQ_PAGE_STYLES, type FaqTab } from "./pages";
 import styles from "./FaqView.module.scss";
 
-const SUGGEST_KEYWORD_URL = "https://t.me/jeff1939";
+const SUGGEST_KEYWORD_URL = "https" + "://t.me/jeff1939";
 
 const NAV: FaqNavItem[] = [
   { id: "terms", label: "Условия и правила", icon: FileText },
@@ -38,12 +38,14 @@ export const FaqView = () => {
 
   const routeTab = useFaqRoute((s) => s.tab);
   const routeNonce = useFaqRoute((s) => s.nonce);
+
   useEffect(() => {
-    if (routeTab) setTab(routeTab);
+    if (routeTab) {
+      setTab(routeTab);
+    }
   }, [routeNonce, routeTab]);
 
-  const openExternal = (url: string) =>
-    void window.moderator.app.openExternal(url);
+  const openExternal = (url: string) => void window.moderator.app.openExternal(url);
 
   return (
     <div className={styles.wrap}>
@@ -51,9 +53,7 @@ export const FaqView = () => {
       <section className={styles.content}>
         {tab === "keywords" && (
           <div className={styles.toolbar}>
-            <span className={styles.toolbarText}>
-              Не нашли нужное ключевое слово?
-            </span>
+            <span className={styles.toolbarText}>Не нашли нужное ключевое слово?</span>
             <button
               type="button"
               className={styles.suggestBtn}
@@ -64,7 +64,11 @@ export const FaqView = () => {
             </button>
           </div>
         )}
-        <HtmlPage html={FAQ_PAGES[tab]} className={styles.frame} />
+        <HtmlPage
+          html={FAQ_PAGES[tab]}
+          extraCss={FAQ_PAGE_STYLES[tab]}
+          className={styles.frame}
+        />
       </section>
     </div>
   );

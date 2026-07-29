@@ -13,6 +13,12 @@ import {
   Languages,
   Settings,
   LogOut,
+  Plus,
+  Eye,
+  ArrowRight,
+  WalletCards,
+  Landmark,
+  Send,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { LZT_CONFIG, type UserProfile } from "@lzt/shared";
@@ -55,7 +61,7 @@ const ManageRow = ({
   label: string;
   onClick: () => void;
 }) => (
-  <button type="button" className={styles.menuItem} onClick={onClick}>
+  <button type="button" className={styles.manageItem} onClick={onClick}>
     <Icon size={18} className={styles.menuItemIcon} />
     <span className={styles.menuLabel}>{label}</span>
   </button>
@@ -124,15 +130,31 @@ export const ProfileMenu = ({ profile }: { profile: UserProfile }) => {
       >
         {({ close }) => (
           <>
-            {}
             <div className={styles.profHeader}>
-              {(avatarOverride ?? profile.avatarUrl) ? (
-                <img className={styles.profAvatar} src={avatarOverride ?? profile.avatarUrl} alt="" />
-              ) : (
-                <span className={styles.profAvatarFallback}>
-                  {profile.username.slice(0, 1).toUpperCase()}
-                </span>
-              )}
+              <div className={styles.profAvatarWrap}>
+                {(avatarOverride ?? profile.avatarUrl) ? (
+                  <img
+                    className={styles.profAvatar}
+                    src={avatarOverride ?? profile.avatarUrl}
+                    alt=""
+                  />
+                ) : (
+                  <span className={styles.profAvatarFallback}>
+                    {profile.username.slice(0, 1).toUpperCase()}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  className={styles.profAvatarAction}
+                  onClick={() => {
+                    openExternal(`${WEB}/members/${profile.userId}/`);
+                    close();
+                  }}
+                  title={t("topbar.profile.goProfile")}
+                >
+                  <Plus size={15} />
+                </button>
+              </div>
               <div className={styles.profInfo}>
                 <span
                   className={styles.profName}
@@ -159,54 +181,67 @@ export const ProfileMenu = ({ profile }: { profile: UserProfile }) => {
               </div>
             </div>
 
-            {}
-            {balance && profile.balance != null && (
-              <div className={styles.profBalanceRow} data-streamer="hideBalance">
-                <span className={styles.profBalanceLabel}>
-                  {t("topbar.profile.balance")}
-                </span>
-                <AnimatedBalance
-                  className={styles.profBalanceVal}
-                  value={profile.balance}
-                  currency={profile.currency ?? "RUB"}
-                  locale={i18n.language === "ru" ? "ru-RU" : "en-US"}
-                />
+            <div className={styles.profBalanceCard} data-streamer="hideBalance">
+              {balance && profile.balance != null && (
+                <div className={styles.profBalanceRow}>
+                  <span className={styles.profBalanceLabel}>
+                    {t("topbar.profile.balance")}
+                  </span>
+                  <span className={styles.profBalanceAmount}>
+                    <Eye size={15} />
+                    <AnimatedBalance
+                      className={styles.profBalanceVal}
+                      value={profile.balance}
+                      currency={profile.currency ?? "RUB"}
+                      locale={i18n.language === "ru" ? "ru-RU" : "en-US"}
+                    />
+                    <ArrowRight size={15} />
+                  </span>
+                </div>
+              )}
+              <div className={styles.profActions}>
+                <button
+                  type="button"
+                  className={`${styles.profActionBtn} ${styles.profActionPrimary}`}
+                  onClick={() => {
+                    openExternal(`${MARKET}/payment/balance/deposit`);
+                    close();
+                  }}
+                >
+                  <span className={styles.profActionIcon}>
+                    <WalletCards size={19} />
+                  </span>
+                  <span>{t("topbar.profile.deposit")}</span>
+                </button>
+                <button
+                  type="button"
+                  className={styles.profActionBtn}
+                  onClick={() => {
+                    openExternal(`${MARKET}/balance/payout`);
+                    close();
+                  }}
+                >
+                  <span className={styles.profActionIcon}>
+                    <Landmark size={19} />
+                  </span>
+                  <span>{t("topbar.profile.payout")}</span>
+                </button>
+                <button
+                  type="button"
+                  className={styles.profActionBtn}
+                  onClick={() => {
+                    setTransferOpen(true);
+                    close();
+                  }}
+                >
+                  <span className={styles.profActionIcon}>
+                    <Send size={19} />
+                  </span>
+                  <span>{t("topbar.profile.transfer")}</span>
+                </button>
               </div>
-            )}
-            <div className={styles.profActions} data-streamer="hideBalance">
-              <button
-                type="button"
-                className={`${styles.profActionBtn} ${styles.profActionPrimary}`}
-                onClick={() => {
-                  openExternal(`${MARKET}/payment/balance/deposit`);
-                  close();
-                }}
-              >
-                {t("topbar.profile.deposit")}
-              </button>
-              <button
-                type="button"
-                className={styles.profActionBtn}
-                onClick={() => {
-                  openExternal(`${MARKET}/balance/payout`);
-                  close();
-                }}
-              >
-                {t("topbar.profile.payout")}
-              </button>
-              <button
-                type="button"
-                className={styles.profActionBtn}
-                onClick={() => {
-                  setTransferOpen(true);
-                  close();
-                }}
-              >
-                {t("topbar.profile.transfer")}
-              </button>
             </div>
 
-            {}
             <div className={styles.manageList}>
               <ManageRow
                 icon={User}
@@ -287,11 +322,10 @@ export const ProfileMenu = ({ profile }: { profile: UserProfile }) => {
               />
             </div>
 
-            {}
             <div className={styles.profFooter}>
               <button
                 type="button"
-                className={styles.menuItem}
+                className={styles.profSettings}
                 onClick={() => {
                   setView("settings");
                   close();

@@ -10,7 +10,6 @@ import {
   ChevronRight,
   FileText,
   FolderTree,
-  Gift,
   Hash,
   Minus,
   Plus,
@@ -29,12 +28,16 @@ import {
   CONTEST_FORUM_ID,
   CONTEST_HIDDEN_IDS,
 } from "./forum-store";
-import { useForumTree, useForumPrefixes } from "./forum-hooks";
+import {
+  useForumTree,
+  useForumPrefixes,
+  useForumSection,
+} from "./forum-hooks";
 import { sortForumTree } from "./forum-order";
 import { ForumEditor } from "./ForumEditor";
 import styles from "./forum.module.scss";
 
-const TITLE_SOFT_LIMIT = 120;
+const TITLE_SOFT_LIMIT = 100;
 
 export const REPLY_GROUPS: Array<{ value: number; key: string }> = [
   { value: 0, key: "staff" },
@@ -104,11 +107,21 @@ const pickIconNode = (node: ForumNode, size: number) =>
 const pad2 = (n: number) => String(n).padStart(2, "0");
 const nowDate = () => {
   const d = new Date();
-  return `${pad2(d.getDate())}-${pad2(d.getMonth() + 1)}-${d.getFullYear()}`;
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 };
 const nowTime = () => {
   const d = new Date();
   return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+};
+
+const toApiDate = (value: string) => {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const year = match[1];
+  const month = match[2];
+  const day = match[3];
+  if (!year || !month || !day) return value;
+  return `${day}-${month}-${year}`;
 };
 
 export const PrefixSelect = ({
@@ -153,10 +166,11 @@ export const PrefixSelect = ({
     );
 
   return (
-    <div className={styles.composeField}>
-      <div className={styles.composeLabel}>{t("forum.form.prefix")}</div>
-      <div className={styles.composeHint}>{t("forum.form.prefixHint")}</div>
-      <div className={styles.prefixBox} ref={boxRef}>
+    <div className={styles.composeControlUnit}>
+      <div className={styles.composeUnitLabel}>{t("forum.form.prefix")}</div>
+      <div className={styles.composeUnitBody}>
+        <div className={styles.composeHint}>{t("forum.form.prefixHint")}</div>
+        <div className={styles.prefixBox} ref={boxRef}>
         <button
           type="button"
           className={styles.prefixControl}
@@ -221,6 +235,7 @@ export const PrefixSelect = ({
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );
@@ -236,6 +251,7 @@ export const CreateThread = () => {
 
   const [step, setStep] = useState<"select" | "compose">("select");
   const [forumId, setForumId] = useState<number | null>(createForumId);
+  const selectedSectionQ = useForumSection(forumId);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
   const [query, setQuery] = useState("");
 
@@ -340,9 +356,27 @@ export const CreateThread = () => {
     [roots, forumId],
   );
   const selected = selectedPath ? selectedPath[selectedPath.length - 1] : null;
+  const selectedSection = selectedSectionQ.data?.ok
+    ? selectedSectionQ.data.section
+    : null;
   const breadcrumb = selectedPath
     ? selectedPath.map((n) => n.title).join(" / ")
     : "";
+
+  const openSelectedRules = () => {
+    if (selectedSection?.rulesThreadId) {
+      openThread(selectedSection.rulesThreadId);
+      return;
+    }
+    if (selectedSection?.permalink) {
+      window.open(selectedSection.permalink, "_blank");
+      return;
+    }
+    pushToast({
+      kind: "info",
+      title: selected?.description ?? t("forum.form.noDescription"),
+    });
+  };
 
   const canSubmit = Boolean(forumId && title.trim() && body.trim());
   const canSubmitContest = Boolean(
@@ -398,7 +432,8 @@ export const CreateThread = () => {
         dontAlertFollowers: dontAlert || undefined,
         watchThread: watchThread || undefined,
         watchThreadEmail: watchThread && watchEmail ? true : undefined,
-        scheduleDate: scheduleOn && scheduleDate ? scheduleDate : undefined,
+        scheduleDate:
+          scheduleOn && scheduleDate ? toApiDate(scheduleDate) : undefined,
         scheduleTime: scheduleOn && scheduleTime ? scheduleTime : undefined,
         maxReplyCount: maxReplyOn ? maxReplyCount : undefined,
         replyDelay: delayOn ? delayMinutes : undefined,
@@ -454,7 +489,8 @@ export const CreateThread = () => {
         allowAskHiddenContent: allowAskHidden || undefined,
         watchThread: watchThread || undefined,
         watchThreadEmail: watchThread && watchEmail ? true : undefined,
-        scheduleDate: scheduleOn && scheduleDate ? scheduleDate : undefined,
+        scheduleDate:
+          scheduleOn && scheduleDate ? toApiDate(scheduleDate) : undefined,
         scheduleTime: scheduleOn && scheduleTime ? scheduleTime : undefined,
       });
       if (res.ok) {
@@ -513,120 +549,142 @@ export const CreateThread = () => {
           : t("forum.createThread");
 
   return (
-    <Modal open={createOpen} onClose={closeCreate} wide title={modalTitle}>
+    <Modal
+      open={createOpen}
+      onClose={closeCreate}
+      wide
+      maxWidth={step === "select" ? 1074 : 1040}
+      title={modalTitle}
+      headerless
+    >
       {step === "select" ? (
         <div className={styles.pickRoot}>
-          <p className={styles.pickDescription}>
-            {t("forum.form.selectDescription")}
-          </p>
-
-          {}
-          <button
-            type="button"
-            className={styles.pollBtn}
-            onClick={() => {
-              setMode("contest");
-              setForumId(CONTEST_FORUM_ID);
-              setStep("compose");
-            }}
-          >
-            <Gift size={16} />
-            <span>{t("forum.contest.entry")}</span>
-            <ChevronRight size={16} />
-          </button>
-
-          <div className={styles.pickSearch}>
-            <Search size={15} />
-            <input
-              value={query}
-              autoFocus
-              placeholder={t("forum.form.searchForum")}
-              onChange={(event) => setQuery(event.target.value)}
-            />
+          <div className={styles.pickTitleContainer}>
+            <div className={styles.pickTitleWrap}>
+              <span className={styles.pickTitle}>
+                {t("forum.form.selectTitle")}
+              </span>
+              <span className={styles.pickDescription}>
+                {t("forum.form.selectDescription")}
+              </span>
+            </div>
           </div>
 
-          <div className={styles.pickScroll}>
-            {tree.isLoading && (
-              <div className={styles.pickHint}>{t("forum.loading")}</div>
-            )}
-            {tree.data && !tree.data.ok && (
-              <div className={styles.pickHint}>{t("forum.loadError")}</div>
-            )}
+          <div className={styles.pickContentContainer}>
+            <div className={styles.pickContent}>
+              <div className={styles.pickSearch}>
+                <Search size={15} />
+                <input
+                  value={query}
+                  autoFocus
+                  placeholder={t("forum.form.searchForum")}
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+                {query && (
+                  <button
+                    type="button"
+                    className={styles.pickSearchClear}
+                    onClick={() => setQuery("")}
+                    aria-label={t("common.clear")}
+                  >
+                    <X size={15} />
+                  </button>
+                )}
+              </div>
 
-            {}
-            {searchResults !== null ? (
-              searchResults.length === 0 ? (
-                <div className={styles.pickHint}>
-                  {t("forum.form.noForums")}
-                </div>
-              ) : (
-                <div className={styles.pickGrid}>
-                  {searchResults.map((forum) => (
-                    <button
-                      key={forum.forumId}
-                      type="button"
-                      className={`${styles.pickItem} ${
-                        forumId === forum.forumId ? styles.pickItemActive : ""
-                      }`}
-                      onClick={() => setForumId(forum.forumId)}
-                    >
-                      <span className={styles.pickIcon}>
-                        {pickIconNode(forum, 17)}
-                      </span>
-                      <b className={styles.pickItemTitle}>{forum.title}</b>
-                    </button>
-                  ))}
-                </div>
-              )
-            ) : (
-              <>
-                {categoryGroups.map((cat) => (
-                  <div key={cat.forumId} className={styles.pickGroup}>
-                    <div className={styles.pickGroupTitle}>{cat.title}</div>
-                    <div className={styles.pickGrid}>
-                      {cat.children.map((child) => renderNode(child))}
-                    </div>
-                  </div>
-                ))}
-                {miscForums.length > 0 && (
-                  <div className={styles.pickGroup}>
-                    <div className={styles.pickGroupTitle}>
-                      {t("forum.form.other")}
-                    </div>
-                    <div className={styles.pickGrid}>
-                      {miscForums.map((forum) => renderNode(forum))}
-                    </div>
+              <div className={styles.pickScroll}>
+                {tree.isLoading && (
+                  <div className={styles.pickSkeleton} aria-label={t("forum.loading")}>
+                    {Array.from({ length: 9 }, (_, index) => (
+                      <span key={index} className={styles.pickSkeletonRow} />
+                    ))}
                   </div>
                 )}
-              </>
-            )}
-          </div>
+                {tree.data && !tree.data.ok && (
+                  <div className={styles.pickHint}>{t("forum.loadError")}</div>
+                )}
 
-          {}
-          {selected && (
-            <div className={styles.pickFooter}>
-              <span className={styles.pickFooterIcon}>
-                {pickIconNode(selected, 22)}
-              </span>
-              <div className={styles.pickFooterInfo}>
-                <div className={styles.pickFooterName}>{breadcrumb}</div>
-                <div className={styles.pickFooterDesc}>
-                  {selected.description ?? t("forum.form.noDescription")}
+                {searchResults !== null ? (
+                  searchResults.length === 0 ? (
+                    <div className={styles.pickHint}>
+                      {t("forum.form.noForums")}
+                    </div>
+                  ) : (
+                    <div className={styles.pickGrid}>
+                      {searchResults.map((forum) => (
+                        <button
+                          key={forum.forumId}
+                          type="button"
+                          className={`${styles.pickItem} ${
+                            forumId === forum.forumId
+                              ? styles.pickItemActive
+                              : ""
+                          }`}
+                          onClick={() => setForumId(forum.forumId)}
+                        >
+                          <span className={styles.pickIcon}>
+                            {pickIconNode(forum, 17)}
+                          </span>
+                          <b className={styles.pickItemTitle}>{forum.title}</b>
+                        </button>
+                      ))}
+                    </div>
+                  )
+                ) : (
+                  <>
+                    {categoryGroups.map((cat) => (
+                      <div key={cat.forumId} className={styles.pickGroup}>
+                        <div className={styles.pickGroupTitle}>{cat.title}</div>
+                        <div className={styles.pickGrid}>
+                          {cat.children.map((child) => renderNode(child))}
+                        </div>
+                      </div>
+                    ))}
+                    {miscForums.length > 0 && (
+                      <div className={styles.pickGroup}>
+                        <div className={styles.pickGroupTitle}>
+                          {t("forum.form.other")}
+                        </div>
+                        <div className={styles.pickGrid}>
+                          {miscForums.map((forum) => renderNode(forum))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+
+            {selected && (
+              <div className={styles.pickFooterContainer}>
+                <div className={styles.pickFooter}>
+                  <div className={styles.pickFooterLeft}>
+                    <span className={styles.pickFooterIcon}>
+                      {pickIconNode(selected, 22)}
+                    </span>
+                    <div className={styles.pickFooterInfo}>
+                      <div className={styles.pickFooterName}>{breadcrumb}</div>
+                      <div className={styles.pickFooterDesc}>
+                        {selected.description ??
+                          t("forum.form.noDescription")}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.pickFooterBtn}
+                    onClick={() => setStep("compose")}
+                  >
+                    {t("forum.createThread")}
+                  </button>
                 </div>
               </div>
-              <button
-                type="button"
-                className={styles.pickFooterBtn}
-                onClick={() => setStep("compose")}
-              >
-                {t("forum.createThread")}
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       ) : mode === "contest" ? (
-        <div className={styles.composeForm}>
-          {}
+        <div className={`${styles.composeForm} ${styles.threadComposeForm}`}>
+          <div className={styles.composeHeader}>{modalTitle}</div>
           <button
             type="button"
             className={styles.pickBack}
@@ -639,7 +697,6 @@ export const CreateThread = () => {
             <span>{t("forum.contest.back")}</span>
           </button>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               <FileText size={13} />
@@ -653,7 +710,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           <div className={styles.composeField}>
             <ForumEditor
               value={body}
@@ -663,7 +719,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               {t("forum.contest.duration")}
@@ -692,7 +747,6 @@ export const CreateThread = () => {
             </div>
           </div>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               {t("forum.contest.prizeType")}
@@ -707,7 +761,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               {t("forum.contest.winners")}
@@ -726,7 +779,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           {prizeType === "money" ? (
             <div className={styles.composeField}>
               <div className={styles.composeLabel}>
@@ -785,7 +837,6 @@ export const CreateThread = () => {
             </div>
           )}
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               {t("forum.contest.requireWeek")}
@@ -817,7 +868,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               <Tag size={13} />
@@ -830,7 +880,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               {t("forum.contest.secret")}
@@ -845,7 +894,6 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
           <div className={styles.composeActions}>
             <button
               type="button"
@@ -857,7 +905,6 @@ export const CreateThread = () => {
             </button>
           </div>
 
-          {}
           <div className={styles.radioGroup}>
             {REPLY_GROUPS.map((g) => (
               <label key={g.value} className={styles.radioRow}>
@@ -872,7 +919,6 @@ export const CreateThread = () => {
             ))}
           </div>
 
-          {}
           <div className={styles.composeField}>
             <Toggle
               checked={scheduleOn}
@@ -883,21 +929,20 @@ export const CreateThread = () => {
               <div className={styles.scheduleRow}>
                 <input
                   className={styles.scheduleDate}
+                  type="date"
                   value={scheduleDate}
-                  placeholder={t("forum.form.scheduleDatePlaceholder")}
                   onChange={(e) => setScheduleDate(e.target.value)}
                 />
                 <input
                   className={styles.scheduleTime}
+                  type="time"
                   value={scheduleTime}
-                  placeholder={t("forum.form.scheduleTimePlaceholder")}
                   onChange={(e) => setScheduleTime(e.target.value)}
                 />
               </div>
             )}
           </div>
 
-          {}
           <div className={styles.composeField}>
             <div className={styles.composeLabel}>
               {t("forum.form.settingsTitle")}
@@ -930,8 +975,8 @@ export const CreateThread = () => {
           </div>
         </div>
       ) : (
-        <div className={styles.composeForm}>
-          {}
+        <div className={`${styles.composeForm} ${styles.threadComposeForm}`}>
+          <div className={styles.composeHeader}>{modalTitle}</div>
           <button
             type="button"
             className={styles.pickBack}
@@ -944,7 +989,26 @@ export const CreateThread = () => {
             )}
           </button>
 
-          {}
+          {selected && (
+            <div className={styles.notificationRules}>
+              <div className={styles.notificationRulesText}>
+                <strong>{t("forum.form.rulesReminderTitle")}</strong>
+                <span>
+                  {t("forum.form.rulesReminderText", {
+                    forum: selected.title,
+                  })}
+                </span>
+              </div>
+              <button
+                type="button"
+                className={styles.notificationRulesButton}
+                onClick={openSelectedRules}
+              >
+                {t("forum.form.rulesButton")}
+              </button>
+            </div>
+          )}
+
           {forumId !== null && (
             <PrefixSelect
               forumId={forumId}
@@ -953,28 +1017,29 @@ export const CreateThread = () => {
             />
           )}
 
-          {}
-          <div className={styles.composeField}>
-            <div className={styles.composeLabel}>
-              <FileText size={13} />
-              {t("forum.form.title")}
-              <span className={styles.fieldCount}>
-                {title.length}/{TITLE_SOFT_LIMIT}
-              </span>
+          <div className={styles.composeControlUnit}>
+            <div className={styles.composeUnitLabel}>
+              {t("forum.form.title")}:
             </div>
-            <div className={styles.composeHint}>
-              {t("forum.form.titleHint")}
+            <div className={styles.composeUnitBody}>
+              <div className={styles.composeHintRow}>
+                <span>{t("forum.form.titleHint")}</span>
+                <span className={styles.fieldCount}>
+                  {title.length}/{TITLE_SOFT_LIMIT}
+                </span>
+              </div>
+              <input
+                className={`${styles.fieldInput} ${styles.createTitleInput}`}
+                value={title}
+                maxLength={TITLE_SOFT_LIMIT}
+                autoFocus
+                placeholder={t("forum.form.titlePlaceholder")}
+                onChange={(event) => setTitle(event.target.value)}
+              />
             </div>
-            <input
-              className={`${styles.fieldInput} ${styles.createTitleInput}`}
-              value={title}
-              autoFocus
-              onChange={(event) => setTitle(event.target.value)}
-            />
           </div>
 
-          {}
-          <div className={styles.composeField}>
+          <div className={styles.composeEditorUnit}>
             <ForumEditor
               value={body}
               onChange={setBody}
@@ -983,21 +1048,23 @@ export const CreateThread = () => {
             />
           </div>
 
-          {}
-          <div className={styles.composeField}>
-            <div className={styles.composeLabel}>
-              <Tag size={13} />
-              {t("forum.form.tags")}
+          <div className={styles.composeControlUnit}>
+            <div className={styles.composeUnitLabel}>
+              {t("forum.form.tags")}:
             </div>
-            <div className={styles.composeHint}>{t("forum.form.tagsHint")}</div>
-            <input
-              className={styles.fieldInput}
-              value={tags}
-              onChange={(event) => setTags(event.target.value)}
-            />
+            <div className={styles.composeUnitBody}>
+              <div className={styles.composeHint}>
+                {t("forum.form.tagsHint")}
+              </div>
+              <input
+                className={styles.fieldInput}
+                value={tags}
+                placeholder={t("forum.form.tagsPlaceholder")}
+                onChange={(event) => setTags(event.target.value)}
+              />
+            </div>
           </div>
 
-          {}
           <div className={styles.composeActions}>
             <button
               type="button"
@@ -1018,8 +1085,9 @@ export const CreateThread = () => {
             </button>
           </div>
 
-          {}
-          <div className={styles.composeField}>
+          <div
+            className={`${styles.composeField} ${styles.composeSection} ${styles.composeScheduleSection}`}
+          >
             <label className={styles.checkRow}>
               <input
                 type="checkbox"
@@ -1032,21 +1100,20 @@ export const CreateThread = () => {
               <div className={styles.scheduleRow}>
                 <input
                   className={styles.scheduleDate}
+                  type="date"
                   value={scheduleDate}
-                  placeholder={t("forum.form.scheduleDatePlaceholder")}
                   onChange={(e) => setScheduleDate(e.target.value)}
                 />
                 <input
                   className={styles.scheduleTime}
+                  type="time"
                   value={scheduleTime}
-                  placeholder={t("forum.form.scheduleTimePlaceholder")}
                   onChange={(e) => setScheduleTime(e.target.value)}
                 />
               </div>
             )}
           </div>
 
-          {}
           <div className={styles.radioGroup}>
             {REPLY_GROUPS.map((g) => (
               <label key={g.value} className={styles.radioRow}>
@@ -1069,8 +1136,7 @@ export const CreateThread = () => {
             </label>
           </div>
 
-          {}
-          <div className={styles.composeField}>
+          <div className={`${styles.composeField} ${styles.composeSection}`}>
             <div className={styles.composeLabel}>
               {t("forum.form.maxRepliesTitle")}
             </div>
@@ -1112,8 +1178,7 @@ export const CreateThread = () => {
             </div>
           </div>
 
-          {}
-          <div className={styles.composeField}>
+          <div className={`${styles.composeField} ${styles.composeSection}`}>
             <div className={styles.composeLabel}>
               {t("forum.form.delayTitle")}
             </div>
@@ -1142,8 +1207,7 @@ export const CreateThread = () => {
             </div>
           </div>
 
-          {}
-          <div className={styles.composeField}>
+          <div className={`${styles.composeField} ${styles.composeSection}`}>
             <div className={styles.composeLabel}>
               {t("forum.form.settingsTitle")}
             </div>
@@ -1186,7 +1250,6 @@ export const CreateThread = () => {
             </label>
           </div>
 
-          {}
           <button
             type="button"
             className={styles.pollBtn}

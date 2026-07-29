@@ -6,6 +6,7 @@ import { useViewStore } from "~/stores/view";
 import { useProfileTarget } from "~/stores/profileTarget";
 import { useReportPresence } from "~/stores/presence";
 import { pushToast } from "~/stores/toast";
+import { useSettingsStore } from "~/stores/settings";
 import { ProfileCard } from "./ProfileCard";
 import styles from "./ProfileView.module.scss";
 
@@ -24,6 +25,9 @@ export const ProfileView = () => {
   const profileNonce = useViewStore((s) => s.profileNonce);
   const targetQuery = useProfileTarget((s) => s.query);
   const targetNonce = useProfileTarget((s) => s.nonce);
+  const disableProfileBackgrounds = useSettingsStore(
+    (s) => s.snapshot?.settings.disableProfileBackgrounds ?? false,
+  );
   const lastTarget = useRef(0);
   const targetRequested = useRef(false);
 
@@ -158,15 +162,26 @@ export const ProfileView = () => {
   }
 
   const isOwn = Boolean(me && viewing && me.userId === viewing.userId);
+  const backdropStyle =
+    !disableProfileBackgrounds && viewing?.bannerUrl
+      ? {
+          backgroundImage: `linear-gradient(180deg, rgba(8, 10, 14, 0.2), rgba(8, 10, 14, 0.76)), url("${viewing.bannerUrl}")`,
+        }
+      : null;
 
   return (
     <div className={styles.wrap}>
+      {backdropStyle ? (
+        <div className={styles.profileBackdrop} style={backdropStyle} />
+      ) : null}
       {viewing && (
-        <ProfileCard
-          profile={viewing}
-          isOwn={isOwn}
-          onOpenProfile={(userId) => void openProfileById(userId)}
-        />
+        <div className={styles.cardWrap}>
+          <ProfileCard
+            profile={viewing}
+            isOwn={isOwn}
+            onOpenProfile={(userId) => void openProfileById(userId)}
+          />
+        </div>
       )}
     </div>
   );

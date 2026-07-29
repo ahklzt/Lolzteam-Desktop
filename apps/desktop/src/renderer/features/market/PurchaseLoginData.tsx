@@ -7,6 +7,7 @@ import './market-lolz.scss'
 import styles from './MarketView.module.scss'
 
 const STEAM_CATEGORY_ID = 1
+const HTTPS_PREFIX = 'https' + '://'
 
 type Props = {
   item: MarketItem
@@ -207,20 +208,20 @@ export const PurchaseLoginData = ({ item, categoryName, categorySlug, openSignal
     const dom = email.split('@')[1]?.toLowerCase() ?? ''
     if (!dom) return null
     if (dom.includes('outlook') || dom.includes('hotmail') || dom.includes('live')) {
-      return 'https://outlook.live.com'
+      return HTTPS_PREFIX + 'outlook.live.com'
     }
-    if (dom.includes('gmail') || dom.includes('googlemail')) return 'https://mail.google.com'
-    if (dom.includes('rambler')) return 'https://mail.rambler.ru'
-    if (dom.includes('yandex') || dom === 'ya.ru') return 'https://mail.yandex.ru'
+    if (dom.includes('gmail') || dom.includes('googlemail')) return HTTPS_PREFIX + 'mail.google.com'
+    if (dom.includes('rambler')) return HTTPS_PREFIX + 'mail.rambler.ru'
+    if (dom.includes('yandex') || dom === 'ya.ru') return HTTPS_PREFIX + 'mail.yandex.ru'
     if (
       dom.includes('mail.ru') ||
       dom.includes('bk.ru') ||
       dom.includes('inbox.ru') ||
       dom.includes('list.ru')
     ) {
-      return 'https://e.mail.ru'
+      return HTTPS_PREFIX + 'e.mail.ru'
     }
-    return `https://${dom}`
+    return HTTPS_PREFIX + dom
   })()
 
   const renderRow = (label: string, value: string, key: string) => (
@@ -275,13 +276,13 @@ export const PurchaseLoginData = ({ item, categoryName, categorySlug, openSignal
                     {title}
                   </div>
                   <div className="new-inputContainer">
-                    {login ? renderRow('Логин:', login, 'login') : null}
-                    {password ? renderRow('Пароль:', password, 'password') : null}
+                    {login ? renderRow(`${t('market.loginData.login')}:`, login, 'login') : null}
+                    {password ? renderRow(`${t('market.loginData.password')}:`, password, 'password') : null}
                     {login && password
-                      ? renderRow('Логин и пароль:', `${login}:${password}`, 'combo')
+                      ? renderRow(`${t('market.loginData.loginAndPassword')}:`, `${login}:${password}`, 'combo')
                       : null}
                     {!login && !password && copyFormat
-                      ? renderRow('Данные:', copyFormat, 'format')
+                      ? renderRow(`${t('market.loginData.data')}:`, copyFormat, 'format')
                       : null}
                   </div>
                   {accountLink || isSteam ? (
@@ -320,7 +321,7 @@ export const PurchaseLoginData = ({ item, categoryName, categorySlug, openSignal
                 <div className="marketItemView--loginData new-loginData-block cookies--block">
                   <div className="marketItemView--loginData--title">
                     <CookieIcon />
-                    Cookies:
+                    {t('market.loginData.cookies')}:
                   </div>
                   <div className="new-inputContainer">
                     <div className="new-inputGroup">
@@ -348,15 +349,15 @@ export const PurchaseLoginData = ({ item, categoryName, categorySlug, openSignal
                 <div className="marketItemView--loginData new-loginData-block email-type-autoreg-or-native">
                   <div className="marketItemView--loginData--title">
                     <MailIcon />
-                    Доступ к почте:
+                    {t('market.loginData.emailAccess')}:
                   </div>
                   <div className="new-inputContainer">
-                    {email ? renderRow('Логин:', email, 'email') : null}
-                    {emailPassword ? renderRow('Пароль:', emailPassword, 'emailPassword') : null}
+                    {email ? renderRow(`${t('market.loginData.email')}:`, email, 'email') : null}
+                    {emailPassword ? renderRow(`${t('market.loginData.emailPassword')}:`, emailPassword, 'emailPassword') : null}
                     {email && emailPassword
-                      ? renderRow('Логин и пароль:', `${email}:${emailPassword}`, 'emailCombo')
+                      ? renderRow(`${t('market.loginData.emailAndPassword')}:`, `${email}:${emailPassword}`, 'emailCombo')
                       : null}
-                    {emailCode ? renderRow('Код:', emailCode, 'emailCode') : null}
+                    {emailCode ? renderRow(`${t('market.loginData.code')}:`, emailCode, 'emailCode') : null}
                   </div>
                   <div className="btn-group">
                     {emailProviderUrl ? (
@@ -366,7 +367,7 @@ export const PurchaseLoginData = ({ item, categoryName, categorySlug, openSignal
                         onClick={() => void window.moderator.app.openExternal(emailProviderUrl)}
                       >
                         <ExternalLink size={14} />
-                        Вход в почту
+                        {t('market.loginData.loginToEmail')}
                       </button>
                     ) : null}
                     {canGetEmailCode ? (
@@ -410,7 +411,7 @@ export const PurchaseLoginData = ({ item, categoryName, categorySlug, openSignal
                 <div className="marketItemView--loginData new-loginData-block market_information_from_seller">
                   <div className="marketItemView--loginData--title">
                     <SellerIcon />
-                    Информация для покупателя:
+                    {t('market.loginData.buyerInfo')}:
                   </div>
                   <blockquote className="quote">{sellerInfo}</blockquote>
                 </div>

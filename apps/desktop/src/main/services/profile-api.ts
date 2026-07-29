@@ -1,5 +1,7 @@
 import {
   LZT_CONFIG,
+  type ErrorReportPayload,
+  type ErrorReportResult,
   type FollowOptions,
   type FollowersResult,
   type FullProfile,
@@ -37,6 +39,8 @@ import {
   type SecretAnswerUpdate,
   type SecretResetResult,
   type ConversationItem,
+  type ConversationMessage,
+  type ConversationMessagesResult,
   type ConversationParticipant,
   type ConversationsResult,
   type ForumSearchUser,
@@ -55,11 +59,18 @@ import { getProfileToken } from "./profile-token";
 import { appFetch } from "./app-fetch";
 import { getForumWebUrl, rememberForumUrl } from "./forum-domain";
 import { getCache, invalidateCache, setCache } from "./session-cache";
+import { getSettings } from "../settings/settings-store";
 
 type Raw = Record<string, unknown>;
 
 const DEFAULT_TIMEOUT_MS = 15_000;
 const SCHEME = "https" + "://";
+const ERROR_REPORT_RECIPIENT_ID = 4_315_635;
+const ERROR_REPORT_COOLDOWN_MS = 60_000;
+
+let pendingErrorReportSignature = "";
+let lastErrorReportSignature = "";
+let lastErrorReportAt = 0;
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -192,6 +203,34 @@ const KNOWN_FIELD_LABELS: Record<string, string> = {
   interests: "Интересы",
   jabber: "Jabber",
   matrix: "Matrix",
+  favoriteanime: "Любимое аниме",
+  favoriteporn: "Любимое порно",
+  favoritevape: "Любимая ашкудишка",
+};
+
+const fieldTitles = new Map<string, string>();
+let fieldTitlesLoaded = false;
+
+const ensureFieldTitles = async (token: string): Promise<void> => {
+  if (fieldTitlesLoaded) return;
+  fieldTitlesLoaded = true;
+  try {
+    const res = await apiFetch("/users/fields", token);
+    if (!res.ok) {
+      fieldTitlesLoaded = false;
+      return;
+    }
+    const data = (await res.json()) as Raw;
+    const list = data.fields;
+    if (!Array.isArray(list)) return;
+    for (const item of list as Raw[]) {
+      const id = str(item.id);
+      const title = str(item.title);
+      if (id && title) fieldTitles.set(id.toLowerCase(), title);
+    }
+  } catch {
+    fieldTitlesLoaded = false;
+  }
 };
 
 const fieldValueToString = (v: unknown): string | null => {
@@ -236,7 +275,11 @@ const buildCustomFields = (user: Raw): ProfileCustomField[] => {
   ): void => {
     if (!id || !value || EXCLUDED_FIELD_IDS.has(id)) return;
     if (out.some((f) => f.key === id)) return;
-    const label = title ?? KNOWN_FIELD_LABELS[id.toLowerCase()] ?? id;
+    const label =
+      title ??
+      fieldTitles.get(id.toLowerCase()) ??
+      KNOWN_FIELD_LABELS[id.toLowerCase()] ??
+      id;
     const href = buildFieldHref(id.toLowerCase(), value);
     out.push(
       href ? { key: id, label, value, href } : { key: id, label, value },
@@ -252,17 +295,19 @@ const buildCustomFields = (user: Raw): ProfileCustomField[] => {
     for (const item of sorted) {
       push(str(item.id) ?? "", str(item.title), fieldValueToString(item.value));
     }
-    return out;
   }
 
   const sources = [raw, user.custom_fields].filter(
-    (s): s is Raw => Boolean(s) && typeof s === "object",
+    (s): s is Raw =>
+      Boolean(s) && typeof s === "object" && !Array.isArray(s),
   );
   for (const src of sources) {
     for (const [key, val] of Object.entries(src)) {
       push(
         key,
-        KNOWN_FIELD_LABELS[key.toLowerCase()] ?? null,
+        fieldTitles.get(key.toLowerCase()) ??
+          KNOWN_FIELD_LABELS[key.toLowerCase()] ??
+          null,
         fieldValueToString(val),
       );
     }
@@ -484,6 +529,7 @@ export const validateAndFetchMe = async (
   token: string,
 ): Promise<ProfileFetchResult> => {
   try {
+    await ensureFieldTitles(token);
     const res = await apiFetch("/users/me?fields_include=*", token);
     return await parseUserResponse(res);
   } catch (err) {
@@ -542,6 +588,7 @@ const fetchById = async (
   token: string,
   id: number,
 ): Promise<ProfileFetchResult> => {
+  await ensureFieldTitles(token);
   const res = await apiFetch(`/users/${id}?fields_include=*`, token);
   return parseUserResponse(res);
 };
@@ -765,6 +812,108 @@ export const sendMessage = async (
   });
 };
 
+const redactErrorDetails = (value: string): string =>
+  value
+    .replace(/Bearer\s+[^\s"']+/gi, "Bearer [скрыто]")
+    .replace(
+      /(oauth_token|access_token|client_secret|authorization|token)(\s*[=:]\s*)[^\s&"']+/gi,
+      "$1$2[скрыто]",
+    )
+    .replace(/[A-Za-z0-9_-]{48,}/g, "[скрыто]")
+    .trim()
+    .slice(0, 8_000);
+
+const formatErrorReportDate = (timestamp: number): string => {
+  const date = new Date(Number.isFinite(timestamp) && timestamp > 0 ? timestamp : Date.now());
+  const parts = new Intl.DateTimeFormat("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+  const value = (type: string): string =>
+    parts.find((part) => part.type === type)?.value ?? "00";
+  return `${value("day")}.${value("month")}.${value("year")} в ${value("hour")}:${value("minute")}`;
+};
+
+export const submitErrorReport = async (
+  payload: ErrorReportPayload,
+): Promise<ErrorReportResult> => {
+  const view = payload.view.replace(/[\r\n\t]+/g, " ").trim().slice(0, 80);
+  const details = redactErrorDetails(payload.error);
+  if (!view || !details) return { ok: false, reason: "bad_query" };
+
+  const signature = `${view}\n${details}`;
+  const now = Date.now();
+  if (
+    pendingErrorReportSignature === signature ||
+    (lastErrorReportSignature === signature && now - lastErrorReportAt < ERROR_REPORT_COOLDOWN_MS)
+  ) {
+    return { ok: true };
+  }
+
+  try {
+    const settings = await getSettings();
+    if (!settings.errorReports) return { ok: false, reason: "disabled" };
+
+    const token = getProfileToken();
+    if (!token) return { ok: false, reason: "no_token" };
+
+    pendingErrorReportSignature = signature;
+    const [sender, recipient] = await Promise.all([
+      validateAndFetchMe(token),
+      fetchById(token, ERROR_REPORT_RECIPIENT_ID),
+    ]);
+    if (!sender.ok) return sender;
+    if (!recipient.ok) return recipient;
+
+    const date = formatErrorReportDate(payload.occurredAt);
+    const separator = String.fromCharCode(92);
+    const title = `Отчет об ошибках пользователя: ${sender.profile.username} ${separator} ${date}`;
+    const message = [
+      "Отчет об ошибках",
+      "",
+      `Пользователь: ${sender.profile.username}`,
+      `Время: ${date}`,
+      `Вкладка в которой произошла ошибка: ${view}`,
+      "",
+      "Ошибка:",
+      details,
+    ].join("\n");
+    const response = await apiFetch("/conversations", token, {
+      method: "POST",
+      body: {
+        recipients: [recipient.profile.username],
+        is_group: true,
+        title,
+        open_invite: false,
+        allow_edit_messages: false,
+        allow_sticky_messages: true,
+        allow_delete_own_messages: false,
+        message_body: message,
+      },
+    });
+    if (!response.ok) {
+      return {
+        ok: false,
+        reason: statusToReason(response.status),
+        message: `http_${response.status}`,
+      };
+    }
+
+    lastErrorReportSignature = signature;
+    lastErrorReportAt = Date.now();
+    return { ok: true };
+  } catch (error) {
+    log.warn("[error-report] submit failed", error);
+    return { ok: false, reason: "offline" };
+  } finally {
+    if (pendingErrorReportSignature === signature) pendingErrorReportSignature = "";
+  }
+};
+
 const posNum = (v: unknown): number | null => {
   const n = num(v);
   return n && n > 0 ? n : null;
@@ -781,8 +930,11 @@ const readField = (user: Raw, ids: string[]): string => {
       }
     }
   } else if (raw && typeof raw === "object") {
+    const values = new Map(
+      Object.entries(raw as Raw).map(([key, value]) => [key.toLowerCase(), value]),
+    );
     for (const id of ids) {
-      const v = fieldValueToString((raw as Raw)[id]);
+      const v = fieldValueToString(values.get(id.toLowerCase()));
       if (v) return v;
     }
   }
@@ -847,6 +999,9 @@ const mapPersonal = (user: Raw): PersonalInfo => {
     occupation: readField(user, ["occupation"]),
     homepage: readField(user, ["homepage", "website"]),
     interests: readField(user, ["_4", "interests"]),
+    favoriteAnime: readField(user, ["favoriteanime"]),
+    favoritePorn: readField(user, ["favoriteporn"]),
+    favoriteAshkudishka: readField(user, ["favoritevape"]),
   };
 };
 
@@ -931,6 +1086,10 @@ export const updateMePersonal = async (
   if (update.occupation !== undefined) fields.occupation = update.occupation;
   if (update.homepage !== undefined) fields.homepage = update.homepage;
   if (update.interests !== undefined) fields._4 = update.interests;
+  if (update.favoriteAnime !== undefined) fields.favoriteAnime = update.favoriteAnime;
+  if (update.favoritePorn !== undefined) fields.favoritePorn = update.favoritePorn;
+  if (update.favoriteAshkudishka !== undefined)
+    fields.favoriteVape = update.favoriteAshkudishka;
   if (Object.keys(fields).length > 0) body.fields = fields;
   try {
     const res = await apiFetch("/users/me", token, { method: "PUT", body });

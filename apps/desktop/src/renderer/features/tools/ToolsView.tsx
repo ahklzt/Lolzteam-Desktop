@@ -5,6 +5,7 @@ import {
   ChevronRight,
   Cookie,
   FileCode2,
+  Inbox,
   KeyRound,
   ListChecks,
   Mail,
@@ -17,9 +18,9 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { MailPanel } from "../mail/MailPanel";
 import { useMailTarget } from "~/stores/mailTarget";
-import { ProxyCheckTool } from "./proxycheck/ProxyCheckTool";
-import { LztMarketTool } from "./lztmarket/LztMarketTool";
 import { CheckerTool } from "./checker/CheckerTool";
+import { LztMarketTool } from "./lztmarket/LztMarketTool";
+import { MassMailCheckerTool } from "./mailchecker/MassMailCheckerTool";
 import { Base64DecodePanel } from "./panels/Base64Decode";
 import { Base64EncodePanel } from "./panels/Base64Encode";
 import { CookieFormatPanel } from "./panels/CookieFormat";
@@ -28,12 +29,14 @@ import { Netscape2JsonPanel } from "./panels/Netscape2Json";
 import { ReplaceDelimPanel } from "./panels/ReplaceDelim";
 import { SplitPanel } from "./panels/Split";
 import { TwoFAPanel } from "./panels/TwoFA";
+import { ProxyCheckTool } from "./proxycheck/ProxyCheckTool";
 import styles from "./ToolsView.module.scss";
 
 type ToolId =
   | "lztmarket"
   | "checker"
   | "mail"
+  | "mass-mail"
   | "proxycheck"
   | "2fa"
   | "cookie-fmt"
@@ -73,6 +76,13 @@ const TOOLS: ToolDef[] = [
     titleKey: "mail.title",
     descKey: "mail.tileDesc",
     Panel: MailPanel,
+  },
+  {
+    id: "mass-mail",
+    icon: Inbox,
+    titleKey: "massMail.title",
+    descKey: "massMail.tileDesc",
+    Panel: MassMailCheckerTool,
   },
   {
     id: "proxycheck",
@@ -144,11 +154,17 @@ export const ToolsView = () => {
   const [active, setActive] = useState<ToolId | null>(null);
 
   const mailPending = useMailTarget((s) => s.pending);
+  const mailOpenNonce = useMailTarget((s) => s.openNonce);
+
   useEffect(() => {
     if (mailPending && active !== "mail") setActive("mail");
   }, [mailPending, active]);
 
-  const current = TOOLS.find((x) => x.id === active);
+  useEffect(() => {
+    if (mailOpenNonce > 0) setActive("mail");
+  }, [mailOpenNonce]);
+
+  const current = TOOLS.find((tool) => tool.id === active);
   if (current) {
     const { Panel } = current;
     return <Panel onBack={() => setActive(null)} />;

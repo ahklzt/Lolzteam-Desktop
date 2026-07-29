@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
   Bookmark,
   Building2,
+  CalendarClock,
   ChevronDown,
   Eye,
   FileText,
@@ -13,7 +14,6 @@ import {
   Mail,
   Megaphone,
   MessagesSquare,
-  MessageSquare,
   Palette,
   Plus,
   Search,
@@ -76,6 +76,14 @@ const ForumNodeRow = ({
   const hasChildren = visibleChildren.length > 0;
   const showChildren = hasChildren && (expanded || open);
   const active = section.type === "forum" && section.forumId === node.forumId;
+  const selectNode = () => {
+    selectSection({
+      type: "forum",
+      forumId: node.forumId,
+      title: node.title,
+    });
+    if (hasChildren) setOpen(true);
+  };
 
   if (depth > 0) {
     return (
@@ -98,13 +106,7 @@ const ForumNodeRow = ({
           <button
             type="button"
             className={`${styles.subRow} ${active ? styles.subRowActive : ""}`}
-            onClick={() =>
-              selectSection({
-                type: "forum",
-                forumId: node.forumId,
-                title: node.title,
-              })
-            }
+            onClick={selectNode}
           >
             {node.title}
           </button>
@@ -145,13 +147,7 @@ const ForumNodeRow = ({
         <button
           type="button"
           className={styles.nodeLink}
-          onClick={() =>
-            selectSection({
-              type: "forum",
-              forumId: node.forumId,
-              title: node.title,
-            })
-          }
+          onClick={selectNode}
         >
           <NodeSvgIcon glyph={node.iconContent} Fallback={Hash} />
           <span className={styles.forumTitle}>{node.title}</span>
@@ -265,15 +261,16 @@ export const ForumSidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      {}
       <div className={styles.sidebarWrapper}>
-        <button
-          type="button"
-          className={styles.createBtnFull}
-          onClick={openCreate}
-        >
-          {t("forum.createThread")}
-        </button>
+        <div className={styles.sidebarTop}>
+          <button
+            type="button"
+            className={styles.createBtnFull}
+            onClick={openCreate}
+          >
+            {t("forum.createThread")}
+          </button>
+        </div>
 
         <ol className={styles.nodeList}>
           <li className={styles.searchInline}>
@@ -295,7 +292,6 @@ export const ForumSidebar = () => {
               </button>
             )}
           </li>
-          {}
           <li>
             <div
               className={`${styles.nodeRow} ${
@@ -316,17 +312,15 @@ export const ForumSidebar = () => {
             </div>
           </li>
 
-          {}
           {personalRow({ type: "my" }, FileText, t("forum.myThreads"))}
-          {personalRow(
-            { type: "userPosts" },
-            MessageSquare,
-            t("forum.myMessages"),
-          )}
           {personalRow({ type: "read" }, Eye, t("forum.readThreads"))}
           {personalRow({ type: "bookmarks" }, Bookmark, t("forum.bookmarks"))}
+          {personalRow(
+            { type: "scheduled" },
+            CalendarClock,
+            t("forum.scheduledThreads"),
+          )}
 
-          {}
           {tabs.map((tab) => {
             const active =
               section.type === "customTab" && section.tabId === tab.id;
@@ -367,7 +361,6 @@ export const ForumSidebar = () => {
             );
           })}
 
-          {}
           <li>
             <div className={styles.nodeRow}>
               <span className={styles.nodeChevron} />
@@ -384,9 +377,12 @@ export const ForumSidebar = () => {
             </div>
           </li>
 
-          {}
           {tree.isLoading && (
-            <li className={styles.sideHint}>{t("forum.loading")}</li>
+            <li className={styles.sideSkeleton} aria-label={t("forum.loading")}>
+              {Array.from({ length: 6 }, (_, index) => (
+                <span key={index} className={styles.sideSkeletonRow} />
+              ))}
+            </li>
           )}
           {tree.data && !tree.data.ok && (
             <li className={styles.sideHint}>{t("forum.loadError")}</li>
@@ -401,10 +397,8 @@ export const ForumSidebar = () => {
         </ol>
       </div>
 
-      {}
       <SympathyWidget />
 
-      {}
       <div className={styles.sidebarWrapper}>
         <div className={styles.categoryStrip}>{t("forum.misc.title")}</div>
         <nav className={styles.miscList}>
@@ -422,7 +416,6 @@ export const ForumSidebar = () => {
         </nav>
       </div>
 
-      {}
       <div className={styles.sideFooter}>
         <div className={styles.footerRow}>
           <span className={styles.footerLabel}>

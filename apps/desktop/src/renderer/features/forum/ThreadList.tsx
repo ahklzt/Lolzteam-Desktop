@@ -4,8 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   Bookmark,
-  Check,
-  ChevronDown,
   Clock,
   EyeOff,
   Eye,
@@ -44,6 +42,7 @@ import { LiveRelativeTime } from "~/lib/LiveRelativeTime";
 import { FeedSettingsModal } from "./FeedSettingsModal";
 import { ForumEditor } from "./ForumEditor";
 import { ForumSectionHeader } from "./ForumSectionHeader";
+import { ForumListHeader } from "./ForumListHeader";
 import styles from "./forum.module.scss";
 
 const ORDER_ITEMS: Array<{ value: ForumOrder; key: string }> = [
@@ -70,7 +69,7 @@ export const ThreadList = () => {
 
   const isSection = section.type === "forum" || section.type === "customTab";
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useForumThreadsInfinite(section, order, isSection ? filters : undefined);
+    useForumThreadsInfinite(section, order, filters);
   const [sectionPage, setSectionPage] = useState(1);
   const pageQ = useForumThreadsPage(
     section,
@@ -86,6 +85,7 @@ export const ThreadList = () => {
   const [likes, setLikes] = useState<
     Record<number, { liked: boolean; count: number }>
   >({});
+  const [bookmarks, setBookmarks] = useState<Record<number, boolean>>({});
   const [replyFor, setReplyFor] = useState<number | null>(null);
   const [replyText, setReplyText] = useState("");
   const [replySending, setReplySending] = useState(false);
@@ -109,8 +109,15 @@ export const ThreadList = () => {
 
   const showToolbar = section.type === "all";
   const showFeedSettings = section.type === "all";
+  const compactLayout = section.type === "forum" || section.type === "userPosts";
+  const specialSectionType =
+    section.type === "my" ||
+    section.type === "read" ||
+    section.type === "bookmarks" ||
+    section.type === "scheduled"
+      ? section.type
+      : null;
 
-  const [filterOpen, setFilterOpen] = useState(false);
   const [feedOpen, setFeedOpen] = useState(false);
 
   const title =
@@ -126,9 +133,13 @@ export const ThreadList = () => {
             ? t("forum.myMessages")
             : section.type === "bookmarks"
               ? t("forum.bookmarks")
-              : t("forum.readThreads");
+              : section.type === "scheduled"
+                ? t("forum.scheduledThreads")
+                : t("forum.readThreads");
 
   const firstPage = isSection ? pageQ.data : data?.pages[0];
+  const listLoading = isSection ? pageQ.isLoading : isLoading;
+  const listRefreshing = isSection && pageQ.isFetching && !pageQ.isLoading;
   const rawThreads = useMemo(() => {
     if (isSection) {
       return pageQ.data?.ok ? pageQ.data.threads : [];
@@ -148,18 +159,20 @@ export const ThreadList = () => {
 
   const threads = useMemo(() => {
     const q = search.trim().toLowerCase();
-    const noReplyActive =
-      order === "noReply" || (isSection && filters.order === "noReply");
+    const noReplyActive = order === "noReply" || filters.order === "noReply";
     const fromTs =
-      isSection && filters.dateFrom
+      filters.dateFrom
         ? Math.floor(new Date(`${filters.dateFrom}T00:00:00`).getTime() / 1000)
         : null;
     const toTs =
-      isSection && filters.dateTo
+      filters.dateTo
         ? Math.floor(new Date(`${filters.dateTo}T23:59:59`).getTime() / 1000)
         : null;
     return rawThreads.filter((thread) => {
       if (hiddenThreadIds.includes(thread.threadId)) return false;
+      if (section.type === "bookmarks" && bookmarks[thread.threadId] === false) {
+        return false;
+      }
       if (!isSection && CONTEST_HIDDEN_IDS.has(thread.forumId)) return false;
       if (q && !thread.title.toLowerCase().includes(q)) return false;
       if (noReplyActive && thread.replyCount > 0) return false;
@@ -167,7 +180,7 @@ export const ThreadList = () => {
       if (toTs !== null && thread.createDate > toTs) return false;
       return true;
     });
-  }, [rawThreads, hiddenThreadIds, search, order, isSection, filters]);
+  }, [rawThreads, hiddenThreadIds, search, order, isSection, filters, bookmarks, section.type]);
 
   const refresh = () => {
     void queryClient.invalidateQueries({
@@ -204,13 +217,31 @@ export const ThreadList = () => {
     refresh();
   };
 
-  const bookmark = async (threadId: number) => {
-    const res = await window.moderator.forum.bookmark(threadId);
-    pushToast(
-      res.ok
-        ? { kind: "success", title: t("forum.bookmarkAdded") }
-        : { kind: "error", title: res.message ?? t("forum.loadError") },
-    );
+  const toggleBookmark = async (
+    thread: ForumThreadItem,
+    currentlyBookmarked: boolean,
+  ) => {
+    const next = !currentlyBookmarked;
+    setBookmarks((current) => ({ ...current, [thread.threadId]: next }));
+    const res = next
+      ? await window.moderator.forum.bookmark(thread.threadId)
+      : await window.moderator.forum.unbookmark(thread.threadId);
+    if (!res.ok) {
+      setBookmarks((current) => ({
+        ...current,
+        [thread.threadId]: currentlyBookmarked,
+      }));
+      pushToast({ kind: "error", title: res.message ?? t("forum.loadError") });
+      return;
+    }
+    pushToast({
+      kind: "success",
+      title: t(next ? "forum.bookmarkAdded" : "forum.bookmarkRemoved"),
+    });
+    refresh();
+    void queryClient.invalidateQueries({
+      queryKey: ["forum", "thread", thread.threadId],
+    });
   };
 
   const hide = async (threadId: number) => {
@@ -248,12 +279,8 @@ export const ThreadList = () => {
     }
   };
 
-  const activeFilter = ORDER_ITEMS.find((item) => item.value === order);
-
   return (
     <div className={styles.listWrap}>
-      {
-}
       {(section.type === "forum" || section.type === "customTab") && (
         <ForumSectionHeader
           forumId={section.forumId}
@@ -265,71 +292,82 @@ export const ThreadList = () => {
         />
       )}
 
-      <div className={styles.listHead} hidden={isSection}>
-        <h2 className={styles.listTitle}>{title}</h2>
+      {specialSectionType && (
+        <ForumListHeader
+          sectionType={specialSectionType}
+          title={title}
+          total={firstPage?.ok ? firstPage.total : null}
+          loadedCount={threads.length}
+          onRefresh={refresh}
+        />
+      )}
+
+      <div
+        className={styles.listHead}
+        hidden={isSection || specialSectionType !== null}
+      >
+        <h2 className={styles.listTitle}>
+          {showToolbar ? t("forum.feedSortHint") : title}
+        </h2>
 
         {showToolbar && (
           <div className={styles.toolbar}>
-            <div className={styles.dropdown}>
-              <button
-                type="button"
-                className={styles.toolBtn}
-                onClick={() => setFilterOpen((v) => !v)}
+            <label className={styles.orderControl}>
+              <select
+                className={styles.orderSelect}
+                value={order}
+                aria-label={t("forum.filter.label")}
+                onChange={(event) => setOrder(event.target.value as ForumOrder)}
               >
-                <SlidersHorizontal size={14} />
-                <span>
-                  {activeFilter ? t(activeFilter.key) : t("forum.filter.label")}
-                </span>
-                <ChevronDown size={14} />
-              </button>
-              {filterOpen && (
-                <>
-                  <div
-                    className={styles.dropdownBackdrop}
-                    onClick={() => setFilterOpen(false)}
-                  />
-                  <div className={styles.dropdownMenu}>
-                    {ORDER_ITEMS.map((item) => (
-                      <button
-                        key={item.value}
-                        type="button"
-                        className={styles.dropdownItem}
-                        onClick={() => {
-                          setOrder(item.value);
-                          setFilterOpen(false);
-                        }}
-                      >
-                        <span>{t(item.key)}</span>
-                        {item.value === order && <Check size={14} />}
-                      </button>
-                    ))}
-                  </div>
-                </>
+                {ORDER_ITEMS.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {t(item.key)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <div className={styles.toolbarActions}>
+              {showFeedSettings && (
+                <button
+                  type="button"
+                  className={styles.toolBtn}
+                  title={t("forum.feedSettings")}
+                  aria-label={t("forum.feedSettings")}
+                  onClick={() => setFeedOpen(true)}
+                >
+                  <SlidersHorizontal size={20} />
+                </button>
               )}
-            </div>
 
-            {showFeedSettings && (
               <button
                 type="button"
                 className={styles.toolBtn}
-                onClick={() => setFeedOpen(true)}
+                title={t("forum.refreshFeed")}
+                aria-label={t("forum.refreshFeed")}
+                onClick={refresh}
               >
-                <SlidersHorizontal size={14} />
-                <span>{t("forum.feedSettings")}</span>
+                <RefreshCw size={20} />
               </button>
-            )}
-
-            <button type="button" className={styles.toolBtn} onClick={refresh}>
-              <RefreshCw size={14} />
-              <span>{t("forum.refreshFeed")}</span>
-            </button>
+            </div>
           </div>
         )}
       </div>
 
-      {(isSection ? pageQ.isLoading : isLoading) && (
-        <div className={styles.hint}>{t("forum.loading")}</div>
+      {listLoading && (
+        <div className={styles.threadSkeleton} aria-label={t("forum.loading")}>
+          {Array.from({ length: 6 }, (_, index) => (
+            <div key={index} className={styles.threadSkeletonRow}>
+              <span className={styles.threadSkeletonAvatar} />
+              <span className={styles.threadSkeletonBody}>
+                <span className={styles.threadSkeletonLine} />
+                <span className={styles.threadSkeletonLineShort} />
+              </span>
+            </div>
+          ))}
+        </div>
       )}
+      {listRefreshing && <div className={styles.threadLoadingBar} />}
       {firstPage && !firstPage.ok && (
         <div className={styles.hint}>
           {firstPage.message ?? t("forum.loadError")}
@@ -339,12 +377,17 @@ export const ThreadList = () => {
         <div className={styles.hint}>{t("forum.empty")}</div>
       )}
 
-      <div className={styles.threads}>
+      <div
+        className={`${styles.threads} ${compactLayout ? styles.compactThreads : ""}`}
+      >
         {threads.map((thread) => {
           const like = likes[thread.threadId] ?? {
             liked: thread.isLiked,
             count: thread.likeCount,
           };
+          const bookmarked =
+            bookmarks[thread.threadId] ??
+            (thread.isBookmarked || section.type === "bookmarks");
           const category = titleMap.get(thread.forumId);
           const categoryIcon = iconMap.get(thread.forumId) ?? null;
           const lastPost = thread.lastPost;
@@ -355,9 +398,143 @@ export const ThreadList = () => {
           );
           const replyOpen = replyFor === thread.threadId;
           const open = () => openThread(thread.threadId);
+          if (compactLayout) {
+            const lastUser = lastPost?.user ?? thread.creator;
+            const lastDate = lastPost?.createDate ?? thread.createDate;
+            return (
+              <article key={thread.threadId} className={styles.compactThread}>
+                <button
+                  type="button"
+                  className={styles.compactMain}
+                  onClick={open}
+                >
+                  <div className={styles.compactBody}>
+                    <div className={styles.compactTitleRow}>
+                      {thread.isSticky && (
+                        <Pin size={14} className={styles.compactFlag} />
+                      )}
+                      {thread.isClosed && (
+                        <Lock size={14} className={styles.compactFlag} />
+                      )}
+                      {thread.prefixes.length > 0 && (
+                        <span className={styles.compactPrefixes}>
+                          {thread.prefixes.map((prefix) => {
+                            const background = prefix.color;
+                            const color =
+                              prefix.textColor ??
+                              (background
+                                ? labelColors(background).text
+                                : undefined);
+                            return (
+                              <span
+                                key={prefix.title}
+                                className={
+                                  prefix.cssClass
+                                    ? `${styles.prefix} ${prefix.cssClass}`
+                                    : styles.prefix
+                                }
+                                style={
+                                  prefix.cssClass
+                                    ? undefined
+                                    : background || color
+                                      ? {
+                                          backgroundColor: background ?? undefined,
+                                          color,
+                                        }
+                                      : undefined
+                                }
+                              >
+                                {prefix.title}
+                              </span>
+                            );
+                          })}
+                        </span>
+                      )}
+                      <span className={styles.compactTitle}>{thread.title}</span>
+                    </div>
+                    <div className={styles.compactMeta}>
+                      <RichUsername
+                        html={thread.creator.usernameHtml}
+                        fallback={thread.creator.username}
+                        userId={thread.creator.userId}
+                        className={styles.compactCreator}
+                      />
+                      <span className={styles.compactMetaDivider} />
+                      <LiveRelativeTime
+                        unix={thread.createDate}
+                        format={formatForumDate}
+                        title={formatAbsoluteDate(thread.createDate)}
+                      />
+                      <span className={styles.compactStat}>
+                        <MessageCircle size={14} />
+                        {thread.replyCount}
+                      </span>
+                      <span className={styles.compactStat}>
+                        <Heart size={14} />
+                        {thread.likeCount}
+                      </span>
+                    </div>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.compactLastPost}
+                  onClick={open}
+                >
+                  <Avatar
+                    url={lastUser.avatarUrl}
+                    name={lastUser.username}
+                    className={styles.compactLastAvatar ?? ""}
+                  />
+                  <span className={styles.compactLastInfo}>
+                    <RichUsername
+                      html={lastUser.usernameHtml}
+                      fallback={lastUser.username}
+                      userId={lastUser.userId}
+                      className={styles.compactLastName}
+                    />
+                    <LiveRelativeTime
+                      className={styles.compactLastDate}
+                      unix={lastDate}
+                      format={formatForumDate}
+                      title={formatAbsoluteDate(lastDate)}
+                    />
+                  </span>
+                </button>
+
+                <div className={styles.compactControls}>
+                  <button
+                    type="button"
+                    className={`${styles.compactControl} ${
+                      bookmarked ? styles.threadControlActive : ""
+                    }`}
+                    title={t(
+                      bookmarked ? "forum.bookmarkRemove" : "forum.bookmarkAdd",
+                    )}
+                    onClick={() => void toggleBookmark(thread, bookmarked)}
+                  >
+                    <Bookmark
+                      size={18}
+                      fill={bookmarked ? "currentColor" : "none"}
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.compactControl}
+                    title={t("forum.complaint")}
+                    onClick={() =>
+                      complain(thread.creator.userId, thread.creator.username)
+                    }
+                  >
+                    <Flag size={18} />
+                  </button>
+                </div>
+              </article>
+            );
+          }
           return (
             <article key={thread.threadId} className={styles.card}>
-              {}
               <div className={styles.cardHead}>
                 <div className={styles.cardAuthor}>
                   <button
@@ -372,7 +549,7 @@ export const ThreadList = () => {
                     <Avatar
                       url={thread.creator.avatarUrl}
                       name={thread.creator.username}
-                      className={styles.cardAvatar}
+                      className={styles.cardAvatar ?? ""}
                     />
                   </button>
                   <button
@@ -444,7 +621,6 @@ export const ThreadList = () => {
                 </span>
               </div>
 
-              {}
               <h3
                 className={styles.cardTitle}
                 role="button"
@@ -463,7 +639,6 @@ export const ThreadList = () => {
                 <span className={styles.cardTitleText}>{thread.title}</span>
               </h3>
 
-              {}
               {thread.contentHtml && (
                 <div
                   className={styles.cardContent}
@@ -481,7 +656,6 @@ export const ThreadList = () => {
 
               <div className={styles.cardSep} />
 
-              {}
               <div className={styles.cardActions}>
                 <div className={styles.cardCounters}>
                   <button
@@ -514,11 +688,18 @@ export const ThreadList = () => {
                 <div className={styles.cardControls}>
                   <button
                     type="button"
-                    className={styles.threadControl}
-                    title={t("forum.bookmarkAdd")}
-                    onClick={() => void bookmark(thread.threadId)}
+                    className={`${styles.threadControl} ${
+                      bookmarked ? styles.threadControlActive : ""
+                    }`}
+                    title={t(
+                      bookmarked ? "forum.bookmarkRemove" : "forum.bookmarkAdd",
+                    )}
+                    onClick={() => void toggleBookmark(thread, bookmarked)}
                   >
-                    <Bookmark size={18} />
+                    <Bookmark
+                      size={18}
+                      fill={bookmarked ? "currentColor" : "none"}
+                    />
                   </button>
                   <button
                     type="button"
@@ -541,7 +722,6 @@ export const ThreadList = () => {
                 </div>
               </div>
 
-              {}
               {replyOpen && (
                 <div className={styles.cardReply}>
                   <ForumEditor
@@ -557,7 +737,6 @@ export const ThreadList = () => {
                 </div>
               )}
 
-              {}
               {showLast && lastPost && (
                 <>
                   <div className={styles.cardSep} />
@@ -573,7 +752,7 @@ export const ThreadList = () => {
                     <Avatar
                       url={lastPost.user.avatarUrl}
                       name={lastPost.user.username}
-                      className={styles.lastPostAvatar}
+                      className={styles.lastPostAvatar ?? ""}
                     />
                     <div className={styles.lastPostMain}>
                       <div className={styles.lastPostTop}>
@@ -607,7 +786,11 @@ export const ThreadList = () => {
       </div>
 
       {isFetchingNextPage && (
-        <div className={styles.hint}>{t("forum.loading")}</div>
+        <div className={styles.loadingMore} aria-label={t("forum.loading")}>
+          <span />
+          <span />
+          <span />
+        </div>
       )}
       {hasNextPage && <div ref={sentinelRef} style={{ height: 1 }} />}
 

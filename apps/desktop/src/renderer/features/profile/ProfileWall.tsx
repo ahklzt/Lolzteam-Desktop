@@ -92,9 +92,17 @@ const appendMention = (draft: string, name: string): string => {
   return (base ? base + ' ' : '') + `@${name}, `
 }
 
-const BodyHtml = ({ html, text }: { html: string | null; text: string }) => (
+const BodyHtml = ({
+  html,
+  text,
+  className,
+}: {
+  html: string | null
+  text: string
+  className?: string
+}) => (
   <div
-    className={styles.body}
+    className={`${styles.body}${className ? ` ${className}` : ''}`}
     onClick={handleBbInteraction}
     // eslint-disable-next-line react/no-danger -- HTML санитизируется renderChatHtml
     dangerouslySetInnerHTML={{
@@ -191,24 +199,13 @@ const Comments = ({
         <div key={c.id} className={styles.comment}>
           <Avatar url={c.avatarUrl} name={c.username} />
           <div className={styles.commentMain}>
-            <div className={styles.meta}>
+            <div className={styles.commentHeader}>
               <EnrichedUsername
                 className={styles.name}
                 username={c.username}
                 html={c.usernameHtml}
                 color={c.usernameColor}
               />
-              <span className={styles.date}>{fmtWhen(c.createDate)}</span>
-              {canComment && (
-                <button
-                  type="button"
-                  className={styles.iconBtn}
-                  title="Ответить"
-                  onClick={() => replyTo(c.username)}
-                >
-                  <Reply size={13} />
-                </button>
-              )}
               {c.canDelete && (
                 <button
                   type="button"
@@ -220,7 +217,19 @@ const Comments = ({
                 </button>
               )}
             </div>
-            <BodyHtml html={c.bodyHtml} text={c.body} />
+            <BodyHtml html={c.bodyHtml} text={c.body} className={styles.commentBody} />
+            <div className={styles.commentFooter}>
+              <span className={styles.date}>{fmtWhen(c.createDate)}</span>
+              {canComment && (
+                <button
+                  type="button"
+                  className={styles.commentReply}
+                  onClick={() => replyTo(c.username)}
+                >
+                  <Reply size={13} /> Ответить
+                </button>
+              )}
+            </div>
           </div>
         </div>
       ))}
@@ -330,114 +339,112 @@ const WallPost = ({
 
   return (
     <article className={`${styles.post}${sticked ? ` ${styles.pinned}` : ''}`}>
-      <Avatar url={post.posterAvatarUrl} name={post.posterUsername} />
-      <div className={styles.postMain}>
-        <div className={styles.meta}>
-          <EnrichedUsername
-            className={styles.name}
-            username={post.posterUsername}
-            html={post.posterUsernameHtml}
-            color={post.posterUsernameColor}
-          />
-          <span className={styles.date}>{fmtWhen(post.createDate)}</span>
-          {sticked && (
-            <span className={styles.pinnedBadge}>
-              <Pin size={12} /> Закреплено
-            </span>
-          )}
-          <div className={styles.spacer} />
-          {hasMenu && (
-            <div className={styles.menuWrap}>
-              <button
-                type="button"
-                className={styles.iconBtn}
-                title="Действия"
-                onClick={() => setMenuOpen((v) => !v)}
-              >
-                <MoreHorizontal size={16} />
-              </button>
-              {menuOpen && (
-                <>
-                  <div
-                    className={styles.menuBackdrop}
-                    onClick={() => setMenuOpen(false)}
-                  />
-                  <div className={styles.menu}>
-                    {perms.stick && (
-                      <button type="button" className={styles.menuItem} onClick={() => void toggleStick()}>
-                        {sticked ? <PinOff size={14} /> : <Pin size={14} />}
-                        {sticked ? 'Открепить' : 'Закрепить'}
-                      </button>
-                    )}
-                    {perms.edit && (
-                      <button type="button" className={styles.menuItem} onClick={() => void toggleCommentsDisabled()}>
-                        {commentsDisabled ? <MessagesSquare size={14} /> : <MessageSquareOff size={14} />}
-                        {commentsDisabled ? 'Включить комментарии' : 'Выключить комментарии'}
-                      </button>
-                    )}
-                    {post.url && (
-                      <button type="button" className={styles.menuItem} onClick={share}>
-                        <Share2 size={14} /> Поделиться
-                      </button>
-                    )}
-                    <button type="button" className={styles.menuItem} onClick={() => void copyBbcode()}>
-                      <Copy size={14} /> Скопировать BBCode
-                    </button>
-                    {perms.delete && (
-                      <button
-                        type="button"
-                        className={`${styles.menuItem} ${styles.danger}`}
-                        onClick={() => void remove()}
-                      >
-                        <Trash2 size={14} /> Удалить
-                      </button>
-                    )}
-                  </div>
-                </>
+      <header className={styles.postHeader}>
+        <div className={styles.postHeaderLeft}>
+          <Avatar url={post.posterAvatarUrl} name={post.posterUsername} />
+          <div className={styles.postAbout}>
+            <div className={styles.postIdentity}>
+              <EnrichedUsername
+                className={styles.name}
+                username={post.posterUsername}
+                html={post.posterUsernameHtml}
+                color={post.posterUsernameColor}
+              />
+              {sticked && (
+                <span className={styles.pinnedBadge}>
+                  <Pin size={12} /> Закреплено
+                </span>
               )}
             </div>
-          )}
+            <span className={styles.date}>{fmtWhen(post.createDate)}</span>
+          </div>
         </div>
-
-        <BodyHtml html={post.bodyHtml} text={post.body} />
-
-        <div className={styles.postActions}>
-          <button
-            type="button"
-            className={`${styles.actionBtn}${liked ? ` ${styles.liked}` : ''}`}
-            onClick={() => void toggleLike()}
-            disabled={!perms.like}
-            title="Мне нравится"
-          >
-            <Heart size={15} fill={liked ? 'currentColor' : 'none'} />
-            {likeCount > 0 && <span>{likeCount}</span>}
-          </button>
-
-          {}
-          {!commentsDisabled && (
+        {hasMenu && (
+          <div className={styles.menuWrap}>
             <button
               type="button"
-              className={`${styles.actionBtn}${commentsOpen ? ` ${styles.liked}` : ''}`}
-              onClick={() => setCommentsOpen((v) => !v)}
-              title="Комментировать"
+              className={styles.iconBtn}
+              title="Действия"
+              onClick={() => setMenuOpen((v) => !v)}
             >
-              <MessageCircle size={15} />
-              <span>{commentCount > 0 ? commentCount : 'Комментировать'}</span>
+              <MoreHorizontal size={18} />
             </button>
-          )}
-        </div>
+            {menuOpen && (
+              <>
+                <div className={styles.menuBackdrop} onClick={() => setMenuOpen(false)} />
+                <div className={styles.menu}>
+                  {perms.stick && (
+                    <button type="button" className={styles.menuItem} onClick={() => void toggleStick()}>
+                      {sticked ? <PinOff size={14} /> : <Pin size={14} />}
+                      {sticked ? 'Открепить' : 'Закрепить'}
+                    </button>
+                  )}
+                  {perms.edit && (
+                    <button type="button" className={styles.menuItem} onClick={() => void toggleCommentsDisabled()}>
+                      {commentsDisabled ? <MessagesSquare size={14} /> : <MessageSquareOff size={14} />}
+                      {commentsDisabled ? 'Включить комментарии' : 'Выключить комментарии'}
+                    </button>
+                  )}
+                  {post.url && (
+                    <button type="button" className={styles.menuItem} onClick={share}>
+                      <Share2 size={14} /> Поделиться
+                    </button>
+                  )}
+                  <button type="button" className={styles.menuItem} onClick={() => void copyBbcode()}>
+                    <Copy size={14} /> Скопировать BBCode
+                  </button>
+                  {perms.delete && (
+                    <button
+                      type="button"
+                      className={`${styles.menuItem} ${styles.danger}`}
+                      onClick={() => void remove()}
+                    >
+                      <Trash2 size={14} /> Удалить
+                    </button>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </header>
 
-        {!commentsDisabled ? (
-          <Comments
-            post={{ ...post, commentCount }}
-            open={commentsOpen}
-            setOpen={setCommentsOpen}
-            onCountChange={(d) => setCommentCount((c) => Math.max(0, c + d))}
-          />
-        ) : (
-          <div className={styles.commentsDisabled}>Комментарии выключены</div>
+      <BodyHtml html={post.bodyHtml} text={post.body} className={styles.postBody} />
+
+      <div className={styles.postActions}>
+        <button
+          type="button"
+          className={`${styles.actionBtn}${liked ? ` ${styles.liked}` : ''}`}
+          onClick={() => void toggleLike()}
+          disabled={!perms.like}
+          title="Мне нравится"
+        >
+          <Heart size={16} fill={liked ? 'currentColor' : 'none'} />
+          <span>{likeCount > 0 ? likeCount : 'Нравится'}</span>
+        </button>
+        {!commentsDisabled && (
+          <button
+            type="button"
+            className={`${styles.actionBtn}${commentsOpen ? ` ${styles.liked}` : ''}`}
+            onClick={() => setCommentsOpen((v) => !v)}
+            title="Комментировать"
+          >
+            <MessageCircle size={16} />
+            <span>{commentCount > 0 ? commentCount : 'Комментировать'}</span>
+          </button>
         )}
       </div>
+
+      {!commentsDisabled ? (
+        <Comments
+          post={{ ...post, commentCount }}
+          open={commentsOpen}
+          setOpen={setCommentsOpen}
+          onCountChange={(d) => setCommentCount((c) => Math.max(0, c + d))}
+        />
+      ) : (
+        <div className={styles.commentsDisabled}>Комментарии выключены</div>
+      )}
     </article>
   )
 }

@@ -30,6 +30,9 @@ import type {
   MarketSimpleResult,
   MarketTempEmailPasswordResult,
   MarketMafileResult,
+  MarketLettersResult,
+  MarketMailLetter,
+  MarketGuardCodeResult,
   MarketCheckResult,
   MarketDownloadQuery,
   MarketDownloadResult,
@@ -364,7 +367,7 @@ export const transferMoney = async (
         Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body,
+      body: body.toString(),
       signal: controller.signal,
     })
     const data = (await res.json().catch(() => ({}))) as Record<string, unknown>
@@ -517,6 +520,16 @@ export const getFavourites = async (
 ): Promise<MarketItemsResult> => {
   const params = { page, ...listParamsFromQuery(query) }
   const res = await marketFetch(`/fave${buildQuery(params)}`)
+  if (!res.ok) return { ok: false, reason: res.reason }
+  return { ok: true, page: normalizeItemsPage(res.data, page) }
+}
+
+export const getViewedItems = async (
+  page = 1,
+  query?: MarketUserItemsQuery,
+): Promise<MarketItemsResult> => {
+  const params = { page, ...listParamsFromQuery(query) }
+  const res = await marketFetch(`/viewed${buildQuery(params)}`)
   if (!res.ok) return { ok: false, reason: res.reason }
   return { ok: true, page: normalizeItemsPage(res.data, page) }
 }
@@ -836,6 +849,84 @@ export const getItemMafile = async (
       ? (res.data.maFile as Record<string, unknown>)
       : {}
   return { ok: true, maFile }
+}
+
+const LETTERS_RETRY_LIMIT = 15
+const LETTERS_RETRY_DELAY_MS = 1_000
+
+const wait = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms))
+
+const isRetryRequest = (data: Record<string, unknown>): boolean => {
+  const errors = data.errors
+  if (Array.isArray(errors)) {
+    return errors.some((e) => String(e).includes('retry_request'))
+  }
+  return String(data.error ?? '').includes('retry_request')
+}
+
+const toMailLetter = (raw: unknown): MarketMailLetter | null => {
+  if (!raw || typeof raw !== 'object') return null
+  const o = raw as Record<string, unknown>
+  return {
+    from: typeof o.from === 'string' ? o.from : '',
+    date: typeof o.date === 'number' ? o.date : Number(o.date) || 0,
+    textPlain: typeof o.textPlain === 'string' ? o.textPlain : '',
+    textHtml: typeof o.textHtml === 'string' ? o.textHtml : '',
+  }
+}
+
+export const getMarketLetters = async (
+  input: { email: string; password?: string; limit?: number },
+): Promise<MarketLettersResult> => {
+  const email = input.email.trim()
+  if (!email) return { ok: false, reason: 'bad_response', message: 'no_email' }
+  const password = input.password?.trim() ?? ''
+  const limit = input.limit && input.limit >= 10 ? Math.min(input.limit, 50) : 10
+  const params: Record<string, unknown> = { limit }
+  if (password) {
+    params.email = email
+    params.password = password
+  } else {
+    params.email_password = email
+  }
+
+  for (let attempt = 0; attempt < LETTERS_RETRY_LIMIT; attempt += 1) {
+    const res = await marketFetch(`/letters2${buildQuery(params)}`)
+    if (!res.ok) return { ok: false, reason: res.reason }
+    if (isRetryRequest(res.data)) {
+      await wait(LETTERS_RETRY_DELAY_MS)
+      continue
+    }
+    const raw = res.data.letters
+    const letters = (Array.isArray(raw) ? raw : [])
+      .map(toMailLetter)
+      .filter((l): l is MarketMailLetter => l !== null)
+    const resolved =
+      typeof res.data.email === 'string' ? (res.data.email as string) : email
+    return { ok: true, email: resolved, letters }
+  }
+  return { ok: false, reason: 'timeout', message: 'retry_request' }
+}
+
+export const getItemGuardCode = async (
+  itemId: number,
+): Promise<MarketGuardCodeResult> => {
+  const res = await marketFetch(`/${itemId}/guard-code`)
+  if (!res.ok) return { ok: false, reason: res.reason }
+  const codeData =
+    res.data.codeData && typeof res.data.codeData === 'object'
+      ? (res.data.codeData as Record<string, unknown>)
+      : {}
+  const code = typeof codeData.code === 'string' ? codeData.code : ''
+  if (!code) return { ok: false, reason: 'bad_response', message: 'no_code' }
+  return {
+    ok: true,
+    code,
+    date: typeof codeData.date === 'number' ? codeData.date : 0,
+    textPlain:
+      typeof codeData.textPlain === 'string' ? codeData.textPlain : '',
+  }
 }
 
 export const fetchProxies = async (): Promise<MarketProxyListResult> => {

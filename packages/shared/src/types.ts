@@ -99,6 +99,22 @@ export interface LocalUniqConfig {
   usernameIconSvg: string | null;
 }
 
+export type AppThemeId = "dark" | "light" | "green" | "purple" | "custom";
+
+export interface AppThemePalette {
+  name: string;
+  background: string;
+  surface: string;
+  surfaceRaised: string;
+  surfaceOverlay: string;
+  text: string;
+  textSoft: string;
+  textMuted: string;
+  accent: string;
+  accentSoft: string;
+  accentDark: string;
+}
+
 export interface ModeratorSettings {
   locale: LocalePreference;
   minimizeToTray: boolean;
@@ -120,6 +136,10 @@ export interface ModeratorSettings {
   accountLabels: AccountLabel[];
 
   appFont: string;
+  appTheme: AppThemeId;
+  customTheme: AppThemePalette | null;
+  appBackgroundPath: string | null;
+  contentWidth: number;
   avatarRadius: number;
   hideNotificationBadges: boolean;
   hideCommentButton: boolean;
@@ -191,6 +211,10 @@ export const DEFAULT_SETTINGS: ModeratorSettings = {
   preferredLoginMethod: "ask",
   accountLabels: [],
   appFont: "system",
+  appTheme: "dark",
+  customTheme: null,
+  appBackgroundPath: null,
+  contentWidth: 1220,
   avatarRadius: 50,
   hideNotificationBadges: false,
   hideCommentButton: false,
@@ -257,6 +281,7 @@ export interface MailLetter {
   date: string | null;
   preview: string;
   body: string;
+  bodyHtml?: string;
   seenOnServer: boolean;
 }
 
@@ -265,6 +290,147 @@ export type MailFetchResult =
   | { ok: false; message: string };
 
 export type MailResult = MailFetchResult;
+
+export type MassMailProtocol = "auto" | "imap" | "pop3" | "hotmail" | "http";
+
+export type MassMailServerProtocol = "imap" | "pop3";
+
+export interface MassMailCustomServerInput {
+  protocol: MassMailServerProtocol;
+  host: string;
+  port: number;
+}
+
+export interface MassMailAttempt {
+  protocol: Exclude<MassMailProtocol, "auto">;
+  host: string;
+  port: number;
+  reason: string | null;
+  durationMs: number;
+}
+
+export interface MassMailAccountInput {
+  id: string;
+  email: string;
+  password: string;
+}
+
+export interface MassMailProxyInput {
+  protocol: ProxyProtocol;
+  host: string;
+  port: number;
+  username?: string;
+  password?: string;
+}
+
+export interface MassMailRunInput {
+  accounts: MassMailAccountInput[];
+  proxies: MassMailProxyInput[];
+  protocol: MassMailProtocol;
+  customServers: MassMailCustomServerInput[];
+  autoFallback: boolean;
+  retryAttempts: number;
+  retryDelayMs: number;
+  keywords: string[];
+  dateFrom: string | null;
+  dateTo: string | null;
+  unreadOnly: boolean;
+  threads: number;
+  letterLimit: number;
+}
+
+export interface MassMailLetter {
+  id: string;
+  subject: string;
+  from: string;
+  date: string | null;
+  preview: string;
+  body: string;
+  bodyHtml: string | null;
+  unread: boolean | null;
+  matchedKeywords: string[];
+}
+
+export type MassMailAccountStatus =
+  | "found"
+  | "good"
+  | "bad"
+  | "error"
+  | "stopped";
+
+export interface MassMailAccountResult {
+  id: string;
+  email: string;
+  domain: string;
+  protocol: Exclude<MassMailProtocol, "auto">;
+  status: MassMailAccountStatus;
+  totalLetters: number;
+  matchCount: number;
+  letters: MassMailLetter[];
+  reason: string | null;
+  attempts: MassMailAttempt[];
+  durationMs: number;
+  proxy: string | null;
+}
+
+export interface MassMailCounters {
+  total: number;
+  checked: number;
+  found: number;
+  good: number;
+  bad: number;
+  errors: number;
+  stopped: number;
+}
+
+export interface MassMailDomainStat {
+  domain: string;
+  total: number;
+  checked: number;
+  found: number;
+  good: number;
+  bad: number;
+  errors: number;
+}
+
+export interface MassMailProgressEvent {
+  runId: string;
+  running: boolean;
+  counters: MassMailCounters;
+  domains: MassMailDomainStat[];
+  result?: MassMailAccountResult;
+}
+
+export type MassMailRunResult =
+  | {
+      ok: true;
+      runId: string;
+      stopped: boolean;
+      counters: MassMailCounters;
+      domains: MassMailDomainStat[];
+      results: MassMailAccountResult[];
+    }
+  | { ok: false; reason: "busy" | "invalid_input" | "internal"; message: string };
+
+export interface MassMailStopResult {
+  ok: boolean;
+  runId: string | null;
+}
+
+export interface MarketMailLetter {
+  from: string;
+  date: number;
+  textPlain: string;
+  textHtml: string;
+}
+
+export type MarketLettersResult =
+  | { ok: true; email: string; letters: MarketMailLetter[] }
+  | { ok: false; reason: MarketErrorReason; message?: string };
+
+export type MarketGuardCodeResult =
+  | { ok: true; code: string; date: number; textPlain: string }
+  | { ok: false; reason: MarketErrorReason; message?: string };
 
 export type CurrencyResult = { ok: true } | { ok: false; message: string };
 
@@ -361,6 +527,20 @@ export interface UserNote {
 
 export type ProfileActionResult =
   { ok: true } | { ok: false; reason: ProfileFetchReason; message?: string };
+
+export interface ErrorReportPayload {
+  view: string;
+  error: string;
+  occurredAt: number;
+}
+
+export type ErrorReportResult =
+  | { ok: true }
+  | {
+      ok: false;
+      reason: ProfileFetchReason | "disabled";
+      message?: string;
+    };
 
 export type FollowersResult =
   | { ok: true; followers: ProfileFollower[] }
@@ -515,6 +695,9 @@ export interface PersonalInfo {
   occupation: string;
   homepage: string;
   interests: string;
+  favoriteAnime: string;
+  favoritePorn: string;
+  favoriteAshkudishka: string;
 }
 
 export type PersonalInfoUpdate = Partial<
@@ -534,6 +717,9 @@ export type PersonalInfoUpdate = Partial<
     | "occupation"
     | "homepage"
     | "interests"
+    | "favoriteAnime"
+    | "favoritePorn"
+    | "favoriteAshkudishka"
   >
 >;
 
@@ -1345,6 +1531,7 @@ export type ForumTreeResult =
 export interface ForumThreadsQuery {
   source?: "threads" | "recent" | "new" | "userPosts";
   forumId?: number;
+  forumIds?: number[];
   creatorUserId?: number;
   posterUserId?: number;
   tab?: string;
@@ -1358,6 +1545,8 @@ export interface ForumThreadsQuery {
   titleOnly?: boolean;
   prefixIds?: number[];
   prefixIdsNot?: number[];
+  postDateFrom?: string;
+  postDateTo?: string;
 }
 
 export interface ForumModerator {
@@ -1407,6 +1596,7 @@ export interface ForumThreadItem {
   firstPostId: number | null;
   likeCount: number;
   isLiked: boolean;
+  isBookmarked: boolean;
   contentHtml: string;
   lastPost: ForumThreadLastPost | null;
   tags: string[];

@@ -24,6 +24,8 @@ import {
   type MarketSimpleResult,
   type MarketTempEmailPasswordResult,
   type MarketMafileResult,
+  type MarketLettersResult,
+  type MarketGuardCodeResult,
   type MarketCheckResult,
   type MarketDownloadQuery,
   type MarketDownloadResult,
@@ -51,6 +53,7 @@ import {
   getUserItems,
   getUserOrders,
   getFavourites,
+  getViewedItems,
   getPayments,
   getUserTags,
   createUserTag,
@@ -65,6 +68,8 @@ import {
   unstarItem,
   getTempEmailPassword,
   getItemMafile,
+  getMarketLetters,
+  getItemGuardCode,
   checkAccount,
   buildDownloadUrl,
   transferMoney,
@@ -255,6 +260,17 @@ export const registerMarketIpc = (): void => {
   )
 
   ipcMain.handle(
+    IPC.MARKET_GET_VIEWED,
+    async (
+      _e,
+      payload?: { page?: number; query?: MarketUserItemsQuery },
+    ): Promise<MarketItemsResult> => {
+      const page = typeof payload?.page === 'number' ? payload.page : 1
+      return getViewedItems(page, payload?.query)
+    },
+  )
+
+  ipcMain.handle(
     IPC.MARKET_GET_PAYMENTS,
     async (
       _e,
@@ -395,6 +411,35 @@ export const registerMarketIpc = (): void => {
       const itemId = typeof payload?.itemId === 'number' ? payload.itemId : 0
       if (!itemId) return { ok: false, reason: 'bad_response' }
       return getItemMafile(itemId)
+    },
+  )
+
+  ipcMain.handle(
+    IPC.MARKET_GET_LETTERS,
+    async (
+      _e,
+      payload?: { email?: string; password?: string; limit?: number },
+    ): Promise<MarketLettersResult> => {
+      const email = typeof payload?.email === 'string' ? payload.email : ''
+      if (!email) return { ok: false, reason: 'bad_response' }
+      return getMarketLetters({
+        email,
+        password:
+          typeof payload?.password === 'string' ? payload.password : undefined,
+        limit: typeof payload?.limit === 'number' ? payload.limit : undefined,
+      })
+    },
+  )
+
+  ipcMain.handle(
+    IPC.MARKET_GET_GUARD_CODE,
+    async (
+      _e,
+      payload?: { itemId?: number },
+    ): Promise<MarketGuardCodeResult> => {
+      const itemId = typeof payload?.itemId === 'number' ? payload.itemId : 0
+      if (!itemId) return { ok: false, reason: 'bad_response' }
+      return getItemGuardCode(itemId)
     },
   )
 

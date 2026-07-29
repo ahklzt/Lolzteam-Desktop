@@ -1,9 +1,10 @@
 import { createRequire } from 'node:module'
 import { IPC, type UpdateStatus } from '@lzt/shared'
-import { app, ipcMain } from 'electron'
+import { app, ipcMain, Notification } from 'electron'
 import log from 'electron-log/main'
 import { getMainWindow } from './window/main-window'
 import { getCachedSettings, onSettingsChange } from './settings/settings-store'
+import { sendAlert } from './services/telegram-alerts'
 
 type UpdateInfo = { version: string; releaseNotes?: unknown }
 type ProgressInfo = { percent: number; transferred: number; total: number }
@@ -43,6 +44,20 @@ const loadAutoUpdater = (): AutoUpdater | null => {
 }
 
 let wired = false
+const announcedVersions = new Set<string>()
+
+const announceUpdate = (info: UpdateInfo): void => {
+  if (announcedVersions.has(info.version)) return
+  announcedVersions.add(info.version)
+  const title = `Доступно обновление ${info.version}`
+  const body = 'Lolzteam Desktop готов скачать новую версию.'
+  try {
+    if (Notification.isSupported()) new Notification({ title, body }).show()
+  } catch (err) {
+    log.warn('[updater] notification failed', err)
+  }
+  void sendAlert('notification', title, body)
+}
 
 const wireEvents = (autoUpdater: AutoUpdater): void => {
   if (wired) return
@@ -53,13 +68,14 @@ const wireEvents = (autoUpdater: AutoUpdater): void => {
   autoUpdater.autoInstallOnAppQuit = true
 
   autoUpdater.on('checking-for-update', () => emit({ state: 'checking' }))
-  autoUpdater.on('update-available', (info) =>
+  autoUpdater.on('update-available', (info) => {
     emit({
       state: 'available',
       version: info.version,
       notes: typeof info.releaseNotes === 'string' ? info.releaseNotes : null,
-    }),
-  )
+    })
+    announceUpdate(info)
+  })
   autoUpdater.on('update-not-available', () => emit({ state: 'not-available' }))
   autoUpdater.on('download-progress', (p) =>
     emit({
@@ -99,8 +115,9 @@ export const registerUpdaterIpc = (): void => {
 
   const applyUpdaterSettings = (): void => {
     const s = getCachedSettings()
-    autoUpdater.autoDownload = s?.autoUpdate ?? true
-    autoUpdater.allowPrerelease = s?.betaUpdates ?? false
+    const betaUpdates = s?.betaUpdates ?? false
+    autoUpdater.allowPrerelease = betaUpdates
+    autoUpdater.autoDownload = (s?.autoUpdate ?? true) || betaUpdates
   }
   applyUpdaterSettings()
   onSettingsChange(() => applyUpdaterSettings())

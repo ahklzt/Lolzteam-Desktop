@@ -300,7 +300,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
 
   return (
     <div className={styles.threadViewWrap}>
-      {}
       <nav className={styles.breadcrumb}>
         <button type="button" className={styles.crumb} onClick={backToList}>
           {t("forum.breadcrumbRoot")}
@@ -335,7 +334,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
         </div>
       )}
 
-      {}
       {details && (
         <section className={styles.threadInfoCard}>
           <h2 className={styles.threadInfoTitle}>
@@ -405,7 +403,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
         </section>
       )}
 
-      {}
       {details && (
         <div className={styles.threadActionsBar}>
           <div className={styles.threadActionMenuWrap} ref={menuRef}>
@@ -517,7 +514,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
         </div>
       )}
 
-      {}
       {details && (
         <div className={styles.postsSortBar}>
           <span className={styles.postsSortLabel}>
@@ -581,7 +577,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
         </div>
       )}
 
-      {}
       <div className={styles.replyCard}>
         <Avatar url={myAvatar} name={myName} className={styles.replyAvatar} />
         <div className={styles.replyMain}>
@@ -620,7 +615,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
         </div>
       </div>
 
-      {}
       {details && editable && (
         <EditThreadModal
           threadId={threadId}
@@ -642,7 +636,6 @@ export const ThreadView = ({ threadId }: ThreadViewProps) => {
         onClose={() => setLogOpen(false)}
       />
 
-      {}
       <ImageLightbox />
     </div>
   );

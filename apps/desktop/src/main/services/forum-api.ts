@@ -265,6 +265,12 @@ const mapThread = (raw: Raw): ForumThreadItem => {
     likeCount:
       num(firstPost["post_like_count"]) ?? num(raw["thread_like_count"]) ?? 0,
     isLiked: flag(firstPost["post_is_liked"]) || flag(raw["thread_is_liked"]),
+    isBookmarked: flag(
+      raw["thread_is_bookmarked"] ??
+        raw["is_bookmarked"] ??
+        raw["thread_user_is_bookmarked"] ??
+        raw["starred"],
+    ),
     contentHtml: str(firstPost["post_body_html"]) ?? "",
     lastPost,
     tags: parseThreadTags(raw["thread_tags"] ?? raw["tags"]),
@@ -504,6 +510,63 @@ export const fetchForumThreads = async (
   const token = getProfileToken();
   if (!token) return fail("no_token");
 
+  if (query.forumIds && query.forumIds.length > 0) {
+    const forumIds = [...new Set(query.forumIds.filter((id) => id > 0))];
+    if (forumIds.length === 0) return { ok: true, threads: [], total: 0 };
+
+    const page = Math.max(1, query.page ?? 1);
+    const limit = Math.max(1, query.limit ?? THREADS_PER_PAGE);
+    const targetCount = page * limit;
+    const results = await Promise.all(
+      forumIds.map((forumId) =>
+        fetchForumThreads({
+          ...query,
+          forumId,
+          forumIds: undefined,
+          page: 1,
+          limit: targetCount,
+        }),
+      ),
+    );
+    const failed = results.find((result) => !result.ok);
+    if (failed && !failed.ok) return failed;
+
+    const byId = new Map<number, ForumThreadItem>();
+    let total = 0;
+    let totalKnown = true;
+    for (const result of results) {
+      if (!result.ok) continue;
+      for (const thread of result.threads) byId.set(thread.threadId, thread);
+      if (result.total === null) totalKnown = false;
+      else total += result.total;
+    }
+
+    const order = query.order ?? "last_post_date";
+    const direction =
+      query.direction === "asc" || order === "reply_count_asc" ? 1 : -1;
+    const value = (thread: ForumThreadItem) => {
+      if (order === "post_date") return thread.createDate;
+      if (order === "reply_count" || order === "reply_count_asc") {
+        return thread.replyCount;
+      }
+      if (order === "first_post_likes") return thread.likeCount;
+      return thread.lastPost?.createDate ?? thread.createDate;
+    };
+    const merged = [...byId.values()].sort((left, right) => {
+      const difference = value(left) - value(right);
+      return difference === 0
+        ? (left.threadId - right.threadId) * direction
+        : difference * direction;
+    });
+    const offset = (page - 1) * limit;
+    return {
+      ok: true,
+      threads: merged.slice(offset, offset + limit),
+      total: totalKnown ? total : null,
+      hasMore: totalKnown ? offset + limit < total : merged.length > offset + limit,
+    };
+  }
+
   if (query.source === "userPosts") {
     if (!query.posterUserId) return { ok: true, threads: [], total: 0 };
     try {
@@ -586,6 +649,12 @@ export const fetchForumThreads = async (
     }
     for (const id of query.prefixIdsNot ?? []) {
       params.append("prefix_ids_not[]", String(id));
+    }
+    if (query.postDateFrom) {
+      const timestamp = Date.parse(`${query.postDateFrom}T00:00:00`);
+      if (Number.isFinite(timestamp)) {
+        params.set("thread_create_date", String(Math.floor(timestamp / 1000)));
+      }
     }
     params.set("page", String(query.page ?? 1));
   }
@@ -933,10 +1002,13 @@ export const createForumThread = async (
   if (input.scheduleDate) body["schedule_date"] = input.scheduleDate;
   if (input.scheduleTime) body["schedule_time"] = input.scheduleTime;
   if (typeof input.maxReplyCount === "number") {
+    body["max_reply_count_enabled"] = true;
     body["max_reply_count"] = input.maxReplyCount;
   }
   if (typeof input.replyDelay === "number") {
-    body["reply_delay"] = input.replyDelay;
+    body["thread_user_reply_delay_enabled"] = true;
+    body["thread_user_reply_delay"] = input.replyDelay;
+    body["thread_user_reply_delay_unit"] = "minutes";
   }
   try {
     const res = await apiFetch("POST", "/threads", token, body);

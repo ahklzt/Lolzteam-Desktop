@@ -31,6 +31,10 @@
   overflow: hidden;
 }
 
+.modalHeaderless {
+  position: relative;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -67,8 +71,38 @@
   }
 }
 
+.closeFloating {
+  @include button-reset;
+  @include clickable;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+
+  &:hover {
+    background: $color-surface-overlay;
+    color: $color-text;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
 .body {
   padding: $space-4 $space-5 $space-5;
   overflow-y: auto;
   @include scrollbar;
+}
+
+.bodyFlush {
+  padding: 0;
+  overflow: hidden;
 }

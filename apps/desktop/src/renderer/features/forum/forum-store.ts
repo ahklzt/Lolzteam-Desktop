@@ -6,13 +6,20 @@ export const CONTEST_HIDDEN_IDS = new Set<number>([766, 771]);
 
 export type ForumSection =
   | { type: "forum"; forumId: number; title: string }
-  | { type: "customTab"; tabId: string; forumId: number; title: string }
+  | {
+      type: "customTab";
+      tabId: string;
+      forumId: number;
+      forumIds: number[];
+      title: string;
+    }
   | { type: "all" }
   | { type: "my" }
   | { type: "userPosts" }
   | { type: "userThreads"; userId: number; username: string }
   | { type: "bookmarks" }
-  | { type: "read" };
+  | { type: "read" }
+  | { type: "scheduled" };
 
 export type ForumScreen =
   | { type: "list" }
@@ -23,6 +30,8 @@ export type ForumOrder =
   | "thread_create_date"
   | "thread_post_count"
   | "first_post_likes"
+  | "last_read_date"
+  | "bookmark_date"
   | "noReply";
 
 export interface ForumFilters {
@@ -50,6 +59,16 @@ export const DEFAULT_FORUM_FILTERS: ForumFilters = {
   title: "",
   titleOnly: false,
 };
+
+const filtersForSection = (section: ForumSection): ForumFilters => ({
+  ...DEFAULT_FORUM_FILTERS,
+  order:
+    section.type === "read"
+      ? "last_read_date"
+      : section.type === "bookmarks"
+        ? "bookmark_date"
+        : DEFAULT_FORUM_FILTERS.order,
+});
 
 interface ForumState {
   section: ForumSection;
@@ -98,7 +117,7 @@ export const useForumStore = create<ForumState>((set) => ({
       section,
       screen: { type: "list" },
       page: 1,
-      filters: DEFAULT_FORUM_FILTERS,
+      filters: filtersForSection(section),
     }),
   selectCustomTab: (tab) =>
     set({
@@ -106,6 +125,7 @@ export const useForumStore = create<ForumState>((set) => ({
         type: "customTab",
         tabId: tab.id,
         forumId: tab.forumIds[0] ?? 0,
+        forumIds: tab.forumIds,
         title: tab.name,
       },
       screen: { type: "list" },
@@ -114,7 +134,8 @@ export const useForumStore = create<ForumState>((set) => ({
     }),
   setFilters: (patch) =>
     set((state) => ({ filters: { ...state.filters, ...patch }, page: 1 })),
-  resetFilters: () => set({ filters: DEFAULT_FORUM_FILTERS, page: 1 }),
+  resetFilters: () =>
+    set((state) => ({ filters: filtersForSection(state.section), page: 1 })),
   openThread: (threadId) => set({ screen: { type: "thread", threadId } }),
   openCreate: () =>
     set((state) => ({

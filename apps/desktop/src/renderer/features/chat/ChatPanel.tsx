@@ -1,6 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { useTranslation } from "react-i18next";
-import { Menu, MoreVertical, X } from "lucide-react";
+import {
+  Ban,
+  ExternalLink,
+  Menu,
+  MoreVertical,
+  ShieldCheck,
+  Trophy,
+  Users,
+  X,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { getForumWebBase } from "@lzt/shared";
 import { useChatStore } from "./chat-store";
 import { ChatMessages } from "./ChatMessages";
@@ -20,9 +35,10 @@ type ChatModalKind = "online" | "top" | "ignored" | "rules" | null;
 
 interface ChatPanelProps {
   onClose?: () => void;
+  onDragStart?: (event: ReactPointerEvent<HTMLDivElement>) => void;
 }
 
-export const ChatPanel = ({ onClose }: ChatPanelProps) => {
+export const ChatPanel = ({ onClose, onDragStart }: ChatPanelProps) => {
   const { t } = useTranslation();
   const rooms = useChatStore((s) => s.rooms);
   const totalOnline = useChatStore((s) => s.totalOnline);
@@ -34,6 +50,7 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modal, setModal] = useState<ChatModalKind>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [onlineCount, setOnlineCount] = useState<number | null>(null);
 
   useEffect(() => {
     void useChatStore.getState().bootstrap();
@@ -62,6 +79,24 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
     return () => document.removeEventListener("mousedown", onDown);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (typeof activeRoomId !== "number") {
+      setOnlineCount(null);
+      return;
+    }
+    let cancelled = false;
+    const load = async () => {
+      const res = await window.moderator.chat.getOnline(activeRoomId);
+      if (!cancelled) setOnlineCount(res.ok ? res.users.length : null);
+    };
+    void load();
+    const timer = setInterval(() => void load(), ROOMS_POLL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [activeRoomId]);
+
   const active = rooms.find((r) => r.roomId === activeRoomId);
   const errorText =
     errorReason === null
@@ -70,7 +105,7 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
         ? t("chat.needToken")
         : (errorMessage ?? t("chat.loadError"));
 
-  const menuItem = (label: string, action: () => void) => (
+  const menuItem = (Icon: LucideIcon, label: string, action: () => void) => (
     <button
       type="button"
       className={styles.menuItem}
@@ -79,13 +114,21 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
         action();
       }}
     >
-      {label}
+      <Icon size={17} className={styles.menuItemIcon} />
+      <span>{label}</span>
     </button>
   );
 
   return (
     <div className={styles.panel}>
-      <div className={styles.header}>
+      <div
+        className={
+          onDragStart
+            ? `${styles.header} ${styles.draggableHeader}`
+            : styles.header
+        }
+        onPointerDown={onDragStart}
+      >
         <button
           type="button"
           className={styles.iconBtn}
@@ -95,16 +138,21 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
           <Menu size={18} />
         </button>
         <div className={styles.headTitle}>
-          <span className={styles.roomTitle}>
-            {active?.title ?? t("chat.title")}
-          </span>
+          <div className={styles.roomHeading}>
+            <span className={styles.roomTitle}>
+              {active?.title ?? t("chat.title")}
+            </span>
+            <span className={styles.socketDot} aria-hidden="true" />
+          </div>
           {active && (
             <button
               type="button"
               className={styles.online}
               onClick={() => setModal("online")}
             >
-              {t("chat.online", { count: active.online ?? 0 })}
+              {t("chat.online", {
+                count: onlineCount ?? active.online ?? totalOnline ?? 0,
+              })}
             </button>
           )}
         </div>
@@ -119,12 +167,14 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
           </button>
           {menuOpen && (
             <div className={styles.menu}>
-              {menuItem(t("chat.rules"), () => setModal("rules"))}
-              {menuItem(t("chat.ignoreList"), () => setModal("ignored"))}
-              {menuItem(t("chat.top"), () => setModal("top"))}
-              {menuItem(t("chat.fullVersion"), () =>
-                window.open(`${getForumWebBase()}/chatbox/`, "_blank"),
+              {menuItem(ShieldCheck, t("chat.rules"), () => setModal("rules"))}
+              {menuItem(Ban, t("chat.ignoreList"), () => setModal("ignored"))}
+              {menuItem(ExternalLink, t("chat.fullVersion"), () =>
+                void window.moderator.app.openExternal(
+                  `${getForumWebBase()}/chatbox/`,
+                ),
               )}
+              {menuItem(Trophy, t("chat.top"), () => setModal("top"))}
             </div>
           )}
         </div>
@@ -157,7 +207,10 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
             <div className={styles.sideTitle}>
               <span>{t("chat.rooms")}</span>
               {totalOnline !== null && (
-                <span className={styles.sideOnline}>{totalOnline}</span>
+                <span className={styles.sideOnline}>
+                  <Users size={14} />
+                  {totalOnline}
+                </span>
               )}
             </div>
             {rooms.map((room) => (
@@ -176,7 +229,10 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
               >
                 <span className={styles.roomName}>{room.title}</span>
                 {room.online !== null && (
-                  <span className={styles.roomOnline}>{room.online}</span>
+                  <span className={styles.roomOnline}>
+                    <Users size={13} />
+                    {t("chat.online", { count: room.online })}
+                  </span>
                 )}
               </button>
             ))}

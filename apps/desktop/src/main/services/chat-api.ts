@@ -157,6 +157,17 @@ const mapMessage = (raw: Raw): ChatMessage => ({
 });
 
 
+const readOnlineCount = (value: unknown): number | null => {
+  if (Array.isArray(value)) return value.length;
+  const direct = num(value);
+  if (direct !== null) return direct;
+  const holder = obj(value);
+  if (!holder) return null;
+  const users = holder["users"];
+  if (Array.isArray(users)) return users.length;
+  return num(holder["total"]) ?? num(holder["count"]) ?? num(holder["online"]);
+};
+
 export const fetchChatRooms = async (): Promise<ChatRoomsResult> => {
   const token = getProfileToken();
   if (!token) return fail("no_token");
@@ -172,7 +183,7 @@ export const fetchChatRooms = async (): Promise<ChatRoomsResult> => {
       totalOnline = rawOnline;
     } else if (obj(rawOnline)) {
       for (const [key, value] of Object.entries(rawOnline as Raw)) {
-        const count = num(value);
+        const count = readOnlineCount(value);
         if (count === null) continue;
         if (key === "total") {
           totalOnline = count;

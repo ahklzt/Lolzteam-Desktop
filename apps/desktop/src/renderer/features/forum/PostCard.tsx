@@ -244,7 +244,7 @@ export const PostCard = ({
         <Avatar
           url={post.user.avatarUrl}
           name={post.user.username}
-          className={styles.postAvatar}
+          className={styles.postAvatar ?? ""}
         />
       </button>
 
@@ -265,7 +265,7 @@ export const PostCard = ({
                 className={styles.postNick}
               />
             </button>
-            {post.user.isOnline ? (
+            {"isOnline" in post.user && post.user.isOnline === true ? (
               <span className={styles.onlineDot} title="online" />
             ) : null}
             {isThreadAuthor && (
@@ -273,7 +273,6 @@ export const PostCard = ({
             )}
           </div>
 
-          {}
           <div className={styles.postMoreWrap} ref={menuRef}>
             <button
               type="button"
@@ -339,7 +338,6 @@ export const PostCard = ({
           }}
         />
 
-        {}
         {editOpen && (
           <div className={styles.postEditForm}>
             <div className={styles.postEditTitle}>
@@ -375,7 +373,6 @@ export const PostCard = ({
           </div>
         )}
 
-        {}
         <div className={styles.postFooter}>
           <span className={styles.postDate}>
             {formatThreadDate(post.createDate)}
@@ -475,7 +472,7 @@ export const PostCard = ({
                     <Avatar
                       url={c.user.avatarUrl}
                       name={c.user.username}
-                      className={styles.commentAvatar}
+                      className={styles.commentAvatar ?? ""}
                     />
                   </button>
                   <div className={styles.commentBody}>
@@ -486,7 +483,7 @@ export const PostCard = ({
                         userId={c.user.userId}
                         className={styles.commentNick}
                       />
-                      {c.user.isOnline ? (
+                      {"isOnline" in c.user && c.user.isOnline === true ? (
                         <span className={styles.onlineDot} title="online" />
                       ) : null}
                       {commentAuthor && (
@@ -497,13 +494,6 @@ export const PostCard = ({
                       <span className={styles.commentDate}>
                         {formatThreadDate(c.createDate)}
                       </span>
-                      <button
-                        type="button"
-                        className={styles.commentReplyBtn}
-                        onClick={() => replyToComment(c)}
-                      >
-                        {t("forum.commentReply")}
-                      </button>
                     </div>
                     <div
                       className={styles.commentText}
@@ -515,6 +505,13 @@ export const PostCard = ({
                         ),
                       }}
                     />
+                    <button
+                      type="button"
+                      className={styles.commentReplyBtn}
+                      onClick={() => replyToComment(c)}
+                    >
+                      {t("forum.commentReply")}
+                    </button>
                   </div>
                 </div>
               );

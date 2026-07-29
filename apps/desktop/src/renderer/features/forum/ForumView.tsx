@@ -30,7 +30,9 @@ export const ForumView = () => {
             ? "Мои сообщения"
             : section.type === "bookmarks"
               ? "Закладки"
-              : "Прочитанные";
+              : section.type === "scheduled"
+                ? "Отложенные темы"
+                : "Прочитанные темы";
   useReportPresence({ kind: "forum_section", name: sectionName });
   const appliedDefaultRef = useRef(false);
   useEffect(() => {
@@ -60,9 +62,7 @@ export const ForumView = () => {
         {screen.type === "list" && <ThreadList />}
         {isThread && <ThreadView threadId={screen.threadId} />}
       </div>
-      {}
       <CreateThread />
-      {}
       <MiniProfileModal
         userId={miniUserId}
         onClose={closeMini}

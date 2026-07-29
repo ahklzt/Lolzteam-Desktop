@@ -9,8 +9,6 @@ import { Avatar } from "./Avatar";
 import { type ForumFilters, type ForumOrder, useForumStore } from "./forum-store";
 import { useForumPrefixes, useForumSection } from "./forum-hooks";
 import { CreateTabModal } from "./CreateTabModal";
-import { Dropdown } from "~/widgets/Dropdown/Dropdown";
-import { Toggle } from "~/widgets/Toggle/Toggle";
 import styles from "./forum.module.scss";
 
 interface Props {
@@ -131,6 +129,9 @@ export const ForumSectionHeader = ({
           <h2 className={styles.secTitle}>{displayTitle}</h2>
           {description && <p className={styles.secDesc}>{description}</p>}
         </div>
+      </div>
+
+      <div className={styles.sectionNavRow}>
         <div className={styles.secActions}>
           <button type="button" className={styles.secBtn} onClick={openRules}>
             <BookOpen size={14} />
@@ -159,6 +160,46 @@ export const ForumSectionHeader = ({
             <RefreshCw size={15} />
           </button>
         </div>
+
+        {totalPages > 1 && (
+          <div className={styles.sectionPager}>
+            {numbered.map((p) => (
+              <button
+                key={p}
+                type="button"
+                className={`${styles.pagerBtn} ${
+                  p === loadedPages ? styles.pagerBtnActive : ""
+                }`}
+                onClick={() => onGoToPage(p)}
+              >
+                {p}
+              </button>
+            ))}
+            {showLast && (
+              <>
+                <button
+                  type="button"
+                  className={styles.pagerBtn}
+                  onClick={() =>
+                    onGoToPage(Math.min(loadedPages + 1, totalPages))
+                  }
+                  title={t("forum.nextPage")}
+                >
+                  ❯
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.pagerBtn} ${
+                    totalPages === loadedPages ? styles.pagerBtnActive : ""
+                  }`}
+                  onClick={() => onGoToPage(totalPages)}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {section && section.moderators.length > 0 && (
@@ -184,115 +225,94 @@ export const ForumSectionHeader = ({
         </div>
       )}
 
-      {}
-      {totalPages > 1 && (
-        <div className={styles.pager}>
-          {numbered.map((p) => (
-            <button
-              key={p}
-              type="button"
-              className={`${styles.pagerBtn} ${
-                p === loadedPages ? styles.pagerBtnActive : ""
-              }`}
-              onClick={() => onGoToPage(p)}
-            >
-              {p}
-            </button>
-          ))}
-          {showLast && (
-            <>
-              <button
-                type="button"
-                className={styles.pagerBtn}
-                onClick={() =>
-                  onGoToPage(Math.min(loadedPages + 1, totalPages))
-                }
-                title={t("forum.nextPage")}
-              >
-                &gt;
-              </button>
-              <button
-                type="button"
-                className={`${styles.pagerBtn} ${
-                  totalPages === loadedPages ? styles.pagerBtnActive : ""
-                }`}
-                onClick={() => onGoToPage(totalPages)}
-              >
-                {totalPages}
-              </button>
-            </>
-          )}
-        </div>
-      )}
-
-      {}
-      <div className={styles.filtersLabel}>{t("forum.filter.label")}</div>
       <div className={styles.filtersGrid}>
-        <Dropdown
+        <select
+          className={styles.sfSelect}
           value={prefixValue(filters.prefixId)}
-          onChange={(v) => setFilters({ prefixId: parsePrefix(v) })}
-          options={[
-            { value: "", label: t("forum.section.prefixAny") },
-            ...prefixOptions.map((p) => ({
-              value: String(p.prefixId),
-              label: p.title,
-            })),
-          ]}
-        />
+          onChange={(event) =>
+            setFilters({ prefixId: parsePrefix(event.target.value) })
+          }
+          aria-label={t("forum.section.prefixAny")}
+        >
+          <option value="">{t("forum.section.prefixAny")}</option>
+          {prefixOptions.map((prefix) => (
+            <option key={prefix.prefixId} value={prefix.prefixId}>
+              {prefix.title}
+            </option>
+          ))}
+        </select>
 
-        <Dropdown
+        <select
+          className={styles.sfSelect}
           value={prefixValue(filters.excludePrefixId)}
-          onChange={(v) => setFilters({ excludePrefixId: parsePrefix(v) })}
-          options={[
-            { value: "", label: t("forum.section.prefixExclude") },
-            ...prefixOptions.map((p) => ({
-              value: String(p.prefixId),
-              label: p.title,
-            })),
-          ]}
-        />
+          onChange={(event) =>
+            setFilters({ excludePrefixId: parsePrefix(event.target.value) })
+          }
+          aria-label={t("forum.section.prefixExclude")}
+        >
+          <option value="">{t("forum.section.prefixExclude")}</option>
+          {prefixOptions.map((prefix) => (
+            <option key={prefix.prefixId} value={prefix.prefixId}>
+              {prefix.title}
+            </option>
+          ))}
+        </select>
 
-        <Dropdown
+        <select
+          className={styles.sfSelect}
           value={filters.order}
-          onChange={(v) => setFilters({ order: v as ForumOrder })}
-          options={ORDER_OPTIONS.map((o) => ({
-            value: o.value,
-            label: t(o.key),
-          }))}
-        />
+          onChange={(event) =>
+            setFilters({ order: event.target.value as ForumOrder })
+          }
+          aria-label={t("forum.filter.label")}
+        >
+          {ORDER_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {t(option.key)}
+            </option>
+          ))}
+        </select>
 
-        <Dropdown
+        <select
+          className={styles.sfSelect}
           value={filters.direction}
-          onChange={(v) => setFilters({ direction: v as "asc" | "desc" })}
-          options={[
-            { value: "desc", label: t("forum.section.desc") },
-            { value: "asc", label: t("forum.section.asc") },
-          ]}
-        />
+          onChange={(event) =>
+            setFilters({ direction: event.target.value as "asc" | "desc" })
+          }
+          aria-label={t("forum.section.desc")}
+        >
+          <option value="desc">{t("forum.section.desc")}</option>
+          <option value="asc">{t("forum.section.asc")}</option>
+        </select>
 
-        <Dropdown
+        <select
+          className={styles.sfSelect}
           value={filters.period}
-          onChange={(v) => setFilters({ period: v as ForumFilters["period"] })}
-          options={[
-            { value: "", label: t("forum.section.periodAny") },
-            { value: "day", label: t("forum.section.periodDay") },
-            { value: "week", label: t("forum.section.periodWeek") },
-            { value: "month", label: t("forum.section.periodMonth") },
-            { value: "year", label: t("forum.section.periodYear") },
-          ]}
-        />
+          onChange={(event) =>
+            setFilters({ period: event.target.value as ForumFilters["period"] })
+          }
+          aria-label={t("forum.section.periodAny")}
+        >
+          <option value="">{t("forum.section.periodAny")}</option>
+          <option value="day">{t("forum.section.periodDay")}</option>
+          <option value="week">{t("forum.section.periodWeek")}</option>
+          <option value="month">{t("forum.section.periodMonth")}</option>
+          <option value="year">{t("forum.section.periodYear")}</option>
+        </select>
 
-        <Dropdown
+        <select
+          className={styles.sfSelect}
           value={filters.state}
-          onChange={(v) => setFilters({ state: v as ForumFilters["state"] })}
-          options={[
-            { value: "", label: t("forum.section.stateAll") },
-            { value: "active", label: t("forum.section.stateActive") },
-            { value: "closed", label: t("forum.section.stateClosed") },
-          ]}
-        />
+          onChange={(event) =>
+            setFilters({ state: event.target.value as ForumFilters["state"] })
+          }
+          aria-label={t("forum.section.stateAll")}
+        >
+          <option value="">{t("forum.section.stateAll")}</option>
+          <option value="active">{t("forum.section.stateActive")}</option>
+          <option value="closed">{t("forum.section.stateClosed")}</option>
+        </select>
 
-        {}
         <div className={styles.sfRange}>
           <span className={styles.sfRangeLabel}>
             {t("forum.section.createDate")}
@@ -335,12 +355,18 @@ export const ForumSectionHeader = ({
             }}
             onBlur={applyTitle}
           />
-          <Toggle
-            checked={filters.titleOnly}
-            onChange={(v) => setFilters({ titleOnly: v })}
-            label={t("forum.section.titleOnly")}
-          />
         </div>
+
+        <label className={styles.sfCheck}>
+          <input
+            type="checkbox"
+            checked={filters.titleOnly}
+            onChange={(event) =>
+              setFilters({ titleOnly: event.target.checked })
+            }
+          />
+          <span>{t("forum.section.titleOnly")}</span>
+        </label>
       </div>
 
       <CreateTabModal

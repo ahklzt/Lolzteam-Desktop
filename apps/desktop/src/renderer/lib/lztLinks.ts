@@ -45,6 +45,8 @@ const RESERVED_SEGMENTS = new Set([
   "misc", "pages", "tags", "categories", "articles", "login", "logout",
   "register", "lost-password", "market", "goto", "attachments", "watched",
   "notifications", "new-features",
+  "chatbox", "guarantor", "antipublic", "banned", "support-tickets",
+  "rules", "payment", "balance", "upgrades",
 ]);
 const parseUserlinkSlug = (url: string): string | null => {
   const m = url.match(/^https?:\/\/lolz\.(?:team|live)\/([^/?#]+)\/?(?:[?#]|$)/i);

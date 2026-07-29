@@ -2,7 +2,7 @@
   position: relative;
   margin: 15px 0 0;
   padding: 15px 20px;
-  background: rgb(28, 28, 28);
+  background: $color-surface;
   border-radius: 10px;
   font-size: 14px;
   color: rgb(214, 214, 214);
@@ -97,7 +97,7 @@
   line-height: 22px;
   font-size: 13px;
   color: #d6d6d6;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   border-radius: 31px;
 }
 
@@ -127,7 +127,7 @@
   line-height: 26px;
   font-size: 13px;
   word-break: break-all;
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   border-radius: 6px;
 }
 
@@ -197,7 +197,7 @@
   font-weight: 600;
   font-size: 14px;
   color: rgb(214, 214, 214);
-  background: rgb(36, 36, 36);
+  background: $color-surface-raised;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -222,7 +222,7 @@
   gap: 12px;
   box-sizing: border-box;
   padding: 12px;
-  background-color: rgb(36, 36, 36);
+  background-color: $color-surface-raised;
   border-radius: 10px;
 }
 
@@ -292,7 +292,7 @@
   line-height: 18px;
   font-size: 14px;
   color: rgb(214, 214, 214);
-  background: rgb(28, 28, 28);
+  background: $color-surface;
   border-radius: 8px;
   word-break: break-all;
 }
@@ -304,7 +304,7 @@
   width: 38px;
   min-width: 38px;
   color: rgb(214, 214, 214);
-  background: rgb(48, 48, 48);
+  background: $color-surface-overlay;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -328,7 +328,7 @@
   font-size: 12px;
   line-height: 16px;
   color: rgb(214, 214, 214);
-  background: rgb(28, 28, 28);
+  background: $color-surface;
   border: none;
   border-radius: 8px;
 }
@@ -351,7 +351,7 @@
   font-size: 14px;
   text-decoration: none;
   color: rgb(214, 214, 214);
-  background-color: rgb(48, 48, 48);
+  background-color: $color-surface-overlay;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -373,7 +373,7 @@
   font-size: 14px;
   line-height: 20px;
   color: rgb(214, 214, 214);
-  background: rgb(28, 28, 28);
+  background: $color-surface;
   border-radius: 8px;
   white-space: pre-wrap;
   word-break: break-word;

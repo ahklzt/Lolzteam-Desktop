@@ -10,7 +10,7 @@
   max-width: min(92vw, 460px);
   padding: $space-2 $space-4;
   border-radius: $radius-pill;
-  background: rgba(28, 28, 28, 0.92);
+  background: color-mix(in srgb, $color-surface 92%, transparent);
   border: 1px solid $color-border-strong;
   box-shadow: $shadow-lg;
   backdrop-filter: blur(12px);

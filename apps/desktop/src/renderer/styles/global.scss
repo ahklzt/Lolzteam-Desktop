@@ -84,9 +84,14 @@ body,
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--app-bg-image, none);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--text);
-  font-family: "Open Sans", "Segoe UI", Inter, system-ui, sans-serif;
+  font-family: var(--app-font, "Open Sans", "Segoe UI", Inter, system-ui, sans-serif);
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   user-select: none;
@@ -109,4 +114,3 @@ a {
   font-display: block;
   src: url("../assets/fonts/lztIcons.ttf") format("truetype");
 }
-

@@ -21,6 +21,7 @@
     "@mtcute/convert": "^0.29.7",
     "@mtcute/node": "^0.29.7",
     "electron-log": "^5.2.4",
+    "electron-updater": "^6.8.9",
     "i18next": "^24.2.0",
     "react-i18next": "^15.4.0",
     "steam-session": "^1.9.2"
@@ -54,11 +55,19 @@
       "out/**/*",
       "package.json"
     ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ahklzt",
+        "repo": "Lolzteam-Desktop"
+      }
+    ],
     "win": {
+      "executableName": "Lolzteam Desktop",
       "target": [
         "nsis"
       ],
-      "icon": "build/icon.png"
+      "icon": "build/icon.ico"
     },
     "nsis": {
       "artifactName": "Lolzteam-Desktop-${version}-setup.${ext}",

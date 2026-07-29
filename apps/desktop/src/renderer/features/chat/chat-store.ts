@@ -9,6 +9,49 @@ const merge = (a: ChatMessage[], b: ChatMessage[]): ChatMessage[] => {
   return [...byId.values()].sort((x, y) => x.messageId - y.messageId);
 };
 
+const sameMessages = (a: ChatMessage[], b: ChatMessage[]): boolean => {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i += 1) {
+    const left = a[i];
+    const right = b[i];
+    if (
+      left.messageId !== right.messageId ||
+      left.date !== right.date ||
+      left.html !== right.html ||
+      left.raw !== right.raw ||
+      left.isDeleted !== right.isDeleted ||
+      left.user.userId !== right.user.userId ||
+      left.user.username !== right.user.username ||
+      left.user.usernameHtml !== right.user.usernameHtml ||
+      left.user.avatarUrl !== right.user.avatarUrl ||
+      left.reply?.username !== right.reply?.username ||
+      left.reply?.usernameHtml !== right.reply?.usernameHtml ||
+      left.reply?.text !== right.reply?.text
+    ) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const sameRooms = (a: ChatRoom[], b: ChatRoom[]): boolean => {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i += 1) {
+    const left = a[i];
+    const right = b[i];
+    if (
+      left.roomId !== right.roomId ||
+      left.title !== right.title ||
+      left.isEnglish !== right.isEnglish ||
+      left.isMarket !== right.isMarket ||
+      left.online !== right.online
+    ) {
+      return false;
+    }
+  }
+  return true;
+};
+
 interface ChatState {
   open: boolean;
   rooms: ChatRoom[];
@@ -84,11 +127,21 @@ export const useChatStore = create<ChatState>((set, get) => ({
   loadRooms: async () => {
     const res = await window.moderator.chat.getRooms();
     if (res.ok) {
-      set({
-        rooms: res.rooms,
-        totalOnline: res.totalOnline,
-        errorReason: null,
-        errorMessage: null,
+      set((state) => {
+        if (
+          sameRooms(state.rooms, res.rooms) &&
+          state.totalOnline === res.totalOnline &&
+          state.errorReason === null &&
+          state.errorMessage === null
+        ) {
+          return state;
+        }
+        return {
+          rooms: res.rooms,
+          totalOnline: res.totalOnline,
+          errorReason: null,
+          errorMessage: null,
+        };
       });
     } else {
       set({ errorReason: res.reason, errorMessage: res.message ?? null });
@@ -128,11 +181,21 @@ export const useChatStore = create<ChatState>((set, get) => ({
     const res = await window.moderator.chat.getMessages(roomId);
     if (get().activeRoomId !== roomId) return;
     if (res.ok) {
-      set((s) => ({
-        messages: merge(s.messages, res.messages),
-        errorReason: null,
-        errorMessage: null,
-      }));
+      set((state) => {
+        const nextMessages = merge(state.messages, res.messages);
+        if (
+          sameMessages(state.messages, nextMessages) &&
+          state.errorReason === null &&
+          state.errorMessage === null
+        ) {
+          return state;
+        }
+        return {
+          messages: nextMessages,
+          errorReason: null,
+          errorMessage: null,
+        };
+      });
     } else {
       set({ errorReason: res.reason, errorMessage: res.message ?? null });
     }

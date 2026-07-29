@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: $space-4;
   width: 100%;
-  max-width: 1220px;
+  max-width: var(--app-content-width, 1220px);
   margin: 0 auto;
 }
 

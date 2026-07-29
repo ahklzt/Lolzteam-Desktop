@@ -11,8 +11,6 @@ import {
   HelpCircle,
   BookText,
   ArrowUpCircle,
-  Users,
-  UserX,
   Megaphone,
   ChevronDown,
 } from "lucide-react";
@@ -160,8 +158,6 @@ const OTHER: IconMenuItem[] = [
     icon: ArrowUpCircle,
     dot: true,
   },
-  { label: "Пользователи", url: `${WEB}/members/`, icon: Users },
-  { label: "Заблокированные", url: `${WEB}/banned/`, icon: UserX },
   { label: "Реклама", url: `${WEB}/misc/ads`, icon: Megaphone, internal: "ads" },
 ];
 

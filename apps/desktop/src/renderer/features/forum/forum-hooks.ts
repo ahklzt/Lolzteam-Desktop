@@ -129,11 +129,17 @@ export const useMyProfile = () =>
 const orderToApi = (order: ForumOrder): string => {
   switch (order) {
     case "thread_create_date":
-      return "thread_create_date";
+      return "post_date";
     case "thread_post_count":
-      return "thread_post_count";
+      return "reply_count";
     case "first_post_likes":
       return "first_post_likes";
+    case "last_read_date":
+      return "last_post_date";
+    case "bookmark_date":
+      return "last_post_date";
+    case "noReply":
+      return "reply_count_asc";
     default:
       return "last_post_date";
   }
@@ -148,6 +154,8 @@ const filtersToQuery = (filters: ForumFilters): Partial<ForumThreadsQuery> => {
   if (filters.excludePrefixId) query.prefixIdsNot = [filters.excludePrefixId];
   if (filters.period) query.period = filters.period;
   if (filters.state) query.state = filters.state;
+  if (filters.dateFrom) query.postDateFrom = filters.dateFrom;
+  if (filters.dateTo) query.postDateTo = filters.dateTo;
   const title = filters.title.trim();
   if (title) {
     query.title = title;
@@ -163,18 +171,29 @@ const sectionQuery = (
   order: ForumOrder,
   filters?: ForumFilters,
 ): ForumThreadsQuery => {
+  const filterQuery = filters ? filtersToQuery(filters) : {};
   switch (section.type) {
     case "all":
-      return { page, order: orderToApi(order) };
+      return { page, order: orderToApi(order), ...filterQuery };
     case "forum":
-    case "customTab":
       return {
         forumId: section.forumId,
         page,
-        ...(filters ? filtersToQuery(filters) : { order: orderToApi(order) }),
+        ...(filters ? filterQuery : { order: orderToApi(order) }),
+      };
+    case "customTab":
+      return {
+        forumIds: section.forumIds,
+        page,
+        ...(filters ? filterQuery : { order: orderToApi(order) }),
       };
     case "my":
-      return { creatorUserId: myUserId ?? undefined, page, order: "post_date" };
+      return {
+        tab: "userthreads",
+        page,
+        order: "thread_create_date",
+        ...filterQuery,
+      };
     case "userPosts":
       return { source: "userPosts", posterUserId: myUserId ?? undefined, page };
     case "userThreads":
@@ -182,11 +201,14 @@ const sectionQuery = (
         creatorUserId: section.userId,
         page,
         order: "thread_create_date",
+        ...filterQuery,
       };
     case "bookmarks":
-      return { tab: "fave", page };
+      return { tab: "fave", page, ...filterQuery };
     case "read":
-      return { tab: "viewedthreads", page };
+      return { tab: "viewedthreads", page, ...filterQuery };
+    case "scheduled":
+      return { tab: "scheduledthreads", page, ...filterQuery };
   }
 };
 
@@ -197,8 +219,7 @@ export const useForumThreads = (
 ) => {
   const { data: myUserId } = useMyUserId();
   const enabled =
-    (section.type !== "my" && section.type !== "userPosts") ||
-    typeof myUserId === "number";
+    section.type !== "userPosts" || typeof myUserId === "number";
   return useQuery({
     queryKey: ["forum", "threads", section, page, order, myUserId ?? null],
     queryFn: () =>
@@ -218,8 +239,7 @@ export const useForumThreadsInfinite = (
 ) => {
   const { data: myUserId } = useMyUserId();
   const enabled =
-    (section.type !== "my" && section.type !== "userPosts") ||
-    typeof myUserId === "number";
+    section.type !== "userPosts" || typeof myUserId === "number";
   return useInfiniteQuery({
     queryKey: [
       "forum",
@@ -242,19 +262,35 @@ export const useForumThreadsInfinite = (
       ),
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage.ok) return undefined;
-      if (lastPage.hasMore !== undefined) {
-        return lastPage.hasMore ? allPages.length + 1 : undefined;
+      if (lastPage.threads.length === 0) return undefined;
+
+      const previousThreadIds = new Set<number>();
+      for (const page of allPages.slice(0, -1)) {
+        if (!page.ok) continue;
+        for (const thread of page.threads) {
+          previousThreadIds.add(thread.threadId);
+        }
       }
-      const loaded = allPages.reduce(
-        (sum, p) => sum + (p.ok ? p.threads.length : 0),
-        0,
+
+      const hasNewThreads = lastPage.threads.some(
+        (thread) => !previousThreadIds.has(thread.threadId),
       );
-      if (lastPage.total !== null) {
-        return loaded < lastPage.total ? allPages.length + 1 : undefined;
+      if (!hasNewThreads) return undefined;
+
+      const loadedThreadIds = new Set(previousThreadIds);
+      for (const thread of lastPage.threads) {
+        loadedThreadIds.add(thread.threadId);
       }
-      return lastPage.threads.length >= THREADS_PAGE_SIZE
-        ? allPages.length + 1
-        : undefined;
+
+      if (
+        lastPage.total !== null &&
+        loadedThreadIds.size >= lastPage.total
+      ) {
+        return undefined;
+      }
+      if (lastPage.threads.length < THREADS_PAGE_SIZE) return undefined;
+      if (lastPage.hasMore === false) return undefined;
+      return allPages.length + 1;
     },
     enabled,
     staleTime: 30_000,
@@ -269,9 +305,7 @@ export const useForumThreadsPage = (
   filters?: ForumFilters,
 ) => {
   const { data: myUserId } = useMyUserId();
-  const enabled =
-    (section.type === "forum" || section.type === "customTab") &&
-    (section.type !== "my" || typeof myUserId === "number");
+  const enabled = section.type === "forum" || section.type === "customTab";
   return useQuery({
     queryKey: [
       "forum",

@@ -2,14 +2,15 @@ import tls from "node:tls";
 import {
   type MailFetchResult,
   type MailLetter,
+  type MassMailProxyInput,
   detectMailProvider,
   mailProviderByKey,
   type MailProvider,
 } from "@lzt/shared";
 import log from "electron-log/main";
+import { openMailTls } from "./mail-transport";
 
 
-const CONNECT_TIMEOUT = 25_000;
 const IO_TIMEOUT = 25_000;
 const MAX_LITERAL = 1_048_576;
 const DEFAULT_LIMIT = 30;
@@ -34,41 +35,41 @@ class ImapClient {
   private failure: Error | null = null;
   private tag = 0;
 
-  connect(host: string, port: number): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const socket = tls.connect(
-        { host, port, servername: host, rejectUnauthorized: true },
-        () => {
-          socket.setTimeout(IO_TIMEOUT);
-          resolve();
-        },
-      );
-      this.socket = socket;
-      let settled = false;
-      const fail = (e: Error) => {
-        if (settled) return;
-        settled = true;
-        this.failure = e;
-        if (this.waiter) {
-          const w = this.waiter;
-          this.waiter = null;
-          w.reject(e);
-        }
-        reject(e);
-      };
-      socket.setTimeout(CONNECT_TIMEOUT);
-      socket.on("data", (chunk: Buffer) => {
-        this.buf = Buffer.concat([this.buf, chunk]);
-        this.pump();
-      });
-      socket.on("error", (e) =>
-        fail(e instanceof Error ? e : new Error(String(e))),
-      );
-      socket.on("timeout", () => {
-        socket.destroy();
-        fail(new Error("timeout"));
-      });
-      socket.on("close", () => fail(new Error("closed")));
+  async connect(
+    host: string,
+    port: number,
+    options?: MailFetchOptions,
+  ): Promise<void> {
+    const socket = await openMailTls(
+      host,
+      port,
+      options?.proxy,
+      options?.signal,
+    );
+    this.socket = socket;
+    const fail = (error: Error): void => {
+      if (this.failure) return;
+      this.failure = error;
+      if (this.waiter) {
+        const waiter = this.waiter;
+        this.waiter = null;
+        waiter.reject(error);
+      }
+    };
+    const abort = (): void => {
+      socket.destroy(new Error("aborted"));
+    };
+    options?.signal?.addEventListener("abort", abort, { once: true });
+    socket.setTimeout(IO_TIMEOUT);
+    socket.on("data", (chunk: Buffer) => {
+      this.buf = Buffer.concat([this.buf, chunk]);
+      this.pump();
+    });
+    socket.on("error", (error) => fail(error));
+    socket.on("timeout", () => socket.destroy(new Error("timeout")));
+    socket.on("close", () => {
+      options?.signal?.removeEventListener("abort", abort);
+      fail(new Error("closed"));
     });
   }
 
@@ -129,8 +130,8 @@ class ImapClient {
       const line = await this.readLine();
       const m = line.match(/\{(\d+)\}\s*$/);
       if (m) {
-        const n = Math.min(parseInt(m[1], 10), MAX_LITERAL);
-        const full = parseInt(m[1], 10);
+        const n = Math.min(parseInt(m[1]!, 10), MAX_LITERAL);
+        const full = parseInt(m[1]!, 10);
         const body = await this.readBytes(full);
         literals.push(body.subarray(0, n));
         lines.push(line);
@@ -163,7 +164,7 @@ class ImapClient {
     for (const l of r.lines) {
       const m = l.match(/^\* SEARCH((?:\s+\d+)+)/i);
       if (m) {
-        for (const n of m[1].trim().split(/\s+/)) uids.push(parseInt(n, 10));
+        for (const n of m[1]!.trim().split(/\s+/)) uids.push(parseInt(n, 10));
       }
     }
     return uids;
@@ -177,8 +178,8 @@ class ImapClient {
     const meta = r.lines.find((l) => /\{\d+\}\s*$/.test(l)) ?? "";
     const seen = /FLAGS \([^)]*\\Seen/i.test(meta);
     const dm = meta.match(/INTERNALDATE "([^"]+)"/);
-    const date = dm ? parseInternalDate(dm[1]) : null;
-    const parsed = parseMessage(r.literals[0]!);
+    const date = dm ? parseInternalDate(dm[1]!) : null;
+    const parsed = parseMailMessage(r.literals[0]!);
     if (parsed.subject.trim() === "" && parsed.text.trim() === "") return null;
     const preview = parsed.text.replace(/\s+/g, " ").trim().slice(0, 200);
     return {
@@ -209,11 +210,18 @@ class ImapClient {
   }
 }
 
+export interface MailFetchOptions {
+  proxy?: MassMailProxyInput;
+  signal?: AbortSignal;
+  provider?: MailProvider;
+}
+
 export const fetchInbox = async (
   email: string,
   password: string,
   providerKey: string | undefined,
   limit = DEFAULT_LIMIT,
+  options?: MailFetchOptions,
 ): Promise<MailFetchResult> => {
   const addr = email.trim();
   const pass = password;
@@ -221,6 +229,7 @@ export const fetchInbox = async (
     return { ok: false, message: "invalid_credentials" };
   }
   const provider: MailProvider | null =
+    options?.provider ??
     (providerKey ? mailProviderByKey(providerKey) : null) ??
     detectMailProvider(addr);
   if (!provider) {
@@ -229,7 +238,7 @@ export const fetchInbox = async (
 
   const client = new ImapClient();
   try {
-    await client.connect(provider.imapHost, provider.imapPort);
+    await client.connect(provider.imapHost, provider.imapPort, options);
     const ok = await client.login(addr, pass);
     if (!ok) {
       client.close();
@@ -260,20 +269,23 @@ export const fetchInbox = async (
 };
 
 
-interface ParsedMessage {
+export interface ParsedMessage {
   subject: string;
   from: string;
+  date: string | null;
   text: string;
 }
 
-const parseMessage = (raw: Buffer): ParsedMessage => {
+export const parseMailMessage = (raw: Buffer): ParsedMessage => {
   const s = raw.toString("latin1");
   const [head, body] = splitHead(s);
   const headers = parseHeaders(head);
   const subject = decodeHeaderWord(headers["subject"] ?? "");
   const from = decodeHeaderWord(headers["from"] ?? "");
+  const dateValue = Date.parse(headers["date"] ?? "");
+  const date = Number.isFinite(dateValue) ? new Date(dateValue).toISOString() : null;
   const text = partToText(headers, body, 0);
-  return { subject, from, text };
+  return { subject, from, date, text };
 };
 
 const splitHead = (raw: string): [string, string] => {
@@ -364,7 +376,7 @@ const partToText = (
   const csMatch = (headers["content-type"] ?? "").match(
     /charset="?([A-Za-z0-9._\-]+)"?/i,
   );
-  const text = decodeBytes(decoded, csMatch ? csMatch[1] : "utf-8");
+  const text = decodeBytes(decoded, csMatch ? csMatch[1]! : "utf-8");
   if (ct.startsWith("text/html")) return htmlToText(text);
   if (ct.startsWith("text/")) return text.trim();
   return "";

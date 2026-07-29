@@ -1,19 +1,19 @@
 
-$color-accent: rgb(0, 186, 120);
-$color-accent-soft: rgb(34, 142, 93);
-$color-accent-dark: rgb(0, 150, 96);
+$color-accent: var(--theme-accent);
+$color-accent-soft: var(--theme-accent-soft);
+$color-accent-dark: var(--theme-accent-dark);
 
-$color-bg: rgb(20, 20, 20);
-$color-surface: rgb(28, 28, 28);
-$color-surface-raised: rgb(36, 36, 36);
-$color-surface-overlay: rgb(48, 48, 48);
+$color-bg: var(--theme-bg);
+$color-surface: var(--theme-surface);
+$color-surface-raised: var(--theme-surface-raised);
+$color-surface-overlay: var(--theme-surface-overlay);
 
-$color-text: rgb(234, 234, 234);
-$color-text-soft: rgb(214, 214, 214);
-$color-text-muted: rgb(148, 148, 148);
+$color-text: var(--theme-text);
+$color-text-soft: var(--theme-text-soft);
+$color-text-muted: var(--theme-text-muted);
 
-$color-border: rgba(255, 255, 255, 0.06);
-$color-border-strong: rgba(255, 255, 255, 0.12);
+$color-border: var(--theme-border);
+$color-border-strong: var(--theme-border-strong);
 
 $color-danger: rgb(234, 76, 76);
 $color-warning: rgb(230, 140, 23);
@@ -38,9 +38,9 @@ $fs-base: 1rem;
 $fs-lg: 1.125rem;
 $fs-xl: 1.25rem;
 
-$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
-$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
-$shadow-focus: 0 0 0 2px rgba(0, 186, 120, 0.45);
+$shadow-md: 0 4px 12px var(--theme-shadow);
+$shadow-lg: 0 12px 32px var(--theme-shadow);
+$shadow-focus: 0 0 0 2px color-mix(in srgb, var(--theme-accent) 45%, transparent);
 
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 $duration-fast: 120ms;

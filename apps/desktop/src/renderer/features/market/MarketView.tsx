@@ -44,7 +44,7 @@ export const MarketView = () => {
 
   const [activeSlug, setActiveSlug] = useState('')
   const categoryLabel =
-    MARKET_CATEGORIES.find((c) => c.slug === activeSlug)?.label ?? 'Маркет'
+    MARKET_CATEGORIES.find((c) => c.slug === activeSlug)?.label ?? t('market.title')
   useReportPresence(
     marketItem
       ? null
@@ -289,79 +289,88 @@ export const MarketView = () => {
           })}
         </div>
 
-        <div className={styles.searchRow}>
-          <input
-            className={styles.priceInput}
-            value={priceMin}
-            onChange={(e) => setPriceMin(e.target.value.replace(/[^0-9]/g, ''))}
-            onKeyDown={onControlsKeyDown}
-            inputMode="numeric"
-            placeholder={t('market.priceFrom')}
-          />
-          <input
-            className={styles.priceInput}
-            value={priceMax}
-            onChange={(e) => setPriceMax(e.target.value.replace(/[^0-9]/g, ''))}
-            onKeyDown={onControlsKeyDown}
-            inputMode="numeric"
-            placeholder={t('market.priceTo')}
-          />
-          <div className={styles.searchBox}>
-            <Search size={16} className={styles.searchIcon} />
+        <section className={styles.marketControls}>
+          <div className={styles.searchRow}>
             <input
-              className={styles.search}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              className={styles.priceInput}
+              value={priceMin}
+              onChange={(e) => setPriceMin(e.target.value.replace(/[^0-9]/g, ''))}
               onKeyDown={onControlsKeyDown}
-              placeholder={t('market.searchPlaceholder')}
-              spellCheck={false}
+              inputMode="numeric"
+              placeholder={t('market.priceFrom')}
             />
+            <input
+              className={styles.priceInput}
+              value={priceMax}
+              onChange={(e) => setPriceMax(e.target.value.replace(/[^0-9]/g, ''))}
+              onKeyDown={onControlsKeyDown}
+              inputMode="numeric"
+              placeholder={t('market.priceTo')}
+            />
+            <div className={styles.searchBox}>
+              <input
+                className={styles.search}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={onControlsKeyDown}
+                placeholder={t('market.searchPlaceholder')}
+                spellCheck={false}
+              />
+              <button
+                type="button"
+                className={styles.searchSubmit}
+                onClick={applyControls}
+                aria-label={t('market.searchPlaceholder')}
+              >
+                <Search size={17} />
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className={styles.sortRow}>
-          {SORT_CHIPS.map((value) => (
-            <button
-              key={value || 'default'}
-              type="button"
-              className={
-                order === value ? `${styles.sortChip} ${styles.sortChipActive}` : styles.sortChip
-              }
-              onClick={() => setOrder(value)}
-            >
-              {value === '' ? t('market.sort.default') : t(`market.sort.${value}`)}
-            </button>
-          ))}
+          <div className={styles.sortRow}>
+            {SORT_CHIPS.map((value) => (
+              <button
+                key={value || 'default'}
+                type="button"
+                className={
+                  order === value ? `${styles.sortChip} ${styles.sortChipActive}` : styles.sortChip
+                }
+                onClick={() => setOrder(value)}
+              >
+                {value === '' ? t('market.sort.default') : t(`market.sort.${value}`)}
+              </button>
+            ))}
 
-          {hasFilterUi ? (
-            <button
-              type="button"
-              className={styles.filterToggle}
-              onClick={() => setShowFilters((v) => !v)}
-            >
-              <SlidersHorizontal size={15} />
-              {t('market.filters')}
-            </button>
+            {hasFilterUi ? (
+              <button
+                type="button"
+                className={styles.filterToggle}
+                onClick={() => setShowFilters((v) => !v)}
+              >
+                <SlidersHorizontal size={15} />
+                {t('market.filters')}
+              </button>
+            ) : null}
+
+            {total > 0 ? (
+              <span className={styles.count}>
+                {t('market.results', { count: total })}
+              </span>
+            ) : null}
+          </div>
+
+          {hasFilterUi && showFilters ? (
+            <FilterPanel
+              params={params}
+              games={games}
+              values={filterDraft}
+              onChange={changeFilter}
+              onApply={applyFilters}
+              onReset={resetFilters}
+              loading={status === 'loading'}
+            />
           ) : null}
-
-          {total > 0 ? (
-            <span className={styles.count}>
-              {t('market.results', { count: total })}
-            </span>
-          ) : null}
-        </div>
-
-        {hasFilterUi && showFilters ? (
-          <FilterPanel
-            params={params}
-            games={games}
-            values={filterDraft}
-            onChange={changeFilter}
-            onApply={applyFilters}
-            onReset={resetFilters}
-            loading={status === 'loading'}
-          />
-        ) : null}
+        </section>
 
         {status === 'error' ? (
           <div className={styles.state}>

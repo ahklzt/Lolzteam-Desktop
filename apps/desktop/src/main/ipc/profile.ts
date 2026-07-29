@@ -2,6 +2,8 @@ import {
   IPC,
   MARKET_CURRENCIES,
   type CurrencyResult,
+  type ErrorReportPayload,
+  type ErrorReportResult,
   type FollowOptions,
   type FollowersResult,
   type MarketCurrency,
@@ -54,6 +56,7 @@ import {
   followUser,
   ignoreUser,
   sendMessage,
+  submitErrorReport,
   fetchConversationMessages,
   sendConversationMessage,
   unfollowUser,
@@ -292,6 +295,19 @@ export const registerProfileIpc = (): void => {
       const message =
         typeof payload?.message === "string" ? payload.message : "";
       return sendMessage(userId, message);
+    },
+  );
+
+  ipcMain.handle(
+    IPC.ERROR_REPORT_SUBMIT,
+    async (_e, payload?: Partial<ErrorReportPayload>): Promise<ErrorReportResult> => {
+      const view = typeof payload?.view === "string" ? payload.view : "";
+      const error = typeof payload?.error === "string" ? payload.error : "";
+      const occurredAt =
+        typeof payload?.occurredAt === "number" && Number.isFinite(payload.occurredAt)
+          ? payload.occurredAt
+          : Date.now();
+      return submitErrorReport({ view, error, occurredAt });
     },
   );
 

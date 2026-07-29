@@ -245,7 +245,9 @@ export const MiniProfileModal = ({ userId, onClose, onOpenProfile }: Props) => {
                         className={styles.miniMenuItem}
                         onClick={() => {
                           setMenuOpen(false)
-                          openLink(memberLink)
+                          void window.moderator.app.openExternal(memberLink, {
+                            forceExternal: true,
+                          })
                         }}
                       >
                         {t('profile.actions.openOnSite')}

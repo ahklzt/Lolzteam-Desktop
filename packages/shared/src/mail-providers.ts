@@ -3,6 +3,8 @@ export interface MailProvider {
   label: string;
   imapHost: string;
   imapPort: number;
+  pop3Host: string;
+  pop3Port: number;
   domains: string[];
 }
 
@@ -12,6 +14,8 @@ export const MAIL_PROVIDERS: MailProvider[] = [
     label: "Rambler",
     imapHost: "imap.rambler.ru",
     imapPort: 993,
+    pop3Host: "pop3.rambler.ru",
+    pop3Port: 995,
     domains: [
       "rambler.ru",
       "lenta.ru",
@@ -25,13 +29,17 @@ export const MAIL_PROVIDERS: MailProvider[] = [
     label: "SmakMail",
     imapHost: "imap.smakmail.com",
     imapPort: 993,
+    pop3Host: "pop3.smakmail.com",
+    pop3Port: 995,
     domains: [],
   },
   {
     key: "outlook",
     label: "Outlook / Hotmail",
-    imapHost: "imap-mail.outlook.com",
+    imapHost: "outlook.office365.com",
     imapPort: 993,
+    pop3Host: "outlook.office365.com",
+    pop3Port: 995,
     domains: [
       "outlook.com",
       "hotmail.com",
@@ -46,6 +54,8 @@ export const MAIL_PROVIDERS: MailProvider[] = [
     label: "GMX",
     imapHost: "imap.gmx.com",
     imapPort: 993,
+    pop3Host: "pop.gmx.com",
+    pop3Port: 995,
     domains: [
       "gmx.com",
       "gmx.net",
@@ -62,6 +72,8 @@ export const MAIL_PROVIDERS: MailProvider[] = [
     label: "Mail.ru",
     imapHost: "imap.mail.ru",
     imapPort: 993,
+    pop3Host: "pop.mail.ru",
+    pop3Port: 995,
     domains: [
       "mail.ru",
       "bk.ru",

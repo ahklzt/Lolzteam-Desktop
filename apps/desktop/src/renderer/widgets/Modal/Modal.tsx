@@ -12,6 +12,7 @@ interface ModalProps {
   closable?: boolean;
   wide?: boolean;
   maxWidth?: number;
+  headerless?: boolean;
 }
 
 export const Modal = ({
@@ -22,6 +23,7 @@ export const Modal = ({
   closable = true,
   wide = false,
   maxWidth,
+  headerless = false,
 }: ModalProps) => {
   const { t } = useTranslation();
 
@@ -44,26 +46,43 @@ export const Modal = ({
       }}
     >
       <div
-        className={`${styles.modal} ${wide ? styles.modalWide : ""}`}
+        className={`${styles.modal} ${wide ? styles.modalWide : ""} ${
+          headerless ? styles.modalHeaderless : ""
+        }`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         style={maxWidth ? { maxWidth: `${maxWidth}px` } : undefined}
       >
-        <div className={styles.header}>
-          <h2 className={styles.title}>{title}</h2>
-          {closable && (
+        {headerless ? (
+          closable && (
             <button
               type="button"
-              className={styles.close}
+              className={styles.closeFloating}
               onClick={onClose}
               aria-label={t("common.close")}
             >
               <X size={18} />
             </button>
-          )}
+            )
+          ) : (
+          <div className={styles.header}>
+            <h2 className={styles.title}>{title}</h2>
+            {closable && (
+              <button
+                type="button"
+                className={styles.close}
+                onClick={onClose}
+                aria-label={t("common.close")}
+              >
+                <X size={18} />
+              </button>
+            )}
+          </div>
+        )}
+        <div className={`${styles.body} ${headerless ? styles.bodyFlush : ""}`}>
+          {children}
         </div>
-        <div className={styles.body}>{children}</div>
       </div>
     </div>,
     document.body,

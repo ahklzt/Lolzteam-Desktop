@@ -31,13 +31,13 @@ export const appFetch = (url: string, init: AppFetchInit = {}): Promise<Response
     }
 
     const onAbort = (): void => {
+      const err = new Error('The operation was aborted')
+      err.name = 'AbortError'
+      done(() => reject(err))
       try {
         req.abort()
       } catch {
       }
-      const err = new Error('The operation was aborted')
-      err.name = 'AbortError'
-      done(() => reject(err))
     }
 
     if (init.signal) {

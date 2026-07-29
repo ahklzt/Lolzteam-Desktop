@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ChevronDown, X } from "lucide-react";
 import type { ForumNode } from "@lzt/shared";
 import {
+  CONTEST_HIDDEN_IDS,
   DEFAULT_FORUM_FILTERS,
   type ForumFilters,
   type ForumOrder,
@@ -33,9 +34,8 @@ const flattenForums = (
 ): Array<{ forumId: number; title: string; depth: number }> => {
   const out: Array<{ forumId: number; title: string; depth: number }> = [];
   for (const node of nodes) {
-    if (!node.isCategory) {
-      out.push({ forumId: node.forumId, title: node.title, depth });
-    }
+    if (CONTEST_HIDDEN_IDS.has(node.forumId)) continue;
+    out.push({ forumId: node.forumId, title: node.title, depth });
     if (node.children.length > 0) {
       out.push(...flattenForums(node.children, depth + 1));
     }
@@ -122,10 +122,8 @@ export const CreateTabModal = ({
     raw === "" ? null : Number(raw);
 
   const submit = () => {
-    const forumIds = [
-      forumId,
-      ...selectedIds.filter((id) => id !== forumId),
-    ];
+    const forumIds = [...new Set(selectedIds)];
+    if (forumIds.length === 0) return;
     const tab = addTab({
       name: name.trim() || forumTitle,
       forumIds,
@@ -151,8 +149,15 @@ export const CreateTabModal = ({
           </button>
         </div>
 
-        <div className={styles.tabModalBody}>
-          <div className={styles.tabField}>
+        <form
+          className={styles.tabModalForm}
+          onSubmit={(event) => {
+            event.preventDefault();
+            submit();
+          }}
+        >
+          <div className={styles.tabModalBody}>
+            <div className={styles.tabField}>
             <label className={styles.tabLabel}>
               {t("forum.tab.sectionsLabel")}
             </label>
@@ -211,21 +216,26 @@ export const CreateTabModal = ({
                 </div>
               )}
             </div>
-          </div>
+            </div>
 
-          <div className={styles.tabField}>
-            <label className={styles.tabLabel}>
-              {t("forum.tab.nameLabel")}
-            </label>
-            <input
-              className={styles.tabInput}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-          <div className={styles.tabRow}>
             <div className={styles.tabField}>
+              <label className={styles.tabLabel}>
+                {t("forum.tab.nameLabel")}
+              </label>
+              <input
+                className={styles.tabInput}
+                value={name}
+                maxLength={32}
+                placeholder={t("forum.tab.namePlaceholder")}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            <details className={styles.tabAdvanced}>
+            <summary>{t("forum.filter.label")}</summary>
+            <div className={styles.tabAdvancedBody}>
+              <div className={styles.tabRow}>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.section.prefixAny")}
               </label>
@@ -243,8 +253,8 @@ export const CreateTabModal = ({
                   </option>
                 ))}
               </select>
-            </div>
-            <div className={styles.tabField}>
+                </div>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.section.prefixExclude")}
               </label>
@@ -262,11 +272,11 @@ export const CreateTabModal = ({
                   </option>
                 ))}
               </select>
-            </div>
-          </div>
+                </div>
+              </div>
 
-          <div className={styles.tabRow}>
-            <div className={styles.tabField}>
+              <div className={styles.tabRow}>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.filter.label")}
               </label>
@@ -283,8 +293,8 @@ export const CreateTabModal = ({
                   </option>
                 ))}
               </select>
-            </div>
-            <div className={styles.tabField}>
+                </div>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.section.direction")}
               </label>
@@ -298,11 +308,11 @@ export const CreateTabModal = ({
                 <option value="desc">{t("forum.section.desc")}</option>
                 <option value="asc">{t("forum.section.asc")}</option>
               </select>
-            </div>
-          </div>
+                </div>
+              </div>
 
-          <div className={styles.tabRow}>
-            <div className={styles.tabField}>
+              <div className={styles.tabRow}>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.section.periodAny")}
               </label>
@@ -319,8 +329,8 @@ export const CreateTabModal = ({
                 <option value="month">{t("forum.section.periodMonth")}</option>
                 <option value="year">{t("forum.section.periodYear")}</option>
               </select>
-            </div>
-            <div className={styles.tabField}>
+                </div>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.section.stateAll")}
               </label>
@@ -335,11 +345,11 @@ export const CreateTabModal = ({
                 <option value="active">{t("forum.section.stateActive")}</option>
                 <option value="closed">{t("forum.section.stateClosed")}</option>
               </select>
-            </div>
-          </div>
+                </div>
+              </div>
 
-          <div className={styles.tabRow}>
-            <div className={styles.tabField}>
+              <div className={styles.tabRow}>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>
                 {t("forum.section.from")}
               </label>
@@ -349,8 +359,8 @@ export const CreateTabModal = ({
                 value={filters.dateFrom ?? ""}
                 onChange={(e) => patch({ dateFrom: e.target.value || null })}
               />
-            </div>
-            <div className={styles.tabField}>
+                </div>
+                <div className={styles.tabField}>
               <label className={styles.tabLabel}>{t("forum.section.to")}</label>
               <input
                 type="date"
@@ -358,43 +368,38 @@ export const CreateTabModal = ({
                 value={filters.dateTo ?? ""}
                 onChange={(e) => patch({ dateTo: e.target.value || null })}
               />
+                </div>
+              </div>
+            </div>
+            </details>
+
+            <label className={styles.tabToggle}>
+              <input
+                type="checkbox"
+                checked={isDefault}
+                onChange={(e) => setIsDefault(e.target.checked)}
+              />
+              <span className={styles.tabToggleText}>
+                <span className={styles.tabToggleTitle}>
+                  {t("forum.tab.makeDefault")}
+                </span>
+                <span className={styles.tabToggleDesc}>
+                  {t("forum.tab.makeDefaultDesc")}
+                </span>
+              </span>
+            </label>
+
+            <div className={styles.tabSubmitContainer}>
+              <button
+                type="submit"
+                className={styles.tabSubmitBtn}
+                disabled={selectedIds.length === 0}
+              >
+                {t("forum.tab.create")}
+              </button>
             </div>
           </div>
-
-          <label className={styles.tabToggle}>
-            <input
-              type="checkbox"
-              checked={isDefault}
-              onChange={(e) => setIsDefault(e.target.checked)}
-            />
-            <span className={styles.tabToggleText}>
-              <span className={styles.tabToggleTitle}>
-                {t("forum.tab.makeDefault")}
-              </span>
-              <span className={styles.tabToggleDesc}>
-                {t("forum.tab.makeDefaultDesc")}
-              </span>
-            </span>
-          </label>
-        </div>
-
-        <div className={styles.tabModalFoot}>
-          <button
-            type="button"
-            className={styles.tabCancelBtn}
-            onClick={onClose}
-          >
-            {t("common.cancel")}
-          </button>
-          <button
-            type="button"
-            className={styles.tabSubmitBtn}
-            onClick={submit}
-            disabled={selectedIds.length === 0}
-          >
-            {t("forum.tab.create")}
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   );

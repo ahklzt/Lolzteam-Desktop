@@ -9,7 +9,7 @@
   gap: $space-1;
   padding: $space-2;
   border-radius: $radius-pill;
-  background: rgba(28, 28, 28, 0.82);
+  background: color-mix(in srgb, $color-surface 88%, transparent);
   border: 1px solid $color-border-strong;
   box-shadow: $shadow-lg;
   backdrop-filter: blur(12px);

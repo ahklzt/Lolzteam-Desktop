@@ -1,12 +1,12 @@
 
 $bg: $color-bg;
 $bg-elev: $color-surface-raised;
-$bg-hover: rgba(255, 255, 255, 0.06);
+$bg-hover: color-mix(in srgb, $color-text 6%, transparent);
 $border: $color-border;
 $text: $color-text;
-$muted: rgba(234, 234, 234, 0.55);
+$muted: $color-text-muted;
 $accent: $color-accent;
-$accent-soft: rgba(0, 186, 120, 0.16);
+$accent-soft: color-mix(in srgb, $color-accent 16%, transparent);
 $danger: $color-danger;
 $green: $color-accent;
 $radius: $radius-md;
@@ -20,8 +20,8 @@ $radius-sm: $radius-sm;
   min-height: 60px;
   margin: 10px 24px;
   padding: 10px 20px;
-  background: rgb(35 35 35);
-  border-bottom: 1px solid rgb(255 255 255 / 0%);
+  background: $color-surface-raised;
+  border: 1px solid $color-border;
   border-radius: 12px;
   -webkit-app-region: drag;
   user-select: none;
@@ -648,47 +648,92 @@ $radius-sm: $radius-sm;
 }
 
 .profilePanel {
-  width: 300px;
-  padding: 8px;
+  width: 314px;
+  max-height: calc(100vh - 76px);
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  background: $color-surface-raised;
 }
 
 .profHeader {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 6px 6px 12px;
-  border-bottom: 1px solid $border;
+  gap: 8px;
+  padding: 22px 18px 14px;
+  background: linear-gradient(
+    180deg,
+    rgba($color-accent, 0.12) 0%,
+    rgba($color-accent, 0) 78%
+  );
+}
+
+.profAvatarWrap {
+  position: relative;
+  width: 76px;
+  height: 76px;
 }
 
 .profAvatar {
-  width: 44px;
-  height: 44px;
+  width: 76px;
+  height: 76px;
   border-radius: var(--avatar-radius, 50%);
   object-fit: cover;
+  border: 3px solid $color-surface-raised;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
 .profAvatarFallback {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 76px;
+  height: 76px;
   border-radius: var(--avatar-radius, 50%);
   background: $bg-hover;
-  color: $muted;
-  font-size: 18px;
-  font-weight: 600;
+  color: $text;
+  font-size: 25px;
+  font-weight: 700;
+  border: 3px solid $color-surface-raised;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.profAvatarAction {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 3px solid $color-surface-raised;
+  border-radius: 50%;
+  background: $accent;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-accent-dark;
+  }
 }
 
 .profInfo {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  gap: 3px;
   min-width: 0;
+  max-width: 100%;
 }
 
 .profName {
-  font-size: 14px;
+  max-width: 250px;
+  font-size: 16px;
   font-weight: 700;
   color: $text;
   overflow: hidden;
@@ -700,17 +745,31 @@ $radius-sm: $radius-sm;
   border: none;
   background: none;
   padding: 0;
-  color: $accent;
+  color: $muted;
   font-size: 12px;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
+
+  &:hover {
+    color: $text;
+  }
+}
+
+.profBalanceCard {
+  margin: 0 12px 12px;
+  padding: 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $color-surface;
 }
 
 .profBalanceRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 6px 8px;
+  gap: 12px;
+  min-height: 26px;
+  margin-bottom: 12px;
 }
 
 .profBalanceLabel {
@@ -721,19 +780,136 @@ $radius-sm: $radius-sm;
 .profBalanceVal {
   font-size: 14px;
   font-weight: 700;
-  color: $green;
+  color: $text;
+}
+
+.profBalanceAmount {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: $muted;
 }
 
 .profActions {
-  display: flex;
-  gap: 6px;
-  padding: 0 2px 8px;
-  border-bottom: 1px solid $border;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .profActionBtn {
-  flex: 1 1 0;
-  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $muted;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.12s ease;
+
+  &:hover {
+    color: $text;
+
+    .profActionIcon {
+      border-color: $color-border-strong;
+      background: $color-surface-overlay;
+    }
+  }
+}
+
+.profActionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 38px;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  background: $bg-hover;
+  color: $text;
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.profActionPrimary {
+  color: $text;
+
+  .profActionIcon {
+    background: $accent;
+    border-color: $accent;
+    color: #fff;
+  }
+
+  &:hover {
+    .profActionIcon {
+      background: $color-accent-dark;
+      border-color: $color-accent-dark;
+    }
+  }
+}
+
+.manageList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 0 12px 12px;
+}
+
+.manageItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 9px;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $text;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: $bg-hover;
+  }
+
+  .menuItemIcon {
+    flex: 0 0 auto;
+    color: $muted;
+  }
+
+  .menuLabel {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+}
+
+.profFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid $border;
+}
+
+.profSettings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  flex: 1 1 auto;
+  height: 38px;
+  padding: 0 12px;
   border: 1px solid $border;
   border-radius: $radius-sm;
   background: $bg-hover;
@@ -741,38 +917,9 @@ $radius-sm: $radius-sm;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.12s ease;
 
   &:hover {
-    background: #2b323f;
-  }
-}
-
-.profActionPrimary {
-  background: $accent;
-  border-color: $accent;
-  color: #fff;
-
-  &:hover {
-    background: #5c9dff;
-  }
-}
-
-.manageList {
-  display: flex;
-  flex-direction: column;
-  padding: 6px 0;
-  border-bottom: 1px solid $border;
-}
-
-.profFooter {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 6px;
-
-  .menuItem {
-    flex: 1 1 auto;
+    background: $color-surface-overlay;
   }
 }
 
@@ -800,19 +947,18 @@ $radius-sm: $radius-sm;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 92, 92, 0.24);
   border-radius: $radius-sm;
-  background: transparent;
-  color: $muted;
+  background: rgba(255, 92, 92, 0.1);
+  color: $danger;
   cursor: pointer;
   transition:
     background 0.12s ease,
     color 0.12s ease;
 
   &:hover {
-    background: rgba(255, 92, 92, 0.14);
-    color: $danger;
+    background: rgba(255, 92, 92, 0.2);
   }
 }

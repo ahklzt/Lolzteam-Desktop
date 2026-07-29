@@ -9,6 +9,7 @@ import { App } from "./app/App";
 import { ErrorBoundary } from "./app/ErrorBoundary";
 import { ChatWindowApp } from "./features/chat/ChatWindowApp";
 import { initI18n } from "./i18n";
+import { initErrorReporting } from "./lib/error-reporter";
 import { useSettingsStore } from "./stores/settings";
 
 const queryClient = new QueryClient({
@@ -34,6 +35,8 @@ async function bootstrap() {
   } catch {
     await initI18n("ru");
   }
+
+  initErrorReporting();
 
   createRoot(rootEl!).render(
     <StrictMode>
